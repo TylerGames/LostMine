@@ -238,7 +238,7 @@ class PlayerInventory extends BaseInventory{
 		$old = $this->getItem($index);
 		$this->slots[$index] = clone $item;
 		$this->onSlotChange($index, $old);
-if($this->getHolder() instanceof Player){
+                if($this->getHolder() instanceof Player){
 			if($this->getHolder()->isSurvival()) $this->sendContents($this->getHolder());
 		}
 		return true;
