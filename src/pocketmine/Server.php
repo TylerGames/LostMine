@@ -1614,7 +1614,7 @@ class Server{
 			"disable-logfile" => false,
 		]);
 
-		if(!$this->getProperty("log.enable", true)){
+		if($this->getProperty("log.enable", true)){
  			$this->logger->info("Enabled log writing to server.log");
  			$this->logger->Enable();
  		}else{
