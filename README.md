@@ -29,8 +29,7 @@ Sure, why not? Simply join one of the servers below to see what ImagicalMine can
 |--------------------------------------------------------------------|:------------------------:|-----------|
 | **RumBenCraft**                                                    | **play.rumbencraft.net** | **19132** |
 | **DarkRealms**                                                     | **play.dr-pvp.us**       | **19132** |
-| **ImagicalMine 0.13.1 Creative (Latest build every day at 12 am)** | **WolvesFortress.de**        | **19133** |
-| **InfinityBox Network  (Latest build every day at 12 - 1 - 3 pm)** | **play.infinitybox.ml**  | **19132**
+| **InfinityBox Network  (Latest build every day at 12 - 1 - 3 pm)** | **play.infinitybox.ml**  | **19132** |
 
 
 **Please do not submit your server via PR. You will be banned from the Imagical Corporation and all of its repositories if you do.**<br>
@@ -40,6 +39,7 @@ See what you can dig out on these servers:<br>
 | Name            |           IP          | PORT      |
 |-----------------|:---------------------:|-----------|
 | **LegoCraftPE** | **play.legocraft.me** | **19132** |
+| **ClearSky 0.13.1 Creative (Latest build every day at 12 am)** | **WolvesFortress.de** | **19133** |
 Never underestimate what you can do with ImagicalMine!<br>
 
 ## What is this?
@@ -66,7 +66,7 @@ Of course you can! Check out the [ImagicalMine forums](http://forums.imagicalmin
 
 Read the documentation for installing ImagicalMine [here](http://imagicalmine.readthedocs.org/en/latest/installation.html).
 You can also go to the Jenkins server by clicking the picture below.<br>
- <a href="http://jenkins.imagicalmine.net:8080/job/ImagicalMine/">![Unofficial-Downloadpng](http://s4.postimg.org/8u7blm3r1/imagical.png)</a>
+ <a href="http://jenkins.imagicalcorp.ml:8080/job/ImagicalMine/">![Unofficial-Downloadpng](http://s4.postimg.org/8u7blm3r1/imagical.png)</a>
 
 ## I'm on a MCPE server hosting provider. How can I install ImagicalMine from there?
 
