@@ -2,17 +2,17 @@
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +20,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -41,6 +41,7 @@ class TeleportCommand extends VanillaCommand{
 			"%pocketmine.command.tp.description",
 			"%commands.tp.usage"
 		);
+		//todo check/add permissions subcommands
 		$this->setPermission("pocketmine.command.teleport");
 	}
 
@@ -49,16 +50,71 @@ class TeleportCommand extends VanillaCommand{
 			return true;
 		}
 
-		if(count($args) < 1 or count($args) > 6){
+		$countArgs = count($args);
+
+		if($countArgs < 1 or $countArgs > 6){
 			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
 			return true;
 		}
 
 		$target = null;
-		$origin = $sender;
 
-		if(count($args) === 1 or count($args) === 3){
+		if($countArgs === 1) {
+            //check subcommands
+		    switch($args[0]) {
+		        case 'off':
+		            //player disable teleporting to or from him
+		            return true;
+		            break;
+		        case 'on':
+		            //player enable teleporting to or from him
+		            return true;
+		            break;
+		    }
+
+		    if(false === ($sender instanceof Player)){
+		        $sender->sendMessage(TextFormat::RED . "Please provide a player!");
+
+		        return true;
+		    }
+		}
+
+		if(in_array($countArgs, array(1,3))) {
+		    //tp sender to somewhere
+		    $originName = $sender->getName();
+		    $origin = $sender;
+		}elseif(in_array($countArgs, array(2,4,5,6))) {
+		    //tp arg[0] to somewhere
+		    $originName = $args[0];
+		    $origin = $sender->getServer()->getPlayer($originName);
+		}else{
+		    //wrong
+		    return true;
+		}
+
+		if(in_array($countArgs, array(1,2))) {
+		    //tp to player
+		    $targetName = $args[$countArgs-1];
+		    $target = $sender->getServer()->getPlayer($targetName);
+		    if(!($origin instanceof Player)){
+		        $sender->sendMessage(TextFormat::RED . "Can't find player " . $originName);
+		        return true;
+		    }
+		    if(!($target instanceof Player)){
+		        $sender->sendMessage(TextFormat::RED . "Can't find player " . $targetName);
+		        return true;
+		    }
+		    $origin->teleport($target);
+		    Command::broadcastCommandMessage($sender, new TranslationContainer("commands.tp.success", array($origin->getName(), $target->getName())));
+
+		}else{
+		    //tp to position
+		}
+
+		//origin
+/*
+		if($countArgs === 1 or $countArgs === 3){
 			if($sender instanceof Player){
 				$target = $sender;
 			}else{
@@ -66,7 +122,9 @@ class TeleportCommand extends VanillaCommand{
 
 				return true;
 			}
-			if(count($args) === 1){
+
+			// check if arg is a subcommand or a player
+			if($countArgs === 1){
 				$target = $sender->getServer()->getPlayer($args[0]);
 				if($target === null){
 					$sender->sendMessage(TextFormat::RED . "Can't find player " . $args[0]);
@@ -81,7 +139,7 @@ class TeleportCommand extends VanillaCommand{
 
 				return true;
 			}
-			if(count($args) === 2){
+			if($countArgs === 2){
 				$origin = $target;
 				$target = $sender->getServer()->getPlayer($args[1]);
 				if($target === null){
@@ -92,13 +150,14 @@ class TeleportCommand extends VanillaCommand{
 			}
 		}
 
-		if(count($args) < 3){
+		if($countArgs < 3){
 			$origin->teleport($target);
 			Command::broadcastCommandMessage($sender, new TranslationContainer("commands.tp.success", [$origin->getName(), $target->getName()]));
 
 			return true;
+*/
 		}elseif($target->getLevel() !== null){
-			if(count($args) === 4 or count($args) === 6){
+			if($countArgs === 4 or $countArgs === 6){
 				$pos = 1;
 			}else{
 				$pos = 0;
@@ -110,7 +169,7 @@ class TeleportCommand extends VanillaCommand{
 			$yaw = $target->getYaw();
 			$pitch = $target->getPitch();
 
-			if(count($args) === 6 or (count($args) === 5 and $pos === 3)){
+			if($countArgs === 6 or ($countArgs === 5 and $pos === 3)){
 				$yaw = $args[$pos++];
 				$pitch = $args[$pos++];
 			}
