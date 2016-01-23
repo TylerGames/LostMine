@@ -53,7 +53,7 @@ class TeleportCommand extends VanillaCommand{
 		$countArgs = count($args);
 
 		if($countArgs < 1 or $countArgs > 6){
-			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
+			$sender->sendMessage(new TranslationContainer("commands.generic.usage", array($this->usageMessage)));
 
 			return true;
 		}
@@ -89,7 +89,7 @@ class TeleportCommand extends VanillaCommand{
 		    $originName = $args[0];
 		    $origin = $sender->getServer()->getPlayer($originName);
 		}else{
-		    //wrong
+		    $sender->sendMessage(new TranslationContainer("commands.generic.usage", array($this->usageMessage)));
 		    return true;
 		}
 
@@ -106,10 +106,32 @@ class TeleportCommand extends VanillaCommand{
 		        return true;
 		    }
 		    $origin->teleport($target);
-		    Command::broadcastCommandMessage($sender, new TranslationContainer("commands.tp.success", array($origin->getName(), $target->getName())));
+		    Command::broadcastCommandMessage($origin, new TranslationContainer("commands.tp.success", array($origin->getName(), $target->getName())));
 
+		    return true;
 		}else{
 		    //tp to position
+		    if($countArgs === 4 or $countArgs === 6){
+		        $pos = 1;
+		    }else{
+		        $pos = 0;
+		    }
+
+		    $x = $this->getRelativeDouble($target->x, $origin, $args[$pos++]);
+		    $y = $this->getRelativeDouble($target->y, $origin, $args[$pos++], 0, 128);
+		    $z = $this->getRelativeDouble($target->z, $origin, $args[$pos++]);
+		    $yaw = $target->getYaw();
+		    $pitch = $target->getPitch();
+
+		    if($countArgs === 6 or ($countArgs === 5 and $pos === 3)){
+		        $yaw = $args[$pos++];
+		        $pitch = $args[$pos++];
+		    }
+
+		    $target->teleport(new Vector3($x, $y, $z), $yaw, $pitch);
+		    Command::broadcastCommandMessage($origin, new TranslationContainer("commands.tp.success.coordinates", array($target->getName(), round($x, 2), round($y, 2), round($z, 2))));
+
+		    return true;
 		}
 
 		//origin
@@ -155,7 +177,7 @@ class TeleportCommand extends VanillaCommand{
 			Command::broadcastCommandMessage($sender, new TranslationContainer("commands.tp.success", [$origin->getName(), $target->getName()]));
 
 			return true;
-*/
+
 		}elseif($target->getLevel() !== null){
 			if($countArgs === 4 or $countArgs === 6){
 				$pos = 1;
@@ -179,9 +201,9 @@ class TeleportCommand extends VanillaCommand{
 
 			return true;
 		}
-
-		$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
+		$sender->sendMessage(new TranslationContainer("commands.generic.usage", array($this->usageMessage)));
 
 		return true;
+*/
 	}
 }
