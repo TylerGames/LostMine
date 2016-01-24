@@ -68,7 +68,7 @@ class ThrownExpBottle extends Projectile{
 		if($this->onGround) {
 			$this->kill();
 			$this->close();
-			$this->getLevel()->addParticle(new GenericParticle($this, 25, 5))
+			$this->getLevel()->addParticle(new GenericParticle($this, 25, 5));
 			$this->getLevel()->addExperienceOrb($this->add(0,1,0), mt_rand(3,11));
 		}
 
