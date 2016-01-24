@@ -117,19 +117,19 @@ class TeleportCommand extends VanillaCommand{
                 $pos = 1;
             }
 
-            $x = $this->getRelativeDouble($target->x, $origin, $args[$pos++]);
-            $y = $this->getRelativeDouble($target->y, $origin, $args[$pos++], 0, 128);
-            $z = $this->getRelativeDouble($target->z, $origin, $args[$pos++]);
-            $yaw = $target->getYaw();
-            $pitch = $target->getPitch();
+            $x = $this->getRelativeDouble($origin->x, $origin, $args[$pos++]);
+            $y = $this->getRelativeDouble($origin->y, $origin, $args[$pos++], 0, 128);
+            $z = $this->getRelativeDouble($origin->z, $origin, $args[$pos++]);
+            $yaw = $origin->getYaw();
+            $pitch = $origin->getPitch();
 
             if($countArgs === 6 or ($countArgs === 5 and $pos === 3)){
                 $yaw = $args[$pos++];
                 $pitch = $args[$pos++];
             }
 
-            $target->teleport(new Vector3($x, $y, $z), $yaw, $pitch);
-            Command::broadcastCommandMessage($origin, new TranslationContainer("commands.tp.success.coordinates", array($target->getName(), round($x, 2), round($y, 2), round($z, 2))));
+            $origin->teleport(new Vector3($x, $y, $z), $yaw, $pitch);
+            Command::broadcastCommandMessage($origin, new TranslationContainer("commands.tp.success.coordinates", array($origin->getName(), round($x, 2), round($y, 2), round($z, 2))));
 
             return true;
         }
