@@ -257,21 +257,21 @@ class CraftingManager{
 		))->setIngredient("G", Item::get(Item::GOLD_BLOCK, 0, 8))->setIngredient("A", Item::get(Item::APPLE, 0, 1)));
 		
 		
-		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::GOLDEN_APPLE, 1, 1),
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::COOKIE, 0, 8),
 			"WCW",
 			"   ",
 			"   "
 		))->setIngredient("W", Item::get(Item::WHEAT, 0, 2))->setIngredient("C", Item::get(Item::COCOA_BEANS, 0, 1)));
 		
 		
-		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::GOLDEN_APPLE, 1, 1),
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::COOKIE, 0, 1),
 			"   ",
 			"WCW",
 			"   "
 		))->setIngredient("W", Item::get(Item::WHEAT, 0, 2))->setIngredient("C", Item::get(Item::COCOA_BEANS, 0, 1)));
 		
 		
-		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::GOLDEN_APPLE, 1, 1),
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::COOKIE, 0, 1, 1),
 			"   ",
 			"   ",
 			"WCW"
