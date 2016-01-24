@@ -61,22 +61,24 @@ class TeleportCommand extends VanillaCommand{
         $target = null;
 
         if($countArgs === 1) {
+            if(!($sender instanceof Player)){
+                $sender->sendMessage(TextFormat::RED . "Please provide a player!");
+                return true;
+            }
             //check subcommands
             switch($args[0]) {
                 case 'off':
                     //player disable teleporting to or from him
+                    $sender->setTeleportEnabled(false);
+                    $sender->sendMessage("Teleporting off. Other players can not teleport you or to you");
                     return true;
                     break;
                 case 'on':
                     //player enable teleporting to or from him
+                    $sender->setTeleportEnabled(true);
+                    $sender->sendMessage("Teleporting on. Other players can teleport you or to you");
                     return true;
                     break;
-            }
-
-            if(!($sender instanceof Player)){
-                $sender->sendMessage(TextFormat::RED . "Please provide a player!");
-
-                return true;
             }
         }
 
@@ -85,10 +87,12 @@ class TeleportCommand extends VanillaCommand{
             //tp sender to somewhere
             $originName = $sender->getName();
             $origin = $sender;
+            $isSender = true;
         }elseif(in_array($countArgs, array(2,4,5,6))) {
             //tp arg[0] to somewhere
             $originName = $args[0];
             $origin = $sender->getServer()->getPlayer($originName);
+            $isSender = false;
         }else{
             $sender->sendMessage(new TranslationContainer("commands.generic.usage", array($this->usageMessage)));
             return true;
@@ -106,9 +110,21 @@ class TeleportCommand extends VanillaCommand{
                 $sender->sendMessage(TextFormat::RED . "Can't find player " . $targetName);
                 return true;
             }
-            $origin->teleport($target);
-            Command::broadcastCommandMessage($origin, new TranslationContainer("commands.tp.success", array($origin->getName(), $target->getName())));
 
+            if(($origin->getTeleportEnabled() && $target->getTeleportEnabled()) || $sender->hasPermission('pocketmine.command.teleport-always')) {
+                $origin->teleport($target);
+                Command::broadcastCommandMessage($origin, new TranslationContainer("commands.tp.success", array($origin->getName(), $target->getName())));
+            } else {
+                if($isSender && !$target->getTeleportEnabled()) {
+                    $sender->sendMessage($targetName . " does not allow to teleport.");
+                }
+                if(!$isSender && !$origin->getTeleportEnabled()) {
+                    $sender->sendMessage($originName . " does not allow to teleport.");
+                }
+                if(!$isSender && !$target->getTeleportEnabled()) {
+                    $sender->sendMessage($targetName . " does not allow to teleport.");
+                }
+            }
             return true;
         }else{
             //tp to position
@@ -127,9 +143,12 @@ class TeleportCommand extends VanillaCommand{
                 $yaw = $args[$pos++];
                 $pitch = $args[$pos++];
             }
-
-            $origin->teleport(new Vector3($x, $y, $z), $yaw, $pitch);
-            Command::broadcastCommandMessage($origin, new TranslationContainer("commands.tp.success.coordinates", array($origin->getName(), round($x, 2), round($y, 2), round($z, 2))));
+            if($isSender || $origin->getTeleportEnabled() || $sender->hasPermission('pocketmine.command.teleport-always')) {
+                $origin->teleport(new Vector3($x, $y, $z), $yaw, $pitch);
+                Command::broadcastCommandMessage($origin, new TranslationContainer("commands.tp.success.coordinates", array($origin->getName(), round($x, 2), round($y, 2), round($z, 2))));
+            }else{
+                $sender->sendMessage($originName . " does not allow to teleport.");
+            }
 
             return true;
         }
