@@ -111,7 +111,7 @@ class TeleportCommand extends VanillaCommand{
                 return true;
             }
 
-            if(($origin->getTeleportEnabled() && $target->getTeleportEnabled()) || $sender->hasPermission('pocketmine.command.teleport-always')) {
+            if(($origin->getTeleportEnabled() && $target->getTeleportEnabled()) || $sender->hasPermission('pocketmine.command.teleport.always')) {
                 $origin->teleport($target);
                 Command::broadcastCommandMessage($origin, new TranslationContainer("commands.tp.success", array($origin->getName(), $target->getName())));
             } else {
@@ -143,7 +143,7 @@ class TeleportCommand extends VanillaCommand{
                 $yaw = $args[$pos++];
                 $pitch = $args[$pos++];
             }
-            if($isSender || $origin->getTeleportEnabled() || $sender->hasPermission('pocketmine.command.teleport-always')) {
+            if($isSender || $origin->getTeleportEnabled() || $sender->hasPermission('pocketmine.command.teleport.always')) {
                 $origin->teleport(new Vector3($x, $y, $z), $yaw, $pitch);
                 Command::broadcastCommandMessage($origin, new TranslationContainer("commands.tp.success.coordinates", array($origin->getName(), round($x, 2), round($y, 2), round($z, 2))));
             }else{
