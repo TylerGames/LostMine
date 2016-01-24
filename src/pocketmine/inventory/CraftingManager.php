@@ -264,14 +264,14 @@ class CraftingManager{
 		))->setIngredient("W", Item::get(Item::WHEAT, 0, 2))->setIngredient("C", Item::get(Item::COCOA_BEANS, 0, 1)));
 		
 		
-		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::COOKIE, 0, 1),
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::COOKIE, 0, 8),
 			"   ",
 			"WCW",
 			"   "
 		))->setIngredient("W", Item::get(Item::WHEAT, 0, 2))->setIngredient("C", Item::get(Item::COCOA_BEANS, 0, 1)));
 		
 		
-		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::COOKIE, 0, 1, 1),
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::COOKIE, 0, 8),
 			"   ",
 			"   ",
 			"WCW"
