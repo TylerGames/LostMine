@@ -74,6 +74,7 @@ Some MCPE server hosting providers support ImagicalMine as a version for their c
 * __[HostMyServers](http://hostmyservers.com)__
 * __[HostingItAll](http://hostingitall.com)__
 * __[InfinityBox](http://infinitybox.ml)__
+* __[MinersPlanet](http://MinersPlanet.com)__
 
 **If you are a MCPE server hosting provider and you support ImagicalMine as a version available for download and to use as part of your service, contact us and we'll happily add your business to the list.**
 
