@@ -35,9 +35,9 @@ interface Info{
 	/**
 	 * Actual Minecraft: PE protocol version
 	 */
-	const CURRENT_PROTOCOL = 41;
+	const CURRENT_PROTOCOL = 38;
 
-	const LOGIN_PACKET = 0x8e;
+	const LOGIN_PACKET = 0x8f;
 	const PLAY_STATUS_PACKET = 0x90;
 	const DISCONNECT_PACKET = 0x91;
 	const BATCH_PACKET = 0x92;
