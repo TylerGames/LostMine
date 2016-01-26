@@ -25,26 +25,6 @@
 - Some of the code in ImagicalMine is taken from the [iTXTech's](https://github.com/iTXTech) project. Code taken from [Genisys](https://github.com/iTXTech/Genisys) was used for a variety of bug fixes and patches and new feature updates.
 - Some of the code in ImagicalMine is taken from the [ClearSkyTeam's](https://github.com/ClearSkyTeam) project. Code taken from [ClearSky](https://github.com/ClearSkyTeam/ClearSky) was used for new features and fixes.
 
-## Can I test ImagicalMine before I download and use it?
-Sure, why not? Simply join one of the servers below to see what ImagicalMine can do! You'll be amazed!<br>
-
-| Name                                                               |            IP            | PORT      |
-|--------------------------------------------------------------------|:------------------------:|-----------|
-| **RumBenCraft**                                                    | **play.rumbencraft.net** | **19132** |
-| **DarkRealms**                                                     | **play.dr-pvp.us**       | **19132** |
-| **InfinityBox Network  (Latest build every day at 12 - 1 - 3 pm)** | **play.infinitybox.ml**  | **19132** |
-
-
-**Please do not submit your server via PR. You will be banned from the Imagical Corporation and all of its repositories if you do.**<br>
-### Can I see some custom-made versions that are based off ImagicalMine?
-See what you can dig out on these servers:<br>
-
-| Name            |           IP          | PORT      |
-|-----------------|:---------------------:|-----------|
-| **LegoCraftPE** | **play.legocraft.me** | **19132** |
-| **ClearSky 0.13.1 Creative (Latest build every day at 12 am)** | **WolvesFortress.de** | **19133** |
-Never underestimate what you can do with ImagicalMine!<br>
-
 ## What is this?
 
 ImagicalMine is software for hosting Minecraft : Pocket Edition servers. From controlling everything you can possibly do on MCPE to everything players can ever imagine on a server, ImagicalMine is the perfect solution to hosting large-scale MCPE servers. Our goal is to make ImagicalMine the best MCPE server software out there, and can implement the latest features from the singleplayer MCPE version.
