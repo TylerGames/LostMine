@@ -29,7 +29,7 @@ namespace pocketmine\block;
 
 class Dispenser extends Block{
 
-	protected $id = self::DISPENDER;
+	protected $id = self::DISPENSER;
 
 	public function getName(){
 		return "Dispenser";
