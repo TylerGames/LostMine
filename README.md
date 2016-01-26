@@ -1,5 +1,8 @@
 # ![ImagicalMine](http://i.imgur.com/6Hlm8mn.gif)
 
+## Notices:
+- ImagicalMine supports MCPE 0.14.0 by providing an experimental build. You can checkout the [mcpe-0.14 branch](https://github.com/ImagicalMine/ImagicalMine/tree/mcpe-0.14) and get the latest compatible build off Jenkins [here](http://jenkins.imagicalmine.net:8080/job/ImagicalMine-0.14/).
+
 ## Project Addons:
 - [Official Forums](http://forums.imagicalmine.me)
 - [![Travis Build](https://travis-ci.org/ImagicalMine/ImagicalMine.svg)](https://travis-ci.org/ImagicalMine/ImagicalMine)
