@@ -46,7 +46,7 @@ class Witch extends Creature {
 
 	public function spawnTo(Player $player){
 		$pk = $this->addEntityDataPacket($player);
-		$pk->type = Enderman::NETWORK_ID;
+		$pk->type = Witch::NETWORK_ID;
 
 		$player->dataPacket($pk);
 		parent::spawnTo($player);
