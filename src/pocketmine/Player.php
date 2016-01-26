@@ -1843,7 +1843,29 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$pk->y = (int) $spawnPosition->y;
 		$pk->z = (int) $spawnPosition->z;
 		$this->dataPacket($pk);
-
+		
+		
+		//Reload Attributes
+		if(isset($nbt["Health"]))
+		{
+			$this->setHealth($nbt["Health"]);
+			$this->foodTick = 0;
+			$this->getAttribute()->getAttribute(AttributeManager::MAX_HEALTH)->setValue($nbt["Health"]);
+		}
+		if(isset($nbt["food"]))
+		{
+			$this->setFood($nbt["food"]);
+		}
+		if(isset($nbt["exp"]))
+		{
+			$this->setExperience($nbt["exp"]);
+		}
+		if(isset($nbt["expLevel"]))
+		{
+			$this->setExpLevel($nbt["expLevel"]);
+		}
+		
+		
 		$this->getAttribute()->sendAll();
 
 		$pk = new SetDifficultyPacket();
@@ -3183,7 +3205,12 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
 			$this->namedtag["playerGameType"] = $this->gamemode;
 			$this->namedtag["lastPlayed"] = new Long("lastPlayed", floor(microtime(true) * 1000));
-
+			
+			$this->namedtag["food"] = new Int("food", $this->getFood());
+			$this->namedtag["Health"] = new Short("Health", $this->getHealth());
+			$this->namedtag["exp"] = new Short("exp", $this->getExperience());
+			$this->namedtag["expLevel"] = new Short("expLevel", $this->getExpLevel());
+			
 			if($this->username != "" and $this->namedtag instanceof Compound){
 				$this->server->saveOfflinePlayerData($this->username, $this->namedtag, $async);
 			}
@@ -3448,7 +3475,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 	}
 
 	public function getExperience(){
-		return $this->exp;
+		return $this->experience;
 	}
 
 	public function getExpLevel(){
