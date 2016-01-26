@@ -460,6 +460,7 @@ class Item{
 	const RAW_CHICKEN = 365;
 	const COOKED_CHICKEN = 366;
 	const ROTTEN_FLESH = 367;
+	const ENDER_PEARL = 368;
 	const BLAZE_ROD = 369;
 	const GHAST_TEAR = 370;
 	const GOLD_NUGGET = 371;
@@ -476,6 +477,7 @@ class Item{
 	const SPAWN_EGG = 383;
 	const EXP_BOTTLE = 384;
 	const EMERALD = 388;
+	const ITEM_FRAME = 389;
 	const FLOWER_POT = 390;
 	const CARROT = 391;
 	const CARROTS = 391;
@@ -484,6 +486,7 @@ class Item{
 	const BAKED_POTATO = 393;
 	const BAKED_POTATOES = 393;
 	const POISONOUS_POTATO = 394;
+	const MAP = 395;
 	const GOLDEN_CARROT = 396;
 	const MOB_HEAD = 397;
 	const SKULL = 397;
