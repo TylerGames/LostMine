@@ -1032,6 +1032,32 @@ class CraftingManager{
 			"SS ",
 			"SSS"
 		))->setIngredient("S", Item::get(Item::SANDSTONE, 0, 6)));
+		
+		
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::SANDSTONE_STAIRS, 0, 4),
+			"S  ",
+			"SS ",
+			"SSS"
+		))->setIngredient("S", Item::get(Item::SANDSTONE, 0, 6)));
+		
+		
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::RED_SANDSTONE_STAIRS, 0, 4),
+			"S  ",
+			"SS ",
+			"SSS"
+		))->setIngredient("S", Item::get(Item::RED_SANDSTONE, 0, 6)));
+		
+		
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::SANDSTONE, 0, 4),
+			"SS ",
+			"SS "
+		))->setIngredient("S", Item::get(Item::SAND, 1, 4)));
+		
+		
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::RED_SANDSTONE, 0, 4),
+			"SS ",
+			"SS "
+		))->setIngredient("S", Item::get(Item::SAND, 1, 4)));
 	}
 	
 	
