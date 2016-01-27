@@ -70,17 +70,17 @@ class CraftingManager{
 		}
 		
 		
-		for($i = 0; $i < 3; ++$i){
+		for($i = 0; $i <= 3; ++$i){
 			$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PLANK, $i, 4),
 				"X"
-			))->setIngredient("X", Item::get(Item::WOOD2, $i, 1)));
+			))->setIngredient("X", Item::get(Item::WOOD, $i, 1)));
 		}
 		
 		
-		for($i = 0; $i < 5; ++$i){
-			$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_BUTTON, $i, 1),
+		for($i = 0; $i < 2; ++$i){
+			$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PLANK, $i+4, 4),
 				"X"
-			))->setIngredient("X", Item::get(Item::WOODEN_PLANK, $i, 1)));
+			))->setIngredient("X", Item::get(Item::WOOD2, $i, 1)));
 		}
 		
 
