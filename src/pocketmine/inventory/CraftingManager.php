@@ -78,12 +78,12 @@ class CraftingManager{
 		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOODEN_BUTTON, Planks::DARK_OAK, 1)))->addIngredient(Item::get(Item::WOODEN_PLANK, Planks::DARK_OAK, 1)));
 		
 		// ShapedRecipes //
-		/*
-		$this->registerRecipe((new ShapedRecipe(Item::get(Item::STONECUTTER, 0, 1),
-			"XX",
-			"XX"
-		))->setIngredient("X", Item::get(Item::COBBLESTONE, null)));
-		*/
+		
+		for($i = 0; $i < 16; ++$i){
+			$this->registerRecipe((new ShapedRecipe(Item::get(Item::CARPET, $i, 2),
+				"CC"
+			))->setIngredient("C", Item::get(Item::WOOL, $i, 1)));
+		}
 		
 		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::BLAZE_POWDER, 0, 2),
@@ -1280,7 +1280,6 @@ class CraftingManager{
 			$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOOL, 15 - $i, 1)))->addIngredient(Item::get(Item::DYE, $i, 1))->addIngredient(Item::get(Item::WOOL, 0, 1)));
 			$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOOL, 15 - $i, 1)))->addIngredient(Item::get(Item::DYE, $i, 1))->addIngredient(Item::get(Item::WOOL, 0, 1)));
 			$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOOL, 15 - $i, 1)))->addIngredient(Item::get(Item::DYE, $i, 1))->addIngredient(Item::get(Item::WOOL, 0, 1)));
-			$this->registerRecipe((new ShapelessRecipe(Item::get(Item::CARPET, $i, 3)))->addIngredient(Item::get(Item::WOOL, $i, 2)));
 		}
 		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::DYE, 11, 2)))->addIngredient(Item::get(Item::DANDELION, 0, 1)));
 		$this->registerRecipe((new ShapelessRecipe(Item::get(Item::DYE, 15, 3)))->addIngredient(Item::get(Item::BONE, 0, 1)));
