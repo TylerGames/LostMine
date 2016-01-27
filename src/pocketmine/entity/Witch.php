@@ -28,12 +28,12 @@ namespace pocketmine\entity;
 
 use pocketmine\Player;
 
-class Witch extends Creature {
-	const NETWORK_ID = 66;
+class Witch extends Monster{
+	const NETWORK_ID = 45;
 
 	public $width = 0.938;
-	public $length = 0.609;
-	public $height = 2;
+	public $length = 0.672;
+	public $height = 2.562;
 
 	public function initEntity(){
 		$this->setMaxHealth(26);
@@ -50,6 +50,10 @@ class Witch extends Creature {
 
 		$player->dataPacket($pk);
 		parent::spawnTo($player);
+	}
+
+	public function getDrops(){
+		return [];
 	}
 
 }

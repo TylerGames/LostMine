@@ -33,9 +33,11 @@ use pocketmine\block\AnvilBlock;
 use pocketmine\block\Block;
 use pocketmine\block\Fence;
 use pocketmine\block\Flower;
+use pocketmine\entity\CavernSpider;
 use pocketmine\entity\Entity;
 use pocketmine\entity\Squid;
 use pocketmine\entity\Villager;
+use pocketmine\entity\Witch;
 use pocketmine\entity\Zombie;
 use pocketmine\entity\Wolf;
 use pocketmine\inventory\Fuel;
@@ -304,7 +306,6 @@ class Item{
 	const DARK_OAK_WOOD_STAIRS = 164;
 	const DARK_OAK_WOODEN_STAIRS = 164;
 	const SLIME_BLOCK = 165;
-	const SLIMEBLOCK = 165;
 	const BARRIER = 166;
 	const IRON_TRAPDOOR = 167;
 	const PRISMARINE = 168;
@@ -612,7 +613,7 @@ class Item{
 			self::$list[self::JUNGLE_DOOR] = JungleDoor::class;
 			self::$list[self::SPRUCE_DOOR] = SpruceDoor::class;
 			self::$list[self::IRON_DOOR] = IronDoor::class;	
-
+			self::$list[self::MAP] = Map::class;
 			self::$list[self::BUCKET] = Bucket::class;
 			
 			self::$list[self::MINECART] = Minecart::class;
@@ -772,6 +773,9 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::SANDSTONE, 0));
 		Item::addCreativeItem(Item::get(Item::SANDSTONE, 1));
 		Item::addCreativeItem(Item::get(Item::SANDSTONE, 2));
+		Item::addCreativeItem(Item::get(Item::RED_SANDSTONE, 0));
+		Item::addCreativeItem(Item::get(Item::RED_SANDSTONE, 1));
+		Item::addCreativeItem(Item::get(Item::RED_SANDSTONE, 2));
 		Item::addCreativeItem(Item::get(Item::SAND, 0));
 		Item::addCreativeItem(Item::get(Item::SAND, 1));
 		Item::addCreativeItem(Item::get(Item::GRAVEL, 0));
@@ -794,6 +798,7 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::DARK_OAK_WOODEN_STAIRS, 0));
 		Item::addCreativeItem(Item::get(Item::BRICK_STAIRS, 0));
 		Item::addCreativeItem(Item::get(Item::SANDSTONE_STAIRS, 0));
+		Item::addCreativeItem(Item::get(Item::RED_SANDSTONE_STAIRS, 0));
 		Item::addCreativeItem(Item::get(Item::STONE_BRICK_STAIRS, 0));
 		Item::addCreativeItem(Item::get(Item::NETHER_BRICKS_STAIRS, 0));
 		Item::addCreativeItem(Item::get(Item::QUARTZ_STAIRS, 0));
@@ -874,12 +879,14 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::BED, 0));
 		Item::addCreativeItem(Item::get(Item::BOOKSHELF, 0));
 		Item::addCreativeItem(Item::get(Item::PAINTING, 0));
+		Item::addCreativeItem(Item::get(Item::ITEM_FRAME, 0));
 		Item::addCreativeItem(Item::get(Item::WORKBENCH, 0));
 		Item::addCreativeItem(Item::get(Item::STONECUTTER, 0));
 		Item::addCreativeItem(Item::get(Item::CHEST, 0));
 		Item::addCreativeItem(Item::get(Item::TRAPPED_CHEST, 0));
 		Item::addCreativeItem(Item::get(Item::FURNACE, 0));
 		Item::addCreativeItem(Item::get(Item::BREWING_STAND, 0));
+		//Item::addCreativeItem(Item::get(Item::CAULDRON, 0));
 		Item::addCreativeItem(Item::get(Item::NOTEBLOCK, 0));
 		Item::addCreativeItem(Item::get(Item::END_PORTAL_FRAME, 0));
 		Item::addCreativeItem(Item::get(Item::ANVIL_BLOCK, AnvilBlock::TYPE_ANVIL));
@@ -945,7 +952,7 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::FLOWER_POT, 0));
 		Item::addCreativeItem(Item::get(Item::MONSTER_SPAWNER, 0));
 		Item::addCreativeItem(Item::get(Item::ENCHANTING_TABLE, 0));
-		
+		Item::addCreativeItem(Item::get(Item::SLIME_BLOCK, 0));
 		Item::addCreativeItem(Item::get(Item::WOOL, 0));
 		Item::addCreativeItem(Item::get(Item::WOOL, 8));
 		Item::addCreativeItem(Item::get(Item::WOOL, 7));
@@ -1028,7 +1035,8 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 32)); //Zombie
 		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 36)); //Zombie Pigman
 		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 17)); //Squid
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 40)); //Cave spider
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, Witch::NETWORK_ID)); //Witch
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, CavernSpider::NETWORK_ID)); //Cave spider
 		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 42)); //Magma Cube
 		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 41)); //Ghast
 		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 43)); //Blaze
@@ -1101,6 +1109,7 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::STONE_BUTTON, 5));
 		Item::addCreativeItem(Item::get(Item::DAYLIGHT_DETECTOR));
 		Item::addCreativeItem(Item::get(Item::TRIPWIRE_HOOK));
+		Item::addCreativeItem(Item::get(Item::DISPENSER, 3));
 		Item::addCreativeItem(Item::get(Item::SNOWBALL));
 	}
 	
@@ -1130,6 +1139,7 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::BOOK, 0));
 		Item::addCreativeItem(Item::get(Item::ARROW, 0));
 		Item::addCreativeItem(Item::get(Item::BONE, 0));
+		Item::addCreativeItem(Item::get(Item::MAP, 0));
 		Item::addCreativeItem(Item::get(Item::SUGARCANE, 0));
 		Item::addCreativeItem(Item::get(Item::WHEAT, 0));
 		Item::addCreativeItem(Item::get(Item::SEEDS, 0));

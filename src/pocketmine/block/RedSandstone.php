@@ -47,8 +47,9 @@ class RedSandstone extends Solid{
 
 	public function getName(){
 		static $names = [
-			self::NORMAL => "Red Sandstone"
-			1 => "",
+			self::NORMAL => "Red Sandstone",
+			self::CHISELED => "Chiseled Red Sandstone",
+			self::SMOOTH => "Smooth Red Sandstone"
 		];
 		return $names[$this->meta & 0x01];
 	}

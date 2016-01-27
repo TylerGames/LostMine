@@ -29,11 +29,7 @@ namespace pocketmine\block;
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
 
-class RedSandstoneStairs extends Solid{
-
-	const NORMAL = 0;
-	const CHISELED = 1;
-	const SMOOTH = 2;
+class RedSandstoneStairs extends SandstoneStairs{
 
 	protected $id = self::RED_SANDSTONE_STAIRS;
 
@@ -41,26 +37,14 @@ class RedSandstoneStairs extends Solid{
 		$this->meta = $meta;
 	}
 
-	public function getHardness(){
-		return 0.8;
-	}
-
 	public function getName(){
-		static $names = [
-			self::NORMAL => "Red Sandstone Stairs"
-			1 => "",
-		];
-		return $names[$this->meta & 0x01];
-	}
-
-	public function getToolType(){
-		return Tool::TYPE_PICKAXE;
+		return "Red Sandstone Stairs";
 	}
 
 	public function getDrops(Item $item){
 		if($item->isPickaxe() >= Tool::TIER_WOODEN){
 			return [
-				[Item::RED_SANDSTONE_STAIRS, $this->meta & 0x03, 1],
+				[Item::RED_SANDSTONE_STAIRS, $this->meta & 0x03, 1]
 			];
 		}else{
 			return [];
