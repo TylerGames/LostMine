@@ -176,7 +176,6 @@ class CraftingManager{
 		
 		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::FLINT_STEEL, 0, 1),
-			"  ",
 			"IF"
 		))->setIngredient("I", Item::get(Item::IRON_INGOT, 0, 1))->setIngredient("F", Item::get(Item::FLINT, 0, 1)));
 		
@@ -194,8 +193,8 @@ class CraftingManager{
 		
 		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::STICK, 0, 4),
-			"X ",
-			"X "
+			"X",
+			"X"
 		))->setIngredient("X", Item::get(Item::WOODEN_PLANK, null)));
 		
 		
@@ -206,7 +205,7 @@ class CraftingManager{
 		
 		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::TORCH, 0, 4),
-			"C ",
+			"C",
 			"S"
 		))->setIngredient("C", Item::get(Item::COAL,0,1))->setIngredient("S", Item::get(Item::STICK,0,1)));
 		
@@ -230,40 +229,39 @@ class CraftingManager{
 		
 		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::STONE_PRESSURE_PLATE, 0, 1),
-			"  ",
 		    "SS"
 		))->setIngredient("S", Item::get(Item::STONE, 0, 2)));
 		
 		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PRESSURE_PLATE, 0, 1),
-			"  ",
 		    "WW"
 		))->setIngredient("W", Item::get(Item::WOODEN_PLANK, Planks::OAK, 2)));
 		
+		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PRESSURE_PLATE, 0, 1),
-			"  ",
 		    "WW"
 		))->setIngredient("W", Item::get(Item::WOODEN_PLANK, Planks::SPRUCE, 2)));
 		
+		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PRESSURE_PLATE, 0, 1),
-			"  ",
 		    "WW"
 		))->setIngredient("W", Item::get(Item::WOODEN_PLANK, Planks::BIRCH, 2)));
 		
+		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PRESSURE_PLATE, 0, 1),
-			"  ",
 		    "WW"
 		))->setIngredient("W", Item::get(Item::WOODEN_PLANK, Planks::JUNGLE, 2)));
 		
+		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PRESSURE_PLATE, 0, 1),
-			"  ",
 		    "WW"
 		))->setIngredient("W", Item::get(Item::WOODEN_PLANK, Planks::ACACIA, 2)));
 		
+		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PRESSURE_PLATE, 0, 1),
-			"  ",
 		    "WW"
 		))->setIngredient("W", Item::get(Item::WOODEN_PLANK, Planks::DARK_OAK, 2)));
+		
 		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::LIGHT_WEIGHTED_PRESSURE_PLATE, 0, 1),
 		    "GG"
