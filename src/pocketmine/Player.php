@@ -1723,8 +1723,20 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			$this->close($this->getLeaveMessage(), "Server is white-listed");
 
 			return;
-		}elseif($this->server->getNameBans()->isBanned(strtolower($this->getName())) or $this->server->getIPBans()->isBanned($this->getAddress())){
-			$this->close($this->getLeaveMessage(), "You are banned");
+		}
+		elseif($this->server->getNameBans()->isBanned(strtolower($this->getName())))
+		{
+			$banEntry = $this->server->getNameBans()->getEntries()[strtolower($this->getName())];
+
+			$this->close($this->getLeaveMessage(), "You are banned: " . $banEntry->getReason());
+
+			return;
+		}
+		elseif($this->server->getIPBans()->isBanned($this->getAddress()))
+		{
+			$banEntry = $this->server->getIPBans()->getEntries()[$this->getAddress()];
+
+			$this->close($this->getLeaveMessage(), "You are banned: " . $banEntry->getReason());
 
 			return;
 		}
