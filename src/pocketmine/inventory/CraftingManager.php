@@ -80,7 +80,7 @@ class CraftingManager{
 		// ShapedRecipes //
 		
 		for($i = 0; $i < 16; ++$i){
-			$this->registerRecipe((new ShapedRecipe(Item::get(Item::CARPET, $i, 2),
+			$this->registerRecipe((new ShapedRecipe(Item::get(Item::CARPET, $i, 3),
 				"CC"
 			))->setIngredient("C", Item::get(Item::WOOL, $i, 1)));
 		}
@@ -228,6 +228,20 @@ class CraftingManager{
 		
 		
 		// BigShapedRecipes //
+		
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::COCOA_BEANS, 0, 1),
+			"   ",
+			"DI ",
+			"   "
+		))->setIngredient("D", Item::get(Item::DYE, 14, 1))->setIngredient("I", Item::get(Item::DYE, 0, 1)));
+		
+		
+		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::COCOA_BEANS, 0, 1),
+			"RD ",
+			" I ",
+			"   "
+		))->setIngredient("D", Item::get(Item::DYE, 11, 1))->setIngredient("I", Item::get(Item::DYE, 0, 1))->setIngredient("R", Item::get(Item::DYE, 1, 1)));
+		
 		
 		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::GOLDEN_APPLE, 0, 1),
 			"GGG",
