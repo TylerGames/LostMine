@@ -32,8 +32,8 @@ use pocketmine\nbt\tag\String;
 use pocketmine\nbt\tag\Int;
 use pocketmine\network\protocol\ContainerSetDataPacket;
 //Bug fixed by MagicDroidX, Genisys and Nukkit Project
-class Furnace extends Spawnable implements InventoryHolder, Container, Nameable{
-	/** @var FurnaceInventory */
+class Dispenser extends Spawnable implements InventoryHolder, Container, Nameable{
+	/** @var DispenserInventory */
 	protected $inventory;
 	public function __construct(FullChunk $chunk, Compound $nbt){
 		parent::__construct($chunk, $nbt);
@@ -113,13 +113,9 @@ public function setItem($index, Item $item){
 			if($windowId > 0){
 				$pk = new ContainerSetDataPacket();
 				$pk->windowid = $windowId;
-				$pk->property = 0; //Smelting
-				$pk->value = floor($this->namedtag["CookTime"]);
 				$player->dataPacket($pk);
 				$pk = new ContainerSetDataPacket();
 				$pk->windowid = $windowId;
-				$pk->property = 1; //Fire icon
-				$pk->value = $this->namedtag["BurnTicks"];
 				$player->dataPacket($pk);
 			}
 		}
