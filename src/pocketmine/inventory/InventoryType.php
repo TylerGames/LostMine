@@ -39,6 +39,7 @@ class InventoryType{
 	const BREWING_STAND = 6;
 	const ANVIL = 7;
 	const ENCHANT_TABLE = 8;
+	const HOPPER = 9;
 
 	private static $default = [];
 
