@@ -31,10 +31,33 @@ namespace pocketmine\item;
 
 use pocketmine\block\AnvilBlock;
 use pocketmine\block\Block;
+use pocketmine\block\Cauldron;
 use pocketmine\block\Fence;
 use pocketmine\block\Flower;
+use pocketmine\entity\Bat;
+use pocketmine\entity\Blaze;
 use pocketmine\entity\CavernSpider;
+use pocketmine\entity\Chicken;
+use pocketmine\entity\Cow;
+use pocketmine\entity\Creeper;
+use pocketmine\entity\Enderman;
 use pocketmine\entity\Entity;
+use pocketmine\entity\Ghast;
+use pocketmine\entity\MagmaCube;
+use pocketmine\entity\MinecartChest;
+use pocketmine\entity\MinecartFurnace;
+use pocketmine\entity\MinecartHopper;
+use pocketmine\entity\MinecartTNT;
+use pocketmine\entity\Mooshroom;
+use pocketmine\entity\Ozelot;
+use pocketmine\entity\Pig;
+use pocketmine\entity\PigZombie;
+use pocketmine\entity\Rabbit;
+use pocketmine\entity\Sheep;
+use pocketmine\entity\Silverfish;
+use pocketmine\entity\Skeleton;
+use pocketmine\entity\Slime;
+use pocketmine\entity\Spider;
 use pocketmine\entity\Squid;
 use pocketmine\entity\Villager;
 use pocketmine\entity\Witch;
@@ -236,7 +259,7 @@ class Item{
 	const ENCHANT_TABLE = 116;
 	const ENCHANTMENT_TABLE = 116;
 	const BREWING_STAND_BLOCK = 117;
-	const CAULDRON = 118;
+	const CAULDRON_ITEM = 118;
 	const END_PORTAL = 119;
 	const END_PORTAL_FRAME = 120;
 	const END_STONE = 121;
@@ -437,6 +460,8 @@ class Item{
 	const PAPER = 339;
 	const BOOK = 340;
 	const SLIMEBALL = 341;
+	const MINECART_CHEST = 342;
+	const MINECART_FURNACE = 343;
 	const EGG = 344;
 	const COMPASS = 345;
 	const FISHING_ROD = 346;
@@ -449,6 +474,7 @@ class Item{
 	const SUGAR = 353;
 	const CAKE = 354;
 	const BED = 355;
+	const REDSTONE_REPEATER_ITEM = 356;
 	const COOKIE = 357;
 	const SHEARS = 359;
 	const MELON = 360;
@@ -474,6 +500,8 @@ class Item{
 	const BLAZE_POWDER = 377;
 	const MAGMA_CREAM = 378;
 	const BREWING_STAND = 379;
+	const CAULDRON = 380;
+	//const ENDER_EYE =  381;
 	const GLISTERING_MELON = 382;
 	const SPAWN_EGG = 383;
 	const EXP_BOTTLE = 384;
@@ -491,16 +519,22 @@ class Item{
 	const GOLDEN_CARROT = 396;
 	const MOB_HEAD = 397;
 	const SKULL = 397;
+	//const STICK_CARROT = 398;
+	//const NETHER_STAR = 399;
 	const PUMPKIN_PIE = 400;
+	const REDSTONE_COMPARATOR_ITEM = 404;
 	const ENCHANTED_BOOK = 403;
 	const NETHER_BRICK = 405;
 	const QUARTZ = 406;
 	const NETHER_QUARTZ = 406;
+	const MINECART_TNT = 407;
+	const MINECART_HOPPER = 408;
 	const RAW_RABBIT = 411;
 	const COOKED_RABBIT = 412;
 	const RABBIT_STEW = 413;
 	const RABBIT_FOOT = 414;
 	const RABBIT_HIDE = 415;
+	//const MINECART_COMMAND_BLOCK = 422;
 	const SPRUCE_DOOR = 427;
 	const BIRCH_DOOR = 428;
 	const JUNGLE_DOOR = 429;
@@ -617,6 +651,9 @@ class Item{
 			self::$list[self::BUCKET] = Bucket::class;
 			
 			self::$list[self::MINECART] = Minecart::class;
+			//self::$list[self::MINECART_CHEST] = MinecartChest::class;
+			//self::$list[self::MINECART_TNT] = MinecartTNT::class;
+			//self::$list[self::MINECART_HOPPER] = MinecartHopper::class;
 			//self::$list[self::SADDLE] = Saddle::class;
 			
 			self::$list[self::IRON_DOOR] = IronDoor::class;
@@ -672,6 +709,7 @@ class Item{
 			self::$list[self::MAGMA_CREAM] = MagmaCream::class;
 			self::$list[self::BREWING_STAND] = BrewingStand::class;
 			self::$list[self::GLISTERING_MELON] = GlisteringMelon::class;
+			self::$list[self::CAULDRON_ITEM] = Cauldron::class;
 			
 			self::$list[self::SPAWN_EGG] = SpawnEgg::class;
 			self::$list[self::EXP_BOTTLE] = EXPBottle::class;
@@ -886,7 +924,7 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::TRAPPED_CHEST, 0));
 		Item::addCreativeItem(Item::get(Item::FURNACE, 0));
 		Item::addCreativeItem(Item::get(Item::BREWING_STAND, 0));
-		//Item::addCreativeItem(Item::get(Item::CAULDRON, 0));
+		Item::addCreativeItem(Item::get(Item::CAULDRON, 0));
 		Item::addCreativeItem(Item::get(Item::NOTEBLOCK, 0));
 		Item::addCreativeItem(Item::get(Item::END_PORTAL_FRAME, 0));
 		Item::addCreativeItem(Item::get(Item::ANVIL_BLOCK, AnvilBlock::TYPE_ANVIL));
@@ -1009,6 +1047,9 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::CLOCK, 0));
 		Item::addCreativeItem(Item::get(Item::COMPASS, 0));
 		Item::addCreativeItem(Item::get(Item::MINECART, 0));
+		Item::addCreativeItem(Item::get(Item::MINECART_CHEST, 0));
+		Item::addCreativeItem(Item::get(Item::MINECART_HOPPER, 0));
+		Item::addCreativeItem(Item::get(Item::MINECART_TNT, 0));
 		Item::addCreativeItem(Item::get(Item::BOAT, 0)); // Oak
 		Item::addCreativeItem(Item::get(Item::BOAT, 1)); // Spruce
 		Item::addCreativeItem(Item::get(Item::BOAT, 2)); // Birch
@@ -1016,30 +1057,30 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::BOAT, 4)); // Acacia
 		Item::addCreativeItem(Item::get(Item::BOAT, 5)); // Dark Oak
 
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 15)); //Villager
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 10)); //Chicken
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 11)); //Cow
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 12)); //Pig
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 13)); //Sheep
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 14)); //Wolf
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 22)); //Ocelot
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 16)); //Mooshroom
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 19)); //Bat
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 18)); //Rabbit
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 33)); //Creeper
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 38)); //Enderman
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 39)); //Silverfish
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 34)); //Skeleton
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 37)); //Slime
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 35)); //Spider
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 32)); //Zombie
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 36)); //Zombie Pigman
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 17)); //Squid
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, Witch::NETWORK_ID)); //Witch
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, CavernSpider::NETWORK_ID)); //Cave spider
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 42)); //Magma Cube
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 41)); //Ghast
-		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 43)); //Blaze
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, Villager::NETWORK_ID));
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, Chicken::NETWORK_ID));
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, Cow::NETWORK_ID));
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, Pig::NETWORK_ID));
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, Sheep::NETWORK_ID));
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, Wolf::NETWORK_ID));
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, Ozelot::NETWORK_ID));
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, Mooshroom::NETWORK_ID));
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, Bat::NETWORK_ID));
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, Rabbit::NETWORK_ID));
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, Creeper::NETWORK_ID));
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, Enderman::NETWORK_ID));
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, Silverfish::NETWORK_ID));
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, Skeleton::NETWORK_ID));
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, Slime::NETWORK_ID));
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, Spider::NETWORK_ID));
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, Zombie::NETWORK_ID));
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, PigZombie::NETWORK_ID));
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, Squid::NETWORK_ID));
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, Witch::NETWORK_ID));
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, CavernSpider::NETWORK_ID));
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, MagmaCube::NETWORK_ID));
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, Ghast::NETWORK_ID));
+		Item::addCreativeItem(Item::get(Item::SPAWN_EGG, Blaze::NETWORK_ID));
 
 		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 20)); //Iron Golem
 		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 21)); //Snow Golem
@@ -1056,6 +1097,7 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::STONE_SHOVEL));
 		Item::addCreativeItem(Item::get(Item::STONE_PICKAXE));
 		Item::addCreativeItem(Item::get(Item::STONE_AXE));
+
 		Item::addCreativeItem(Item::get(Item::IRON_SWORD));
 		Item::addCreativeItem(Item::get(Item::IRON_HOE));
 		Item::addCreativeItem(Item::get(Item::IRON_SHOVEL));
@@ -1098,6 +1140,7 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::GOLD_CHESTPLATE));
 		Item::addCreativeItem(Item::get(Item::GOLD_LEGGINGS));
 		Item::addCreativeItem(Item::get(Item::GOLD_BOOTS));
+
 		Item::addCreativeItem(Item::get(Item::LEVER));
 		Item::addCreativeItem(Item::get(Item::REDSTONE_LAMP));
 		Item::addCreativeItem(Item::get(Item::REDSTONE_TORCH));
@@ -1109,7 +1152,12 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::STONE_BUTTON, 5));
 		Item::addCreativeItem(Item::get(Item::DAYLIGHT_DETECTOR));
 		Item::addCreativeItem(Item::get(Item::TRIPWIRE_HOOK));
+		Item::addCreativeItem(Item::get(Item::REDSTONE_REPEATER_ITEM, 0));
+		Item::addCreativeItem(Item::get(Item::REDSTONE_COMPARATOR_ITEM, 0));
 		Item::addCreativeItem(Item::get(Item::DISPENSER, 3));
+		//Item::addCreativeItem(Item::get(Item::DROPPER, 3));
+		Item::addCreativeItem(Item::get(Item::HOPPER));
+
 		Item::addCreativeItem(Item::get(Item::SNOWBALL));
 	}
 	

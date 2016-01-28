@@ -29,4 +29,7 @@ namespace pocketmine\entity;
 
 class Minecart extends Vehicle{
 
+    public function getName(){
+        return "Minecart";
+    }
 }

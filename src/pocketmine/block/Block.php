@@ -453,7 +453,7 @@ class Block extends Position implements Metadatable{
 			self::$list[self::GLASS] = Glass::class;
 			self::$list[self::LAPIS_ORE] = LapisOre::class;
 			self::$list[self::LAPIS_BLOCK] = Lapis::class;
-			//self::$list[self::DISPENSER] = Dispenser::class;
+			self::$list[self::DISPENSER] = Dispenser::class;
 			self::$list[self::SANDSTONE] = Sandstone::class;
 			self::$list[self::NOTEBLOCK] = Noteblock::class;
 			self::$list[self::BED_BLOCK] = Bed::class;
@@ -562,7 +562,7 @@ class Block extends Position implements Metadatable{
 
 			self::$list[self::ENCHANTING_TABLE] = EnchantingTable::class;
 			self::$list[self::BREWING_STAND_BLOCK] = BrewingStand::class;
-			//self::$list[self::CAULDRON] = Cauldron::class;
+			self::$list[self::CAULDRON] = Cauldron::class;
 			//self::$list[self::END_PORTAL] = EndPortal::class;
 
 			self::$list[self::END_PORTAL_FRAME] = EndPortalFrame::class;

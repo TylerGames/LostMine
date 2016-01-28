@@ -26,33 +26,39 @@
 namespace pocketmine\block;
 
 use pocketmine\item\Item;
-use pocketmine\math\AxisAlignedBB;
+use pocketmine\item\Tool;
 
-class SlimeBlock extends Transparent{
+class Cauldron extends Transparent{
 
-    protected $id = self::SLIME_BLOCK;
+    protected $id = self::CAULDRON;
 
-    public function __construct(){
+    public function __construct($meta = 0){
+        $this->meta = $meta;
+    }
 
+    public function isSolid(){
+        return true;
     }
 
     public function getName(){
-        return "Slime Block";
+        return "Cauldron";
+    }
+
+    public function getToolType(){
+        return Tool::TYPE_PICKAXE;
     }
 
     public function getHardness(){
-        return 0.1;
+        return 2;
     }
 
-    protected function recalculateBoundingBox(){
-        return new AxisAlignedBB(
-            $this->x,
-            $this->y,
-            $this->z,
-            $this->x + 1,
-            $this->y + 1 - 0.125,
-            $this->z + 1
-        );
+    public function getDrops(Item $item){
+        if($item->isPickaxe() >= Tool::TIER_WOODEN){
+            return [[$this->id, 0, 1]];
+        }else{
+            return[];
+        }
     }
+
 
 }

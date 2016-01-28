@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  *  _                       _           _ __  __ _
@@ -23,36 +24,12 @@
  *
 */
 
-namespace pocketmine\block;
+namespace pocketmine\entity;
 
-use pocketmine\item\Item;
-use pocketmine\math\AxisAlignedBB;
 
-class SlimeBlock extends Transparent{
-
-    protected $id = self::SLIME_BLOCK;
-
-    public function __construct(){
-
-    }
+class MinecartHopper extends Minecart{
 
     public function getName(){
-        return "Slime Block";
+        return "Minecart with Hopper";
     }
-
-    public function getHardness(){
-        return 0.1;
-    }
-
-    protected function recalculateBoundingBox(){
-        return new AxisAlignedBB(
-            $this->x,
-            $this->y,
-            $this->z,
-            $this->x + 1,
-            $this->y + 1 - 0.125,
-            $this->z + 1
-        );
-    }
-
 }

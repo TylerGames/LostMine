@@ -24,18 +24,17 @@
  *
 */
 
-namespace pocketmine\block;
+namespace pocketmine\item;
 
+use pocketmine\block\Block;
 
-class Dispenser extends Solid{
+class RedstoneRepeater extends Item{
+    public function __construct($meta = 0, $count = 1){
+        $this->block = Block::get(Item::REDSTONE_REPEATER_ITEM);
+        parent::__construct(self::REDSTONE_REPEATER_ITEM, 0, $count, "Redstone Repeater");
+    }
 
-	protected $id = self::DISPENSER;
-
-	public function __construct($meta = 0){
-		$this->meta = $meta;
-	}
-
-	public function getName(){
-		return "Dispenser";
-	}
+    public function getMaxStackSize(){
+        return 64;
+    }
 }

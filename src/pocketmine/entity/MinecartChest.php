@@ -24,18 +24,12 @@
  *
 */
 
-namespace pocketmine\block;
+namespace pocketmine\entity;
 
 
-class Dispenser extends Solid{
+class MinecartChest extends Minecart{
 
-	protected $id = self::DISPENSER;
-
-	public function __construct($meta = 0){
-		$this->meta = $meta;
-	}
-
-	public function getName(){
-		return "Dispenser";
-	}
+    public function getName(){
+        return "Minecart with Chest";
+    }
 }

@@ -26,33 +26,47 @@
 namespace pocketmine\block;
 
 use pocketmine\item\Item;
-use pocketmine\math\AxisAlignedBB;
+use pocketmine\item\Tool;
+use pocketmine\Player;
 
-class SlimeBlock extends Transparent{
+class Hopper extends Transparent{
 
-    protected $id = self::SLIME_BLOCK;
+    protected $id = self::HOPPER;
 
-    public function __construct(){
-
+    public function __construct($meta = 0){
+        $this->meta = $meta;
     }
 
     public function getName(){
-        return "Slime Block";
+        return "Hopper";
     }
 
     public function getHardness(){
-        return 0.1;
+        return 3;
     }
 
-    protected function recalculateBoundingBox(){
-        return new AxisAlignedBB(
-            $this->x,
-            $this->y,
-            $this->z,
-            $this->x + 1,
-            $this->y + 1 - 0.125,
-            $this->z + 1
-        );
+    public function getToolType(){
+        return Tool::TYPE_PICKAXE;
     }
 
+    public function getDrops(Item $item){
+        if($item->isPickaxe() >= Tool::TIER_WOODEN){
+            return [[$this->id, 0, 1]];
+        }else{
+            return[];
+        }
+    }
+
+    public function onPlace(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+        $faces = [
+            0 => 0,
+            1 => 1,
+            2 => 2,
+            3 => 3,
+        ];
+
+        $this->meta = $faces[$player instanceof Player ? $player->getDirection() : 0] & 0x04;
+        $this->getLevel()->setBlock($block, $this, true, true);
+        return true;
+    }
 }

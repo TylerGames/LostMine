@@ -1,4 +1,5 @@
 <?php
+
 /*
  *
  *  _                       _           _ __  __ _
@@ -23,36 +24,17 @@
  *
 */
 
-namespace pocketmine\block;
+namespace pocketmine\item;
 
-use pocketmine\item\Item;
-use pocketmine\math\AxisAlignedBB;
+use pocketmine\block\Block;
 
-class SlimeBlock extends Transparent{
-
-    protected $id = self::SLIME_BLOCK;
-
-    public function __construct(){
-
+class RedstoneComparator extends Item{
+    public function __construct($meta = 0, $count = 1){
+        $this->block = Block::get(Item::REDSTONE_COMPARATOR_ITEM);
+        parent::__construct(self::REDSTONE_COMPARATOR_ITEM, 0, $count, "Redstone Comparator");
     }
 
-    public function getName(){
-        return "Slime Block";
+    public function getMaxStackSize(){
+        return 64;
     }
-
-    public function getHardness(){
-        return 0.1;
-    }
-
-    protected function recalculateBoundingBox(){
-        return new AxisAlignedBB(
-            $this->x,
-            $this->y,
-            $this->z,
-            $this->x + 1,
-            $this->y + 1 - 0.125,
-            $this->z + 1
-        );
-    }
-
 }
