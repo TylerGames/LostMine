@@ -26,6 +26,7 @@
 
 namespace pocketmine\block;
 
+use pocketmine/Item/Item;
 
 class Dispenser extends Solid{
 
@@ -38,4 +39,7 @@ class Dispenser extends Solid{
 	public function getName(){
 		return "Dispenser";
 	}
+
+        public function getDrops(Item $item){
+                return [Item::get(Item::DISPENSER), 0, 1];
 }
