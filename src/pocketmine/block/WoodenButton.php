@@ -88,6 +88,22 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,16);
 			return;
 		}
+		elseif($type === Level::BLOCK_UPDATE_NORMAL){
+			$lookDirection = [
+				0 => 4,
+				1 => 1,
+				2 => 2,
+				3 => 5,
+				4 => 0,
+				5 => 3
+			];
+		
+			if($this->getSide($lookDirection[$this->getAttachedFace()])->isTransparent() === true)
+			{
+				$this->getLevel()->useBreakOn($this);
+				return Level::BLOCK_UPDATE_NORMAL;
+			}
+		}
 		return;
 	}
 
@@ -145,9 +161,10 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 	 * @return BlockFace attached to
 	 */
 	public function getAttachedFace(){
-		$data = $this->meta;
-		if($this->meta & 0x08 === 0x08) // remove power byte if powered
-			$data |= 0x08;
+		$data = intval($this->meta);
+		if(($data & 0x08) === 0x08) // remove power byte if powered
+			$data ^= 0x08;
+
 		$faces = [
 				5 => 0,
 				0 => 1,
