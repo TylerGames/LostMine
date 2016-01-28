@@ -4,7 +4,11 @@ namespace pocketmine\entity;
 
 use pocketmine\block\Dispenser;
 
-class  extends ContainerInventory{
+class DispenserInventory extends ContainerInventory{
 	public function __construct(Dispenser $block){
-		parent::__construct($block, InventoryType::get(InventoryType::DISPNSER));
+		parent::__construct($block, InventoryType::get(InventoryType::DISPENSER));
 	}
+        public function getInventory(){
+                return $this->inventory;
+        }
+}
