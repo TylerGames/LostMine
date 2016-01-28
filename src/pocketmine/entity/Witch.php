@@ -29,11 +29,11 @@ namespace pocketmine\entity;
 use pocketmine\Player;
 
 class Witch extends Monster{
-	const NETWORK_ID = 66;
+	const NETWORK_ID = 45;
 
 	public $width = 0.938;
-	public $length = 0.609;
-	public $height = 2;
+	public $length = 0.672;
+	public $height = 2.562;
 
 	public function initEntity(){
 		$this->setMaxHealth(26);
