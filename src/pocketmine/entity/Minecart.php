@@ -30,12 +30,12 @@ namespace pocketmine\entity;
 class Minecart extends Vehicle{
     /**
      * @todo: add network_id and properties
-     * const NETWORK_ID =;
-     *
-     *public $height = ;
-     *public $width = ;
-     *public $lenght = ;
-     **/
+    const NETWORK_ID =;
+
+    public $height = 0.438;
+    public $width = 0.609;
+    public $lenght = 1.094;
+    **/
 
     public function initEntity(){
         parent::initEntity();
