@@ -226,8 +226,8 @@ class Item{
 	const LIT_PUMPKIN = 91;
 	const JACK_O_LANTERN = 91;
 	const CAKE_BLOCK = 92;
-	const UNPOWERED_REPEATER = 93;
-	const POWERED_REPEATER = 94;
+	const UNLIT_REDSTONE_REPEATER = 93;
+	const LIT_REDSTONE_REPEATER = 94;
 	const STAINED_GLASS = 95; // INVISIBLE BEDROCK ID
 	const TRAPDOOR = 96;
 	const MONSTER_EGG = 97;
@@ -299,8 +299,8 @@ class Item{
 	const TRAPPED_CHEST = 146;
 	const LIGHT_WEIGHTED_PRESSURE_PLATE = 147;
 	const HEAVY_WEIGHTED_PRESSURE_PLATE = 148;
-	const UNPOWERED_COMPARATOR = 149;
-	const POWERED_COMPARATOR = 150;
+	const UNLIT_REDSTONE_COMPARATOR = 149;
+	const LIT_REDSTONE_COMPARATOR = 150;
 	const DAYLIGHT_DETECTOR = 151;
 	const REDSTONE_BLOCK = 152;
 	const NETHER_QUARTZ_ORE = 153;
@@ -1156,7 +1156,7 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::REDSTONE_COMPARATOR_ITEM, 0));
 		Item::addCreativeItem(Item::get(Item::DISPENSER, 3));
 		//Item::addCreativeItem(Item::get(Item::DROPPER, 3));
-		Item::addCreativeItem(Item::get(Item::HOPPER));
+		Item::addCreativeItem(Item::get(Item::HOPPER, 0));
 
 		Item::addCreativeItem(Item::get(Item::SNOWBALL));
 	}
