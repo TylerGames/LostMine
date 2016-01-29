@@ -25,7 +25,6 @@
 
 namespace pocketmine\block;
 
-use pocketmine\math\AxisAlignedBB;
 use pocketmine\nbt\NBT;
 use pocketmine\nbt\tag\Compound;
 use pocketmine\nbt\tag\Enum;
@@ -55,6 +54,10 @@ class Hopper extends Transparent{
 
     public function getToolType(){
         return Tool::TYPE_PICKAXE;
+    }
+
+    public function canBeActivated(){ //At the moment disable, prevent servers crash (For devs, put true if you want check error)
+        return false;
     }
 
     public function onActivate(Item $item, Player $player = null){

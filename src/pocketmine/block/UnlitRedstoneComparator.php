@@ -44,6 +44,9 @@ class UnlitRedstoneComparator extends Solid{
         return "Redstone Comparator";
     }
 
+    public function canBeActivated(){
+        return true;
+    }
 
     public function getHardness(){
         return 0.1;

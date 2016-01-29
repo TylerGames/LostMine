@@ -45,6 +45,9 @@ class UnlitRedstoneRepeater extends Solid{
         return "Redstone Repeater";
     }
 
+    public function canBeActivated(){
+        return true;
+    }
 
     public function getHardness(){
         return 0.1;

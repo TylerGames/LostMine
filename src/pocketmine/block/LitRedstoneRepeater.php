@@ -40,6 +40,10 @@ class LitRedstoneRepeater extends Solid{
         return true;
     }
 
+    public function canBeActivated(){
+        return true;
+    }
+
     public function getName(){
         return "Redstone Repeater";
     }

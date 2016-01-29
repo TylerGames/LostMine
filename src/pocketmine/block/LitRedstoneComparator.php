@@ -48,6 +48,10 @@ class LitRedstoneComparator extends Solid{
         return 0.1;
     }
 
+    public function canBeActivated(){
+        return true;
+    }
+
     public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
         $faces = [
             0 => 0,

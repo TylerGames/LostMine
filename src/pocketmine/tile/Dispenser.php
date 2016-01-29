@@ -26,6 +26,7 @@ use pocketmine\level\format\FullChunk;
 use pocketmine\nbt\NBT;
 use pocketmine\nbt\tag\Compound;
 use pocketmine\nbt\tag\Enum;
+use pocketmine\nbt\tag\Int;
 use pocketmine\nbt\tag\String;
 use pocketmine\network\protocol\ContainerSetDataPacket;
 //Bug fixed by MagicDroidX, Genisys and Nukkit Project
@@ -33,12 +34,23 @@ use pocketmine\network\protocol\ContainerSetDataPacket;
 class Dispenser extends Spawnable implements InventoryHolder, Container, Nameable{
 	/** @var DispenserInventory */
 	protected $inventory;
-	
+
 	public function __construct(FullChunk $chunk, Compound $nbt){
 		parent::__construct($chunk, $nbt);
 		$this->inventory = new DispenserInventory($this);
 	}
-         
+
+	public function getSize(){
+		return 9;
+	}
+
+	/**
+	 * @return DispenserInventory
+	 */
+	public function getInventory(){
+		return $this->inventory;
+	}
+
 	public function getName(){
 		return isset($this->namedtag->CustomName) ? $this->namedtag->CustomName->getValue() : "Furnace";
 	}
@@ -53,6 +65,21 @@ class Dispenser extends Spawnable implements InventoryHolder, Container, Nameabl
 			return;
 		}
 		$this->namedtag->CustomName = new String("CustomName", $str);
+	}
+
+	public function getSpawnCompound(){
+		$nbt = new Compound("", [
+			new String("id", Tile::HOPPER),
+			new Int("x", (int) $this->x),
+			new Int("y", (int) $this->y),
+			new Int("z", (int) $this->z),
+		]);
+
+		if($this->hasName()){
+			$nbt->CustomName = $this->namedtag->CustomName;
+		}
+
+		return $nbt;
 	}
 	
 	public function close(){
@@ -128,5 +155,6 @@ class Dispenser extends Spawnable implements InventoryHolder, Container, Nameabl
 		}
 		$this->lastUpdate = microtime(true);
 		$this->timings->stopTiming();
+		return true;
 	}
 }

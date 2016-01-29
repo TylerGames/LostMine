@@ -34,6 +34,7 @@ use pocketmine\nbt\tag\Int;
 use pocketmine\nbt\tag\String;
 use pocketmine\Player;
 use pocketmine\tile\Tile;
+use pocketmine\tile\Dispenser as TileDispenser;
 
 class Dispenser extends Solid{
 
@@ -47,8 +48,8 @@ class Dispenser extends Solid{
 		return "Dispenser";
 	}
 
-    public function canBeActivated(){
-		return true;
+    public function canBeActivated(){//At the moment disable, prevent servers crash (For devs, put true if you want check error)
+		return false;
 	}
 	
 	public function getHardness(){
@@ -56,14 +57,16 @@ class Dispenser extends Solid{
 	}
 
     public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-            $faces = [
+		$faces = [
 			0 => 4,
 			1 => 2,
 			2 => 5,
 			3 => 3,
 		];
+
 		$this->meta = $faces[$player instanceof Player ? $player->getDirection() : 0];
 		$this->getLevel()->setBlock($block, $this, true, true);
+
 		$nbt = new Compound("", [
 			new Enum("Items", []),
 			new String("id", Tile::DISPENSER),
@@ -72,24 +75,28 @@ class Dispenser extends Solid{
 			new Int("z", $this->z)
 		]);
 		$nbt->Items->setTagType(NBT::TAG_Compound);
+
 		if($item->hasCustomName()){
 			$nbt->CustomName = new String("CustomName", $item->getCustomName());
 		}
+
 		if($item->hasCustomBlockData()){
 			foreach($item->getCustomBlockData() as $key => $v){
 				$nbt->{$key} = $v;
 			}
 		}
+
 		Tile::createTile("Dispenser", $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
+
 		return true;
 	}
 	
 	public function onActivate(Item $item, Player $player = null){
 		if($player instanceof Player){
 			$t = $this->getLevel()->getTile($this);
-			$dispenser = false;
-			if($t instanceof Dispenser){
-				$dispeser = $t;
+			$dispenser = null;
+			if($t instanceof TileDispenser){
+				$dispenser = $t;
 			}else{
 				$nbt = new Compound("", [
 					new Enum("Items", []),
@@ -99,16 +106,15 @@ class Dispenser extends Solid{
 					new Int("z", $this->z)
 				]);
 				$nbt->Items->setTagType(NBT::TAG_Compound);
-				$furnace = Tile::createTile("Dispenser", $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
+				$dispenser = Tile::createTile("Dispenser", $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
 			}
+
 			if(isset($dispenser->namedtag->Lock) and $dispenser->namedtag->Lock instanceof String){
 				if($dispenser->namedtag->Lock->getValue() !== $item->getCustomName()){
 					return true;
 				}
 			}
-			if($player->isCreative()){
-				return true;
-			}
+
 			$player->addWindow($dispenser->getInventory());
 		}
 		return true;
@@ -117,7 +123,7 @@ class Dispenser extends Solid{
     public function getDrops(Item $item){
 		$drops = [];
 		if($item->isPickaxe() >= 1){
-			$drops[] = [Item::DISPENSER, 0, 1];
+			$drops[] = [$this->id, 0, 1];
 		}
 		return $drops;
 	}
