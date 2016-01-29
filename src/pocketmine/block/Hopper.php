@@ -25,6 +25,7 @@
 
 namespace pocketmine\block;
 
+use pocketmine\math\AxisAlignedBB;
 use pocketmine\nbt\NBT;
 use pocketmine\nbt\tag\Compound;
 use pocketmine\nbt\tag\Enum;
@@ -58,11 +59,6 @@ class Hopper extends Transparent{
 
     public function onActivate(Item $item, Player $player = null){
         if($player instanceof Player){
-            $top = $this->getSide(1);
-            if($top->isTransparent() !== true){
-                return true;
-            }
-
             $t = $this->getLevel()->getTile($this);
             $hopper = null;
             if($t instanceof TileHopper){
@@ -92,39 +88,24 @@ class Hopper extends Transparent{
     }
 
     public function getDrops(Item $item){
+        $drops = [];
         if($item->isPickaxe() >= Tool::TIER_WOODEN){
-            return [[$this->id, 0, 1]];
-        }else{
-            return[];
+            $drops [] = [$this->id, 0, 1];
         }
+
+        return $drops;
     }
 
     public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
         $faces = [
-            0 => 0,
-            1 => 1,
+            0 => 3,
+            1 => 4,
             2 => 2,
-            3 => 3,
+            3 => 0,
         ];
 
         $hopper = null;
-        $this->meta = $faces[$player instanceof Player ? $player->getDirection() : 0];
-
-        for($side = 2; $side <= 5; ++$side){
-            if(($this->meta === 4 or $this->meta === 5) and ($side === 4 or $side === 5)){
-                continue;
-            }elseif(($this->meta === 3 or $this->meta === 2) and ($side === 2 or $side === 3)){
-                continue;
-            }
-            $h = $this->getSide($side);
-            if($h instanceof Hopper and $h->getDamage() === $this->meta){
-                $tile = $this->getLevel()->getTile($h);
-                if($tile instanceof TileHopper and !$tile->isPaired()){
-                    $hopper = $tile;
-                    break;
-                }
-            }
-        }
+        $this->meta = $faces[$player instanceof Player ? $player->getDirection() : 0] & 0x01;
 
         $this->getLevel()->setBlock($block, $this, true, true);
         $nbt = new Compound("", [
@@ -146,12 +127,7 @@ class Hopper extends Transparent{
             }
         }
 
-        $tile = Tile::createTile("Hopper", $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
-
-        if($hopper instanceof TileHopper and $tile instanceof TileHopper){
-            $hopper->pairWith($tile);
-            $tile->pairWith($hopper);
-        }
+        Tile::createTile("Hopper", $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
 
         return true;
     }

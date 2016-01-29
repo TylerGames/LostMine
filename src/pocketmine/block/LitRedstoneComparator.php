@@ -26,12 +26,11 @@
 namespace pocketmine\block;
 
 use pocketmine\item\Item;
-use pocketmine\item\Tool;
 use pocketmine\Player;
 
-class Cauldron extends Solid{
+class LitRedstoneComparator extends Solid{
 
-    protected $id = self::CAULDRON;
+    protected $id = self::UNLIT_REDSTONE_COMPARATOR;
 
     public function __construct($meta = 0){
         $this->meta = $meta;
@@ -42,15 +41,11 @@ class Cauldron extends Solid{
     }
 
     public function getName(){
-        return "Cauldron";
-    }
-
-    public function getToolType(){
-        return Tool::TYPE_PICKAXE;
+        return "Redstone Comparator";
     }
 
     public function getHardness(){
-        return 2;
+        return 0.1;
     }
 
     public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
@@ -68,12 +63,8 @@ class Cauldron extends Solid{
     }
 
     public function getDrops(Item $item){
-        if($item->isPickaxe() >= Tool::TIER_WOODEN){
-            return [[$this->id, 0, 1]];
-        }else{
-            return[];
-        }
+        return [
+            [$this->id, 0, 1]
+        ];
     }
-
-
 }

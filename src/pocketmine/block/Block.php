@@ -188,8 +188,8 @@ class Block extends Position implements Metadatable{
 	const JACK_O_LANTERN = 91;
 	const CAKE_BLOCK = 92;
 	
-	const UNPOWERED_REPEATER = 93;
-	const POWERED_REPEATER = 94;
+	const UNLIT_REDSTONE_REPEATER = 93;
+	const LIT_REDSTONE_REPEATER = 94;
 	
 	const STAINED_GLASS = 95; //INVISIBLE BEDROCK ID
 
@@ -283,8 +283,8 @@ class Block extends Position implements Metadatable{
 	const TRAPPED_CHEST = 146;
 	const LIGHT_WEIGHTED_PRESSURE_PLATE = 147;
 	const HEAVY_WEIGHTED_PRESSURE_PLATE = 148;
-	const UNPOWERED_COMPARATOR = 149;
-	const POWERED_COMPARATOR = 150;
+	const UNLIT_REDSTONE_COMPARATOR = 149;
+	const LIT_REDSTONE_COMPARATOR = 150;
 	const DAYLIGHT_DETECTOR = 151;
 
 	const REDSTONE_BLOCK = 152;
@@ -531,8 +531,8 @@ class Block extends Position implements Metadatable{
 
 			self::$list[self::LIT_PUMPKIN] = LitPumpkin::class;
 			self::$list[self::CAKE_BLOCK] = Cake::class;
-			//self::$list[self::UNPOWERED_REPEATER] = UnpoweredRepeater::class;
-			//self::$list[self::POWERED_REPEATER] = PoweredRepeater::class;
+			self::$list[self::UNLIT_REDSTONE_REPEATER] = UnlitRedstoneRepeater::class;
+			self::$list[self::LIT_REDSTONE_REPEATER] = LitRedstoneRepeater::class;
 			//self::$list[self::STAINED_GLASS] = StainedGlass::class;
 
 			self::$list[self::TRAPDOOR] = Trapdoor::class;
@@ -601,8 +601,8 @@ class Block extends Position implements Metadatable{
 			self::$list[self::TRAPPED_CHEST] = TrappedChest::class;
 			self::$list[self::LIGHT_WEIGHTED_PRESSURE_PLATE] = LightWeightedPressurePlate::class;
 			self::$list[self::HEAVY_WEIGHTED_PRESSURE_PLATE] = HeavyWeightedPressurePlate::class;
-			//self::$list[self::UNPOWERED_COMPARATOR] = UnpoweredComparator::class;
-			//self::$list[self::POWERED_COMPARATOR] = PoweredComparator::class;
+			self::$list[self::UNLIT_REDSTONE_COMPARATOR] = UnlitRedstoneComparator::class;
+			self::$list[self::LIT_REDSTONE_COMPARATOR] = LitRedstoneComparator::class;
 			self::$list[self::DAYLIGHT_DETECTOR] = DaylightDetector::class;
 
 			self::$list[self::REDSTONE_BLOCK] = RedstoneBlock::class;
