@@ -50,7 +50,7 @@ abstract class Tile extends Position{
 	const ENCHANT_TABLE = "EnchantTable";
 	const TRAPPED_CHEST = "TrappedChest";
 	const HOPPER = "Hopper";
-
+        const DISPENSER = "Dispenser";
 	public static $tileCount = 1;
 
 	private static $knownTiles = [];
