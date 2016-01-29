@@ -37,9 +37,9 @@ class Dispenser extends Spawnable implements InventoryHolder, Container, Nameabl
 	public function __construct(FullChunk $chunk, Compound $nbt){
 		parent::__construct($chunk, $nbt);
 		$this->inventory = new DispenserInventory($this);
-    }
+	}
          
-    public function getName(){
+	public function getName(){
 		return isset($this->namedtag->CustomName) ? $this->namedtag->CustomName->getValue() : "Furnace";
 	}
 	
@@ -72,7 +72,7 @@ class Dispenser extends Spawnable implements InventoryHolder, Container, Nameabl
 		}
 	}
 	
-    protected function getSlotIndex($index){
+	protected function getSlotIndex($index){
 		foreach($this->namedtag->Items as $i => $slot){
 			if($slot["Slot"] === $index){
 				return $i;
@@ -81,7 +81,7 @@ class Dispenser extends Spawnable implements InventoryHolder, Container, Nameabl
 		return -1;
 	}
 	
-    public function getItem($index){
+	public function getItem($index){
 		$i = $this->getSlotIndex($index);
 		if($i < 0){
 			return Item::get(Item::AIR, 0, 0);
@@ -110,12 +110,12 @@ class Dispenser extends Spawnable implements InventoryHolder, Container, Nameabl
 		return true;
 	}
 	
-    public function onUpdate(){
+	public function onUpdate(){
 		if($this->closed === true){
 			return false;
 		}
 		$this->timings->startTiming();
-        foreach($this->getInventory()->getViewers() as $player){
+		foreach($this->getInventory()->getViewers() as $player){
 			$windowId = $player->getWindowId($this->getInventory());
 			if($windowId > 0){
 				$pk = new ContainerSetDataPacket();
@@ -128,5 +128,5 @@ class Dispenser extends Spawnable implements InventoryHolder, Container, Nameabl
 		}
 		$this->lastUpdate = microtime(true);
 		$this->timings->stopTiming();
-    }
+	}
 }
