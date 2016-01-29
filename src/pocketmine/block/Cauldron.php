@@ -27,9 +27,8 @@ namespace pocketmine\block;
 
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
-use pocketmine\Player;
 
-class Cauldron extends Solid{
+class Cauldron extends Transparent{
 
     protected $id = self::CAULDRON;
 
@@ -51,20 +50,6 @@ class Cauldron extends Solid{
 
     public function getHardness(){
         return 2;
-    }
-
-    public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-        $faces = [
-            0 => 0,
-            1 => 1,
-            2 => 2,
-            3 => 3,
-        ];
-
-        $this->meta = $faces[$player instanceof Player ? $player->getDirection() : 0];
-
-        $this->getLevel()->setBlock($block, $this, true);
-        return true;
     }
 
     public function getDrops(Item $item){

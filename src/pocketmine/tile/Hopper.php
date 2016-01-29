@@ -30,6 +30,7 @@ use pocketmine\inventory\HopperInventory;
 use pocketmine\inventory\InventoryHolder;
 use pocketmine\item\Item;
 use pocketmine\level\format\FullChunk;
+use pocketmine\math\Vector3;
 use pocketmine\nbt\NBT;
 
 use pocketmine\nbt\tag\Compound;
@@ -37,7 +38,6 @@ use pocketmine\nbt\tag\Enum;
 use pocketmine\nbt\tag\Int;
 
 use pocketmine\nbt\tag\String;
-use pocketmine\network\protocol\ContainerSetDataPacket;
 
 class Hopper extends Spawnable implements InventoryHolder, Container, Nameable{
 
@@ -55,14 +55,6 @@ class Hopper extends Spawnable implements InventoryHolder, Container, Nameable{
 
         for($i = 0; $i < $this->getSize(); ++$i){
             $this->inventory->setItem($i, $this->getItem($i));
-        }
-
-        if(!isset($this->namedtag->BurnTime) or $this->namedtag["TransferCooldown"] < 0){
-            $this->namedtag->BurnTime = new Int("TransferCooldown", 0);
-        }
-
-        if($this->namedtag["TransferCooldown"] > 0){
-            $this->scheduleUpdate();
         }
     }
 
@@ -91,7 +83,7 @@ class Hopper extends Spawnable implements InventoryHolder, Container, Nameable{
      * @return int
      */
     public function getSize(){
-        return 5;
+        return 27;
     }
 
     /**
@@ -160,7 +152,10 @@ class Hopper extends Spawnable implements InventoryHolder, Container, Nameable{
      * @return HopperInventory
      */
     public function getInventory(){
-        return $this->inventory;
+        if($this->isPaired()){
+            $this->checkPairing();
+        }
+        return $this->inventory instanceof HopperInventory;
     }
 
     /**
@@ -170,20 +165,15 @@ class Hopper extends Spawnable implements InventoryHolder, Container, Nameable{
         return $this->inventory;
     }
 
-    public function getSpawnCompound(){
-        $nbt = new Compound("", [
-            new String("id", Tile::HOPPER),
-            new Int("x", (int) $this->x),
-            new Int("y", (int) $this->y),
-            new Int("z", (int) $this->z),
-            new Int("TransferCooldown", $this->namedtag["TransferCooldown"]),
-        ]);
+    protected function checkPairing(){
+        if(($pair = $this->getPair()) instanceof Hopper){
+            if(!$pair->isPaired()){
+                $pair->createPair($this);
+                $pair->checkPairing();
+            }else{
 
-        if($this->hasName()){
-            $nbt->CustomName = $this->namedtag->CustomName;
+            }
         }
-
-        return $nbt;
     }
 
     public function getName(){
@@ -203,47 +193,93 @@ class Hopper extends Spawnable implements InventoryHolder, Container, Nameable{
         $this->namedtag->CustomName = new String("CustomName", $str);
     }
 
-    public function onUpdate(){
-        if($this->closed === true){
+    public function isPaired(){
+        if(!isset($this->namedtag->pairx) or !isset($this->namedtag->pairz)){
             return false;
         }
 
-        $this->timings->startTiming();
-        $ret = false;
+        return true;
+    }
 
-        if($this->namedtag["TransferCooldow"] > 0){
-            $this->namedtag->BurnTime = new Int("TransferCooldown", $this->namedtag["TransferCooldown"] - 1);
-
-            if($this->namedtag["TransferCooldown"] <= 0) {
-                $this->namedtag->BurnTime = new Int("TransferCooldown", 0);
+    /**
+     * @return Hopper
+     */
+    public function getPair(){
+        if($this->isPaired()){
+            $tile = $this->getLevel()->getTile(new Vector3((int) $this->namedtag["pairx"], $this->y, (int) $this->namedtag["pairz"]));
+            if($tile instanceof Hopper){
+                return $tile;
             }
-            $ret = true;
+        }
+
+        return null;
+    }
+
+    public function pairWith(Hopper $tile){
+        if($this->isPaired() or $tile->isPaired()){
+            return false;
+        }
+
+        $this->createPair($tile);
+
+        $this->spawnToAll();
+        $tile->spawnToAll();
+        $this->checkPairing();
+
+        return true;
+    }
+
+    private function createPair(Hopper $tile){
+        $this->namedtag->pairx = new Int("pairx", $tile->x);
+        $this->namedtag->pairz = new Int("pairz", $tile->z);
+
+        $tile->namedtag->pairx = new Int("pairx", $this->x);
+        $tile->namedtag->pairz = new Int("pairz", $this->z);
+    }
+
+    public function unpair(){
+        if(!$this->isPaired()){
+            return false;
+        }
+
+        $tile = $this->getPair();
+        unset($this->namedtag->pairx, $this->namedtag->pairz);
+
+        $this->spawnToAll();
+
+        if($tile instanceof Hopper){
+            unset($tile->namedtag->pairx, $tile->namedtag->pairz);
+            $tile->checkPairing();
+            $tile->spawnToAll();
+        }
+        $this->checkPairing();
+
+        return true;
+    }
+
+    public function getSpawnCompound(){
+        if($this->isPaired()){
+            $h = new Compound("", [
+                new String("id", Tile::HOPPER),
+                new Int("x", (int) $this->x),
+                new Int("y", (int) $this->y),
+                new Int("z", (int) $this->z),
+                new Int("pairx", (int) $this->namedtag["pairx"]),
+                new Int("pairz", (int) $this->namedtag["pairz"])
+            ]);
         }else{
-            $this->namedtag->BurnTime = new Int("TransferCooldown", 0);
+            $h = new Compound("", [
+                new String("id", Tile::HOPPER),
+                new Int("x", (int) $this->x),
+                new Int("y", (int) $this->y),
+                new Int("z", (int) $this->z)
+            ]);
         }
 
-        foreach($this->getInventory()->getViewers() as $player){
-            $windowId = $player->getWindowId($this->getInventory());
-            if($windowId > 0){
-                $pk = new ContainerSetDataPacket();
-                $pk->windowid = $windowId;
-                $pk->property = 0; //Smelting
-                $pk->value = floor($this->namedtag["CookTime"]);
-                $player->dataPacket($pk);
-
-                $pk = new ContainerSetDataPacket();
-                $pk->windowid = $windowId;
-                $pk->property = 1; //Fire icon
-                $pk->value = $this->namedtag["BurnTicks"];
-                $player->dataPacket($pk);
-            }
-
+        if($this->hasName()){
+            $h->CustomName = $this->namedtag->CustomName;
         }
 
-        $this->lastUpdate = microtime(true);
-
-        $this->timings->stopTiming();
-
-        return $ret;
+        return $h;
     }
 }
