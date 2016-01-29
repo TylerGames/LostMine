@@ -139,12 +139,7 @@ class CraftingManager{
 			"MS",
 			" E"
 		))->setIngredient("M", Item::get(Item::BROWN_MUSHROOM, 0, 1))->setIngredient("S", Item::get(Item::SUGAR, 0, 1))->setIngredient("E", Item::get(Item::SPIDER_EYE, 0, 1)));
-		
-		
-		$this->registerRecipe((new ShapedRecipe(Item::get(Item::FLINT_STEEL, 0, 1),
-			"IF"
-		))->setIngredient("I", Item::get(Item::IRON_INGOT, 0, 1))->setIngredient("F", Item::get(Item::FLINT, 0, 1)));
-		
+
 		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::WORKBENCH, 0, 1),
 			"XX",
@@ -173,13 +168,7 @@ class CraftingManager{
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::TORCH, 0, 4),
 			"C",
 			"S"
-		))->setIngredient("C", Item::get(Item::COAL,0,1))->setIngredient("S", Item::get(Item::STICK,0,1)));
-		
-		
-		$this->registerRecipe((new ShapedRecipe(Item::get(Item::TORCH, 0, 4),
-			"C",
-			"S"
-		))->setIngredient("C", Item::get(Item::COAL, 1, 1))->setIngredient("S", Item::get(Item::STICK, 0, 1)));
+		))->setIngredient("C", Item::get(Item::COAL,null,1))->setIngredient("S", Item::get(Item::STICK,0,1)));
 		
 		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::REDSTONE_TORCH, 0, 1),
@@ -706,27 +695,11 @@ class CraftingManager{
 		
 		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::IRON_BARS, 0, 16),
 			"III",
-			"III",
-			"   "
-		))->setIngredient("I", Item::get(Item::IRON_INGOT, 0, 6)));
-		
-		
-		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::IRON_BARS, 0, 16),
-			"   ",
-			"III",
 			"III"
 		))->setIngredient("I", Item::get(Item::IRON_INGOT, 0, 6)));
 		
 		
 		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::BREWING_STAND, 0, 1),
-			" B ",
-			"CCC",
-			"   "
-		))->setIngredient("B", Item::get(Item::BLAZE_ROD, 0, 1))->setIngredient("C", Item::get(Item::COBBLESTONE, 0, 3)));
-		
-		
-		$this->registerRecipe((new BigShapedRecipe(Item::get(Item::BREWING_STAND, 0, 1),
-			"   ",
 			" B ",
 			"CCC"
 		))->setIngredient("B", Item::get(Item::BLAZE_ROD, 0, 1))->setIngredient("C", Item::get(Item::COBBLESTONE, 0, 3)));
@@ -807,7 +780,6 @@ class CraftingManager{
 		$this->registerRecipe(new FurnaceRecipe(Item::get(Item::STONE, 0, 1), Item::get(Item::COBBLESTONE, 0, 1)));
 		$this->registerRecipe(new FurnaceRecipe(Item::get(Item::STONE_BRICK, 2, 1), Item::get(Item::STONE_BRICK, 0, 1)));
 		$this->registerRecipe(new FurnaceRecipe(Item::get(Item::GLASS, 0, 1), Item::get(Item::SAND, null, 1)));
-		$this->registerRecipe(new FurnaceRecipe(Item::get(Item::COAL, 1, 1), Item::get(Item::TRUNK, null, 1)));
 		$this->registerRecipe(new FurnaceRecipe(Item::get(Item::GOLD_INGOT, 0, 1), Item::get(Item::GOLD_ORE, 0, 1)));
 		$this->registerRecipe(new FurnaceRecipe(Item::get(Item::IRON_INGOT, 0, 1), Item::get(Item::IRON_ORE, 0, 1)));
 		$this->registerRecipe(new FurnaceRecipe(Item::get(Item::EMERALD, 0, 1), Item::get(Item::EMERALD_ORE, 0, 1)));
@@ -823,6 +795,15 @@ class CraftingManager{
 		$this->registerRecipe(new FurnaceRecipe(Item::get(Item::COOKED_CHICKEN, 0, 1), Item::get(Item::RAW_CHICKEN, 0, 1)));
 		$this->registerRecipe(new FurnaceRecipe(Item::get(Item::BAKED_POTATO, 0, 1), Item::get(Item::POTATO, 0, 1)));
 		$this->registerRecipe(new FurnaceRecipe(Item::get(Item::HARDENED_CLAY, 0, 1), Item::get(Item::CLAY_BLOCK, 0, 1)));
+		
+		for($i=0; $i<=4; $i++)
+		{
+			$this->registerRecipe(new FurnaceRecipe(Item::get(Item::COAL, 1, 1), Item::get(Item::WOOD, $i, 1)));
+		}
+		for($i=0; $i<=1; $i++)
+		{
+			$this->registerRecipe(new FurnaceRecipe(Item::get(Item::COAL, 1, 1), Item::get(Item::WOOD2, $i, 1)));
+		}
 	}
 	protected function registerBrewingStand(){
 		$this->registerRecipe(new BrewingRecipe(Item::get(Item::POTION, 4, 1), Item::get(Item::NETHER_WART, 0, 1), Item::get(Item::POTION, 0, 1))); //Akward Potion
@@ -996,6 +977,7 @@ class CraftingManager{
 			" X~"
 		))->setIngredient("~", Item::get(Item::STRING))->setIngredient("X", Item::get(Item::STICK)));
 	}
+	
 	protected function registerTools(){
 		$types = [
 			[Item::WOODEN_PLANK, Item::COBBLESTONE, Item::IRON_INGOT, Item::DIAMOND, Item::GOLD_INGOT],
@@ -1035,11 +1017,14 @@ class CraftingManager{
 			" S",
 			"F "
 		))->setIngredient("F", Item::get(Item::FLINT))->setIngredient("S", Item::get(Item::IRON_INGOT)));
+		
+		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::SHEARS, 0, 1),
 			" X",
 			"X "
 		))->setIngredient("X", Item::get(Item::IRON_INGOT)));
 	}
+	
 	protected function registerDyes(){
 		for($i = 0; $i < 16; ++$i){
 			$this->registerRecipe((new ShapelessRecipe(Item::get(Item::WOOL, 15 - $i, 1)))->addIngredient(Item::get(Item::DYE, $i, 1))->addIngredient(Item::get(Item::WOOL, 0, 1)));
