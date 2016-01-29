@@ -1,5 +1,4 @@
 <?php
-
 /*
  *
  *  _                       _           _ __  __ _
@@ -23,10 +22,18 @@
  *
  *
 */
-
 namespace pocketmine\inventory;
 
 use pocketmine\block\Planks;
+use pocketmine\block\Quartz;
+use pocketmine\block\Sandstone;
+use pocketmine\block\Slab;
+use pocketmine\block\Fence;
+use pocketmine\block\Stone;
+use pocketmine\block\StoneBricks;
+use pocketmine\block\StoneWall;
+use pocketmine\block\Wood;
+use pocketmine\block\Wood2;
 use pocketmine\item\Item;
 use pocketmine\utils\UUID;
 
@@ -51,7 +58,7 @@ class CraftingManager{
 		
 		// ShapedRecipes //
 		
-		for($i = 0; $i < 16; ++$i){
+		for($i = 0; $i <= 16; ++$i){
 			$this->registerRecipe((new ShapedRecipe(Item::get(Item::CARPET, $i, 3),
 				"CC"
 			))->setIngredient("C", Item::get(Item::WOOL, $i, 1)));
@@ -65,7 +72,7 @@ class CraftingManager{
 		}
 		
 		
-		for($i = 0; $i < 2; ++$i){
+		for($i = 0; $i <= 1; ++$i){
 			$this->registerRecipe((new ShapedRecipe(Item::get(Item::WOODEN_PLANK, $i+4, 4),
 				"X"
 			))->setIngredient("X", Item::get(Item::WOOD2, $i, 1)));
@@ -175,10 +182,10 @@ class CraftingManager{
 		))->setIngredient("C", Item::get(Item::COAL, 1, 1))->setIngredient("S", Item::get(Item::STICK, 0, 1)));
 		
 		
-        $this->registerRecipe((new ShapedRecipe(Item::get(Item::REDSTONE_TORCH, 0, 1),
+		$this->registerRecipe((new ShapedRecipe(Item::get(Item::REDSTONE_TORCH, 0, 1),
 			"R",
 			"S"
-        ))->setIngredient("R", Item::get(Item::REDSTONE_DUST, 0, 1))->setIngredient("S", Item::get(Item::STICK,0,1)));
+		))->setIngredient("R", Item::get(Item::REDSTONE_DUST, 0, 1))->setIngredient("S", Item::get(Item::STICK,0,1)));
 		
 		
 		$this->registerRecipe((new ShapedRecipe(Item::get(Item::BOOK, 0, 1),
