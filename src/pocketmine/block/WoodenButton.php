@@ -120,13 +120,15 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 
 	public function onActivate(Item $item, Player $player = null){
 		if($this->getPower()>0){
-			return;
+			return true;
 		}
 		if(($player instanceof Player && !$player->isSneaking())||$player===null){
 			$this->togglePowered();
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,$this->getPower());
 			$this->getLevel()->scheduleUpdate($this, 15);
 		}
+		
+		return true;
 	}
 
 	public function getDrops(Item $item){
