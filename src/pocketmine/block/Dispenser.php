@@ -27,14 +27,12 @@
 namespace pocketmine\block;
 
 use pocketmine\item\Item;
-use pocketmine\item\Tool;
 use pocketmine\nbt\NBT;
 use pocketmine\nbt\tag\Compound;
 use pocketmine\nbt\tag\Enum;
 use pocketmine\nbt\tag\Int;
 use pocketmine\nbt\tag\String;
 use pocketmine\Player;
-use pocketmine\tile\Furnace;
 use pocketmine\tile\Tile;
 
 class Dispenser extends Solid{
@@ -49,14 +47,15 @@ class Dispenser extends Solid{
 		return "Dispenser";
 	}
 
-        public function canBeActivated(){
+    public function canBeActivated(){
 		return true;
 	}
+	
 	public function getHardness(){
 		return 3.5;
 	}
 
-        public function place(Item $item, Block $block, Block $target, $fx, $fy, $fz, Player $player = null){
+    public function place(Item $item, Block $block, Block $target, $fx, $fy, $fz, Player $player = null){
             $faces = [
 			0 => 4,
 			1 => 2,
@@ -84,6 +83,7 @@ class Dispenser extends Solid{
 		Tile::createTile("Dispenser", $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
 		return true;
 	}
+	
 	public function onActivate(Item $item, Player $player = null){
 		if($player instanceof Player){
 			$t = $this->getLevel()->getTile($this);
@@ -112,8 +112,8 @@ class Dispenser extends Solid{
 			$player->addWindow($dispenser->getInventory());
 		}
 		return true;
-	}       
-    }
+	}
+	
     public function getDrops(Item $item){
 		$drops = [];
 		if($item->isPickaxe() >= 1){

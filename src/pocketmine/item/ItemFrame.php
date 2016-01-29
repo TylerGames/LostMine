@@ -22,7 +22,7 @@
  * @link http://forums.imagicalcorp.ml/
  * 
  *
-*/const NETWORK_ID = 18;
+*/
 
 namespace pocketmine\item;
 
