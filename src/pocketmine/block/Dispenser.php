@@ -55,7 +55,7 @@ class Dispenser extends Solid{
 		return 3.5;
 	}
 
-    public function place(Item $item, Block $block, Block $target, $fx, $fy, $fz, Player $player = null){
+    public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
             $faces = [
 			0 => 4,
 			1 => 2,
