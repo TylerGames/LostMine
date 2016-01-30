@@ -63,12 +63,12 @@ class Pumpkin extends Solid{
 		$this->getLevel()->setBlock($block, $this, true, true);
 
 		if($player != null){
-			$firstBlock = $this->getLevel()->getBlock($block->add(0, -1, 0));
-			$secondBlock = $this->getLevel()->getBlock($block->add(0, -2, 0));
-			$thirdBlock = $this->getLevel()->getBlock($block->add(-1, -1, 0));
-			$fourthBlock = $this->getLevel()->getBlock($block->add(1, -1, 0));
-			$fifthBlock = $this->getLevel()->getBlock($block->add(0, -1, -1));
-			$sixthBlock = $this->getLevel()->getBlock($block->add(0, -1, 1));
+			$firstBlock = $this->getLevel ()->getBlock ( $block->add ( 0, - 1, 0 ) );
+			$secondBlock = $this->getLevel ()->getBlock ( $block->add ( 0, - 2, 0 ) );
+			$thirdBlock = $this->getLevel ()->getBlock ( $block->add ( 0, -1, -1 ) );
+			$fourthBlock = $this->getLevel ()->getBlock ( $block->add ( 0, -1, 1 ) );
+			$fifthBlock = $this->getLevel ()->getBlock ( $block->add ( 0, -2, - 1 ) );
+			$sixthBlock = $this->getLevel ()->getBlock ( $block->add ( 0, - 2, 1 ) );
 
 			if($firstBlock->getId() === Item::SNOW_BLOCK && $secondBlock->getId() === Item::SNOW_BLOCK){ //Block match snowgolem
 				$this->getLevel()->setBlock($block, new Air());
