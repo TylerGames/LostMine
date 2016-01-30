@@ -2,17 +2,17 @@
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _					   _		   _ __  __ _
+ * (_)					 (_)		 | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *					 __/ |
+ *					|___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +20,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -48,6 +48,7 @@ use pocketmine\nbt\tag\String;
 use pocketmine\Player;
 use pocketmine\nbt\tag\Compound;
 use pocketmine\nbt\NBT;
+use pocketmine\network\protocol\PlayerActionPacket;
 
 class Item{
 
@@ -78,7 +79,7 @@ class Item{
 		self::$cachedParser->setData($tag);
 		return self::$cachedParser->write();
 	}
-		
+
 	// All Block IDs are here too
 	const AIR = 0;
 	const STONE = 1;
@@ -608,31 +609,31 @@ class Item{
 			self::$list[self::DARK_OAK_DOOR] = DarkOakDoor::class;
 			self::$list[self::JUNGLE_DOOR] = JungleDoor::class;
 			self::$list[self::SPRUCE_DOOR] = SpruceDoor::class;
-			self::$list[self::IRON_DOOR] = IronDoor::class;	
+			self::$list[self::IRON_DOOR] = IronDoor::class;
 
 			self::$list[self::BUCKET] = Bucket::class;
-			
+
 			self::$list[self::MINECART] = Minecart::class;
 			//self::$list[self::SADDLE] = Saddle::class;
-			
+
 			self::$list[self::IRON_DOOR] = IronDoor::class;
 			self::$list[self::REDSTONE] = Redstone::class;
 			self::$list[self::SNOWBALL] = Snowball::class;
 			self::$list[self::BOAT] = Boat::class;
-			
+
 			self::$list[self::LEATHER] = Leather::class;
-			
+
 			self::$list[self::BRICK] = Brick::class;
 			self::$list[self::CLAY] = Clay::class;
 			self::$list[self::SUGARCANE] = Sugarcane::class;
 			self::$list[self::PAPER] = Paper::class;
 			self::$list[self::BOOK] = Book::class;
 			self::$list[self::SLIMEBALL] = Slimeball::class;
-			
+
 			self::$list[self::EGG] = Egg::class;
 			self::$list[self::COMPASS] = Compass::class;
 			self::$list[self::FISHING_ROD] = FishingRod::class;
-			
+
 			self::$list[self::CLOCK] = Clock::class;
 			self::$list[self::GLOWSTONE_DUST] = GlowstoneDust::class;
 			self::$list[self::RAW_FISH] = Fish::class;
@@ -642,19 +643,19 @@ class Item{
 			self::$list[self::SUGAR] = Sugar::class;
 			self::$list[self::CAKE] = Cake::class;
 			self::$list[self::BED] = Bed::class;
-			
+
 			self::$list[self::COOKIE] = Cookie::class;
-			
+
 			self::$list[self::SHEARS] = Shears::class;
 			self::$list[self::MELON] = Melon::class;
 			self::$list[self::PUMPKIN_SEEDS] = PumpkinSeeds::class;
 			self::$list[self::MELON_SEEDS] = MelonSeeds::class;
 			self::$list[self::RAW_BEEF] = RawBeef::class;
 			self::$list[self::STEAK] = Steak::class;
-			
+
 			self::$list[self::RAW_CHICKEN] = RawChicken::class;
 			self::$list[self::COOKED_CHICKEN] = CookedChicken::class;
-			
+
 			self::$list[self::ROTTEN_FLESH] = RottenFlesh::class;
 			self::$list[self::BLAZE_ROD] = BlazeRod::class;
 			self::$list[self::GHAST_TEAR] = GhastTear::class;
@@ -668,24 +669,24 @@ class Item{
 			self::$list[self::MAGMA_CREAM] = MagmaCream::class;
 			self::$list[self::BREWING_STAND] = BrewingStand::class;
 			self::$list[self::GLISTERING_MELON] = GlisteringMelon::class;
-			
+
 			self::$list[self::SPAWN_EGG] = SpawnEgg::class;
 			self::$list[self::EXP_BOTTLE] = EXPBottle::class;
-			
+
 			self::$list[self::EMERALD] = Emerald::class;
 			self::$list[self::FLOWER_POT] = FlowerPot::class;
-			
+
 			self::$list[self::CARROT] = Carrot::class;
 			self::$list[self::POTATO] = Potato::class;
 			self::$list[self::BAKED_POTATO] = BakedPotato::class;
 			self::$list[self::POISONOUS_POTATO] = PoisonousPotato::class;
 			self::$list[self::GOLDEN_CARROT] = GoldenCarrot::class;
 			self::$list[self::SKULL] = Skull::class;
-			
+
 			self::$list[self::PUMPKIN_PIE] = PumpkinPie::class;
-			
+
 			self::$list[self::ENCHANTED_BOOK] = EnchantedBook::class;
-			
+
 			self::$list[self::NETHER_BRICK] = NetherBrick::class;
 			//self::$list[self::QUARTZ] = Quartz::class;
 			self::$list[self::QUARTZ] = NetherQuartz::class;
@@ -694,9 +695,9 @@ class Item{
 			self::$list[self::COOKED_RABBIT] = CookedRabbit::class;
 			self::$list[self::RABBIT_STEW] = RabbitStew::class;
 			self::$list[self::RABBIT_FOOT] = RabbitFoot::class;
-			
+
 			self::$list[self::SPLASH_POTION] = SplashPotion::class;
-			
+
 			// self::$list[self::CAMERA] = Camera::class;
 			self::$list[self::BEETROOT] = Beetroot::class;
 			self::$list[self::BEETROOT_SEEDS] = BeetrootSeeds::class;
@@ -721,7 +722,7 @@ class Item{
 		self::toolsTab();
 		self::seedsTab();
 	}
-	
+
 	private static function buildingTab(){
 		//Building
 		Item::addCreativeItem(Item::get(Item::COBBLESTONE, 0));
@@ -824,7 +825,7 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::SNOW_BLOCK, 0));
 		Item::addCreativeItem(Item::get(Item::END_STONE, 0));
 	}
-	
+
 	private static function decorationTab(){
 		//Decoration
 		Item::addCreativeItem(Item::get(Item::COBBLESTONE_WALL, 0));
@@ -892,14 +893,14 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::RED_FLOWER, Flower::TYPE_WHITE_TULIP));
 		Item::addCreativeItem(Item::get(Item::RED_FLOWER, Flower::TYPE_PINK_TULIP));
 		Item::addCreativeItem(Item::get(Item::RED_FLOWER, Flower::TYPE_OXEYE_DAISY));
-		
+
 		Item::addCreativeItem(Item::get(Item::DOUBLE_PLANT, 0)); // SUNFLOWER ?
 		Item::addCreativeItem(Item::get(Item::DOUBLE_PLANT, 1)); // Lilac ?
 		Item::addCreativeItem(Item::get(Item::DOUBLE_PLANT, 2)); // Double TALL_GRASS
 		Item::addCreativeItem(Item::get(Item::DOUBLE_PLANT, 3)); // Large fern
 		Item::addCreativeItem(Item::get(Item::DOUBLE_PLANT, 4)); // Rose bush
 		Item::addCreativeItem(Item::get(Item::DOUBLE_PLANT, 5)); // Peony
-		
+
 		Item::addCreativeItem(Item::get(Item::BROWN_MUSHROOM, 0));
 		Item::addCreativeItem(Item::get(Item::RED_MUSHROOM, 0));
 		Item::addCreativeItem(Item::get(Item::BROWN_MUSHROOM_BLOCK, 0));
@@ -915,34 +916,34 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::TALL_GRASS, 1)); // Grass
 		Item::addCreativeItem(Item::get(Item::TALL_GRASS, 2)); // Fern
 		Item::addCreativeItem(Item::get(Item::DEAD_BUSH, 0));
-		
+
 		Item::addCreativeItem(Item::get(Item::SAPLING, 0)); // Oak
 		Item::addCreativeItem(Item::get(Item::SAPLING, 1)); // Spruce
 		Item::addCreativeItem(Item::get(Item::SAPLING, 2)); // Birtch
 		Item::addCreativeItem(Item::get(Item::SAPLING, 3)); // Jungle
 		Item::addCreativeItem(Item::get(Item::SAPLING, 4)); // Acacia
 		Item::addCreativeItem(Item::get(Item::SAPLING, 5)); // Dark oak
-		
+
 		Item::addCreativeItem(Item::get(Item::LEAVES, 0)); // Oak
 		Item::addCreativeItem(Item::get(Item::LEAVES, 1)); // Spruce
 		Item::addCreativeItem(Item::get(Item::LEAVES, 2)); // Birtch
 		Item::addCreativeItem(Item::get(Item::LEAVES, 3)); // Jungle
 		Item::addCreativeItem(Item::get(Item::LEAVES2, 0)); // Acacia
 		Item::addCreativeItem(Item::get(Item::LEAVES2, 1)); // Dark oak
-		
+
 		Item::addCreativeItem(Item::get(Item::CAKE, 0));
-		
+
 		Item::addCreativeItem(Item::get(Item::SKULL, 0)); // Skeleton
 		Item::addCreativeItem(Item::get(Item::SKULL, 1)); // Wither Skeleton
 		Item::addCreativeItem(Item::get(Item::SKULL, 2)); // Zombie
 		Item::addCreativeItem(Item::get(Item::SKULL, 3)); // Head (Steve)
 		Item::addCreativeItem(Item::get(Item::SKULL, 4)); // Creeper
-		
+
 		Item::addCreativeItem(Item::get(Item::SIGN, 0));
 		Item::addCreativeItem(Item::get(Item::FLOWER_POT, 0));
 		Item::addCreativeItem(Item::get(Item::MONSTER_SPAWNER, 0));
 		Item::addCreativeItem(Item::get(Item::ENCHANTING_TABLE, 0));
-		
+
 		Item::addCreativeItem(Item::get(Item::WOOL, 0));
 		Item::addCreativeItem(Item::get(Item::WOOL, 8));
 		Item::addCreativeItem(Item::get(Item::WOOL, 7));
@@ -959,8 +960,8 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::WOOL, 10));
 		Item::addCreativeItem(Item::get(Item::WOOL, 2));
 		Item::addCreativeItem(Item::get(Item::WOOL, 6));
-		
-		
+
+
 		Item::addCreativeItem(Item::get(Item::CARPET, 0));
 		Item::addCreativeItem(Item::get(Item::CARPET, 8));
 		Item::addCreativeItem(Item::get(Item::CARPET, 7));
@@ -978,7 +979,7 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::CARPET, 2));
 		Item::addCreativeItem(Item::get(Item::CARPET, 6));
 	}
-	
+
 	private static function toolsTab(){
 		//Tools
 		Item::addCreativeItem(Item::get(Item::RAIL, 0));
@@ -990,7 +991,7 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::BUCKET, 1)); // milk
 		Item::addCreativeItem(Item::get(Item::BUCKET, 8)); // water
 		Item::addCreativeItem(Item::get(Item::BUCKET, 10)); // lava
-		Item::addCreativeItem(Item::get(Item::TNT, 0)); 
+		Item::addCreativeItem(Item::get(Item::TNT, 0));
 		Item::addCreativeItem(Item::get(Item::REDSTONE, 0));
 		Item::addCreativeItem(Item::get(Item::BOW, 0));
 		Item::addCreativeItem(Item::get(Item::FISHING_ROD, 0));
@@ -1033,13 +1034,13 @@ class Item{
 		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 20)); //Iron Golem
 		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 21)); //Snow Golem
 		//Item::addCreativeItem(Item::get(Item::SPAWN_EGG, 44)); //Zombie Villager
-		
+
 		Item::addCreativeItem(Item::get(Item::WOODEN_SWORD));
 		Item::addCreativeItem(Item::get(Item::WOODEN_HOE));
 		Item::addCreativeItem(Item::get(Item::WOODEN_SHOVEL));
 		Item::addCreativeItem(Item::get(Item::WOODEN_PICKAXE));
 		Item::addCreativeItem(Item::get(Item::WOODEN_AXE));
-		
+
 		Item::addCreativeItem(Item::get(Item::STONE_SWORD));
 		Item::addCreativeItem(Item::get(Item::STONE_HOE));
 		Item::addCreativeItem(Item::get(Item::STONE_SHOVEL));
@@ -1050,39 +1051,39 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::IRON_SHOVEL));
 		Item::addCreativeItem(Item::get(Item::IRON_PICKAXE));
 		Item::addCreativeItem(Item::get(Item::IRON_AXE));
-		
+
 		Item::addCreativeItem(Item::get(Item::DIAMOND_SWORD));
 		Item::addCreativeItem(Item::get(Item::DIAMOND_HOE));
 		Item::addCreativeItem(Item::get(Item::DIAMOND_SHOVEL));
 		Item::addCreativeItem(Item::get(Item::DIAMOND_PICKAXE));
-		Item::addCreativeItem(Item::get(Item::DIAMOND_AXE));		
-		
+		Item::addCreativeItem(Item::get(Item::DIAMOND_AXE));
+
 		Item::addCreativeItem(Item::get(Item::GOLD_SWORD));
 		Item::addCreativeItem(Item::get(Item::GOLD_HOE));
 		Item::addCreativeItem(Item::get(Item::GOLD_SHOVEL));
 		Item::addCreativeItem(Item::get(Item::GOLD_PICKAXE));
 		Item::addCreativeItem(Item::get(Item::GOLD_AXE));
-		
+
 		Item::addCreativeItem(Item::get(Item::LEATHER_CAP));
 		Item::addCreativeItem(Item::get(Item::LEATHER_TUNIC));
 		Item::addCreativeItem(Item::get(Item::LEATHER_PANTS));
 		Item::addCreativeItem(Item::get(Item::LEATHER_BOOTS));
-		
+
 		Item::addCreativeItem(Item::get(Item::CHAIN_HELMET));
 		Item::addCreativeItem(Item::get(Item::CHAIN_CHESTPLATE));
 		Item::addCreativeItem(Item::get(Item::CHAIN_LEGGINGS));
 		Item::addCreativeItem(Item::get(Item::CHAIN_BOOTS));
-		
+
 		Item::addCreativeItem(Item::get(Item::IRON_HELMET));
 		Item::addCreativeItem(Item::get(Item::IRON_CHESTPLATE));
 		Item::addCreativeItem(Item::get(Item::IRON_LEGGINGS));
-		Item::addCreativeItem(Item::get(Item::IRON_BOOTS));		
-		
+		Item::addCreativeItem(Item::get(Item::IRON_BOOTS));
+
 		Item::addCreativeItem(Item::get(Item::DIAMOND_HELMET));
 		Item::addCreativeItem(Item::get(Item::DIAMOND_CHESTPLATE));
 		Item::addCreativeItem(Item::get(Item::DIAMOND_LEGGINGS));
-		Item::addCreativeItem(Item::get(Item::DIAMOND_BOOTS));		
-		
+		Item::addCreativeItem(Item::get(Item::DIAMOND_BOOTS));
+
 		Item::addCreativeItem(Item::get(Item::GOLD_HELMET));
 		Item::addCreativeItem(Item::get(Item::GOLD_CHESTPLATE));
 		Item::addCreativeItem(Item::get(Item::GOLD_LEGGINGS));
@@ -1100,16 +1101,16 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::TRIPWIRE_HOOK));
 		Item::addCreativeItem(Item::get(Item::SNOWBALL));
 	}
-	
+
 	private static function seedsTab(){
 		//Seeds
-		/* 
+		/*
 		Im gonna make it so you can do:
 		Item::addCreativeItem(Item::get(Item::ENCHANTED_BOOK, EnchantedBook::'ENCHANTMENT'));
 		*/
 		Item::addCreativeItem(Item::get(Item::COAL, 0));
 		Item::addCreativeItem(Item::get(Item::COAL, 1)); // charcoal
-		Item::addCreativeItem(Item::get(Item::DIAMOND, 0)); 
+		Item::addCreativeItem(Item::get(Item::DIAMOND, 0));
 		Item::addCreativeItem(Item::get(Item::IRON_INGOT, 0));
 		Item::addCreativeItem(Item::get(Item::GOLD_INGOT, 0));
 		Item::addCreativeItem(Item::get(Item::EMERALD, 0));
@@ -1137,7 +1138,7 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::APPLE, 0));
 		Item::addCreativeItem(Item::get(Item::GOLDEN_APPLE, 0));
 		Item::addCreativeItem(Item::get(Item::GOLDEN_APPLE, 1)); // Enchanted golden apple
-		Item::addCreativeItem(Item::get(Item::RAW_FISH, 0)); 
+		Item::addCreativeItem(Item::get(Item::RAW_FISH, 0));
 		Item::addCreativeItem(Item::get(Item::RAW_FISH, 1)); // Salmon
 		Item::addCreativeItem(Item::get(Item::RAW_FISH, 2)); // Clownfish
 		Item::addCreativeItem(Item::get(Item::RAW_FISH, 3)); // Pufferfish
@@ -1179,7 +1180,7 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::FERMENTED_SPIDER_EYE, 0));
 		Item::addCreativeItem(Item::get(Item::EXP_BOTTLE, 0));
 		// enchanted books
-		
+
 		Item::addCreativeItem(Item::get(Item::DYE, 0));
 		Item::addCreativeItem(Item::get(Item::DYE, 8));
 		Item::addCreativeItem(Item::get(Item::DYE, 7));
@@ -1196,9 +1197,9 @@ class Item{
 		Item::addCreativeItem(Item::get(Item::DYE, 10));
 		Item::addCreativeItem(Item::get(Item::DYE, 2));
 		Item::addCreativeItem(Item::get(Item::DYE, 6));
-		
+
 		Item::addCreativeItem(Item::get(Item::GLASS_BOTTLE, 0));
-		
+
 		self::addCreativeItem(Item::get(Item::POTION, Potion::WATER_BOTTLE));
 		self::addCreativeItem(Item::get(Item::POTION, Potion::AWKWARD));
 		self::addCreativeItem(Item::get(Item::POTION, Potion::THICK));
@@ -1273,7 +1274,7 @@ class Item{
 		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::WEAKNESS));
 		self::addCreativeItem(Item::get(Item::SPLASH_POTION, Potion::WEAKNESS_T));
 	}
-	
+
 	public static function clearCreativeItems(){
 		Item::$creative = [];
 	}
@@ -1778,6 +1779,30 @@ class Item{
 		}
 
 		return false;
+	}
+
+	/**
+	 * onPlayerAction
+	 * use this method in item classes to handle specific logic
+	 * this method is added to remove item based logic from Player class
+	 * can be called in Player for individual logic required for an item
+	 * example:
+	 * if ($playerAction == PlayerActionPacket::ACTION_JUMP) {
+			//do something
+	 * }
+	 *
+	 * @param Item   $item
+	 * @param Player $player
+	 * @param int	$playerAction - defined in PlayerActionPacket
+	 *
+	 * @return bool
+	 */
+	public function onPlayerAction(Item $item,Player $player, $playerAction) {
+		//override in specific item class
+		//if ($playerAction == PlayerActionPacket::ACTION_JUMP) {
+			//do something
+		//}
+		return true;
 	}
 
 }
