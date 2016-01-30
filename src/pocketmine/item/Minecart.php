@@ -57,20 +57,20 @@ class Minecart extends Item{
         //if(!$block instanceof RailBlock || !$block instanceof Rail) return false; in previuos version IM
         //if($blockTemp->getId() != self::RAIL and $blockTemp->getId() != self::POWERED_RAIL) return; in previuos version Genisys
 
-        $minecart = new MinecartEntity($player->getLevel()->getChunk($block->getX() >> 4, $block->getZ() >> 4), new CompoundTag("", array(
-                "Pos" => new EnumTag("Pos", arary(
-                        new DoubleTag("", $block->getX()),
-                        new DoubleTag("", $block->getY() + 1),
-                        new DoubleTag("", $block->getZ())
+        $minecart = new MinecartEntity($player->getLevel()->getChunk($block->getX() >> 4, $block->getZ() >> 4), new Compound("", array(
+                "Pos" => new Enum("Pos", array(
+                        new Double("", $block->getX()),
+                        new Double("", $block->getY() + 1),
+                        new Double("", $block->getZ())
                         )),
-                "Motion" => new EnumTag("Motion", array(
-                        new DoubleTag("", 0),
-                        new DoubleTag("", 0),
-                        new DoubleTag("", 0)
+                "Motion" => new Enum("Motion", array(
+                        new Double("", 0),
+                        new Double("", 0),
+                        new Double("", 0)
                         )),
-                "Rotation" => new EnumTag("Rotation", array(
-                        new FloatTag("", 0),
-                        new FloatTag("", 0)
+                "Rotation" => new Enum("Rotation", array(
+                        new Float("", 0),
+                        new Float("", 0)
                         )),
                 )));
         $minecart->spawnToAll();

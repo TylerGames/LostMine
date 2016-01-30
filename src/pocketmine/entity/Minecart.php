@@ -143,7 +143,7 @@ class Minecart extends Vehicle{
     }
 
     public function getDrops(){
-        return [ItemItem::get(ItemItem::Minecart, 0, 1)];
+        return [ItemItem::get(ItemItem::MINECART, 0, 1)];
     }
 
     public function getSaveId(){
