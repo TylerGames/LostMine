@@ -1733,7 +1733,7 @@ abstract class Entity extends Location implements Metadatable{
 	 * can be called in Player for individual logic required for an entity
 	 * example:
 	 * if ($playerAction == PlayerActionPacket::ACTION_JUMP) {
-	 //do something
+	 *     //do something
 	 * }
 	 *
 	 * @param Entity $entity

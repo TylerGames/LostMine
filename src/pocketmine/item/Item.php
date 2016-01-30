@@ -1788,7 +1788,7 @@ class Item{
 	 * can be called in Player for individual logic required for an item
 	 * example:
 	 * if ($playerAction == PlayerActionPacket::ACTION_JUMP) {
-			//do something
+	 *     //do something
 	 * }
 	 *
 	 * @param Item   $item
