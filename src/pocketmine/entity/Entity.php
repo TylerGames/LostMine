@@ -2,17 +2,17 @@
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +20,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -70,6 +70,7 @@ use pocketmine\Server;
 use pocketmine\utils\ChunkException;
 use pocketmine\event\entity\EntityDamageByChildEntityEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
+use pocketmine\network\protocol\PlayerActionPacket;
 
 abstract class Entity extends Location implements Metadatable{
 
@@ -210,7 +211,7 @@ abstract class Entity extends Location implements Metadatable{
 	/** @var \pocketmine\event\TimingsHandler */
 	protected $timings;
 	protected $isPlayer = false;
-	
+
 	protected $linkedEntity = \Null;
 	/** 0 no linked 1 linked other 2 be linked */
 	protected $linkedType = \Null;
@@ -463,7 +464,7 @@ abstract class Entity extends Location implements Metadatable{
 		if($effect->getId() === Effect::HEALTH_BOOST){
 			$this->setHealth($this->getHealth() + 4 * ($effect->getAmplifier() + 1));
 		}
-		
+
 		if($effect->getId() === Effect::HEALING){
 			if($this->getHealth() + 2 * ($effect->getAmplifier() + 1) > $this->getMaxHealth()){
 				$ev = new EntityRegainHealthEvent($this, $this->getMaxHealth() - $this->getHealth(), EntityRegainHealthEvent::CAUSE_MAGIC);
@@ -725,7 +726,7 @@ abstract class Entity extends Location implements Metadatable{
             return;
         }
 		$this->setLastDamageCause($source);
-		
+
 		($this->getHealth() - $source->getFinalDamage() <= 0)?$this->setHealth(0):$this->setHealth($this->getHealth() - $source->getFinalDamage());
 	}
 
@@ -1725,4 +1726,27 @@ abstract class Entity extends Location implements Metadatable{
 		return (new \ReflectionClass($this))->getShortName() . "(" . $this->getId() . ")";
 	}
 
+	/**
+	 * onPlayerAction
+	 * use this method in entity classes to handle specific logic
+	 * this method is added to remove entity based logic from Player class
+	 * can be called in Player for individual logic required for an entity
+	 * example:
+	 * if ($playerAction == PlayerActionPacket::ACTION_JUMP) {
+	 *     //do something
+	 * }
+	 *
+	 * @param Entity $entity
+	 * @param Player $player
+	 * @param int    $playerAction - defined in PlayerActionPacket
+	 *
+	 * @return bool
+	 */
+	public function onPlayerAction(Entity $entity,Player $player, $playerAction) {
+		//override in specific item class
+		//if ($playerAction == PlayerActionPacket::ACTION_JUMP) {
+		//do something
+		//}
+		return true;
+	}
 }
