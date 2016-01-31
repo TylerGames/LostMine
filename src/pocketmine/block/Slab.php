@@ -13,9 +13,9 @@ class Slab extends Transparent{
 	const COBBLESTONE = 3;
 	const BRICK = 4;
 	const STONE_BRICK = 5;
-	const QUARTZ = 6;
-	const NETHER_BRICK = 7;
-
+	const NETHER_BRICK = 6;
+	const QUARTZ = 7;
+	
 	protected $id = self::SLAB;
 
 	public function __construct($meta = 0){
