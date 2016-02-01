@@ -72,7 +72,7 @@ class Rail extends Flowable{
 	}
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		$downBlock = $this->getSide(Vector3::SIDE_DOWN);
-		if($downBlock instanceof Rail or !$this->isBlock($downBlock)){//ÅĞ¶ÏÊÇ·ñ¿ÉÒÔ·ÅÖÃ
+		if($downBlock instanceof Rail or !$this->isBlock($downBlock)){//ï¿½Ğ¶ï¿½ï¿½Ç·ï¿½ï¿½ï¿½Ô·ï¿½ï¿½ï¿½
 			return false;
 		}
 		$arrayXZ = [[1, 0], [0, 1], [-1, 0], [0, -1]];
@@ -141,7 +141,7 @@ class Rail extends Flowable{
 			$v3 = new Vector3($rail->x + $blocks[0][0], $rail->y + $y, $rail->z + $blocks[0][1]);
 			$id = $rail->getLevel()->getBlockIdAt($v3->x, $v3->y, $v3->z);
 			$meta = $rail->getLevel()->getBlockDataAt($v3->x, $v3->y, $v3->z);
-			if(($id == self::RAIL or $id == self::POWERED_RAIL) and in_array([$rail->x - $v3->x, $rail->z - $v3->z], $array[$meta])){
+			if(in_array($id, array(self::RAIL, self::POWERED_RAIL, self::ACTIVATOR_RAIL, self::DETECTOR_RAIL)) and in_array([$rail->x - $v3->x, $rail->z - $v3->z], $array[$meta])){
 				$connected[] = $v3;
 				break;
 			}
@@ -150,7 +150,7 @@ class Rail extends Flowable{
 			$v3 = new Vector3($rail->x + $blocks[1][0], $rail->y + $y, $rail->z + $blocks[1][1]);
 			$id = $rail->getLevel()->getBlockIdAt($v3->x, $v3->y, $v3->z);
 			$meta = $rail->getLevel()->getBlockDataAt($v3->x, $v3->y, $v3->z);
-			if(($id == self::RAIL or $id == self::POWERED_RAIL) and in_array([$rail->x - $v3->x, $rail->z - $v3->z], $array[$meta])){
+			if(in_array($id, array(self::RAIL, self::POWERED_RAIL, self::ACTIVATOR_RAIL, self::DETECTOR_RAIL)) and in_array([$rail->x - $v3->x, $rail->z - $v3->z], $array[$meta])){
 				$connected[] = $v3;
 				break;
 			}
