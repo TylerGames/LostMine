@@ -72,7 +72,7 @@ class FillCommand extends VanillaCommand{
 		}
 	}
 
-	private function setBlock(Vector3 $p, Level $lvl, ItemBlock $b, int $meta = NULL){
+	private function setBlock(Vector3 $p, Level $lvl, ItemBlock $b, $meta){
 		$block = $b->getBlock();
 		$block->setDamage($meta);
 		$lvl->setBlock($p, $b);
