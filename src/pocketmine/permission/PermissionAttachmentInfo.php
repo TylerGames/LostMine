@@ -26,69 +26,64 @@
 
 namespace pocketmine\permission;
 
-class PermissionAttachmentInfo
-{
-    /** @var Permissible */
-    private $permissible;
 
-    /** @var string */
-    private $permission;
+class PermissionAttachmentInfo{
+	/** @var Permissible */
+	private $permissible;
 
-    /** @var PermissionAttachment */
-    private $attachment;
+	/** @var string */
+	private $permission;
 
-    /** @var bool */
-    private $value;
+	/** @var PermissionAttachment */
+	private $attachment;
 
-    /**
-     * @param Permissible          $permissible
-     * @param string               $permission
-     * @param PermissionAttachment $attachment
-     * @param bool                 $value
-     *
-     * @throws \InvalidStateException
-     */
-    public function __construct(Permissible $permissible, $permission, $attachment, $value)
-    {
-        if ($permission === null) {
-            throw new \InvalidStateException("Permission may not be null");
-        }
+	/** @var bool */
+	private $value;
 
-        $this->permissible = $permissible;
-        $this->permission = $permission;
-        $this->attachment = $attachment;
-        $this->value = $value;
-    }
+	/**
+	 * @param Permissible          $permissible
+	 * @param string               $permission
+	 * @param PermissionAttachment $attachment
+	 * @param bool                 $value
+	 *
+	 * @throws \InvalidStateException
+	 */
+	public function __construct(Permissible $permissible, $permission, $attachment, $value){
+		if($permission === null){
+			throw new \InvalidStateException("Permission may not be null");
+		}
 
-    /**
-     * @return Permissible
-     */
-    public function getPermissible()
-    {
-        return $this->permissible;
-    }
+		$this->permissible = $permissible;
+		$this->permission = $permission;
+		$this->attachment = $attachment;
+		$this->value = $value;
+	}
 
-    /**
-     * @return string
-     */
-    public function getPermission()
-    {
-        return $this->permission;
-    }
+	/**
+	 * @return Permissible
+	 */
+	public function getPermissible(){
+		return $this->permissible;
+	}
 
-    /**
-     * @return PermissionAttachment
-     */
-    public function getAttachment()
-    {
-        return $this->attachment;
-    }
+	/**
+	 * @return string
+	 */
+	public function getPermission(){
+		return $this->permission;
+	}
 
-    /**
-     * @return bool
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
+	/**
+	 * @return PermissionAttachment
+	 */
+	public function getAttachment(){
+		return $this->attachment;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function getValue(){
+		return $this->value;
+	}
 }

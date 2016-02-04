@@ -29,64 +29,60 @@ namespace pocketmine\command;
 use pocketmine\event\TranslationContainer;
 use pocketmine\plugin\Plugin;
 
-class PluginCommand extends Command implements PluginIdentifiableCommand
-{
 
-    /** @var Plugin */
-    private $owningPlugin;
+class PluginCommand extends Command implements PluginIdentifiableCommand{
 
-    /** @var CommandExecutor */
-    private $executor;
+	/** @var Plugin */
+	private $owningPlugin;
 
-    /**
-     * @param string $name
-     * @param Plugin $owner
-     */
-    public function __construct($name, Plugin $owner)
-    {
-        parent::__construct($name);
-        $this->owningPlugin = $owner;
-        $this->executor = $owner;
-        $this->usageMessage = "";
-    }
+	/** @var CommandExecutor */
+	private $executor;
 
-    public function execute(CommandSender $sender, $commandLabel, array $args)
-    {
-        if (!$this->owningPlugin->isEnabled()) {
-            return false;
-        }
+	/**
+	 * @param string $name
+	 * @param Plugin $owner
+	 */
+	public function __construct($name, Plugin $owner){
+		parent::__construct($name);
+		$this->owningPlugin = $owner;
+		$this->executor = $owner;
+		$this->usageMessage = "";
+	}
 
-        if (!$this->testPermission($sender)) {
-            return false;
-        }
+	public function execute(CommandSender $sender, $commandLabel, array $args){
 
-        $success = $this->executor->onCommand($sender, $this, $commandLabel, $args);
+		if(!$this->owningPlugin->isEnabled()){
+			return false;
+		}
 
-        if (!$success and $this->usageMessage !== "") {
-            $sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
-        }
+		if(!$this->testPermission($sender)){
+			return false;
+		}
 
-        return $success;
-    }
+		$success = $this->executor->onCommand($sender, $this, $commandLabel, $args);
 
-    public function getExecutor()
-    {
-        return $this->executor;
-    }
+		if(!$success and $this->usageMessage !== ""){
+			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
+		}
 
-    /**
-     * @param CommandExecutor $executor
-     */
-    public function setExecutor(CommandExecutor $executor)
-    {
-        $this->executor = ($executor != null) ? $executor : $this->owningPlugin;
-    }
+		return $success;
+	}
 
-    /**
-     * @return Plugin
-     */
-    public function getPlugin()
-    {
-        return $this->owningPlugin;
-    }
+	public function getExecutor(){
+		return $this->executor;
+	}
+
+	/**
+	 * @param CommandExecutor $executor
+	 */
+	public function setExecutor(CommandExecutor $executor){
+		$this->executor = ($executor != null) ? $executor : $this->owningPlugin;
+	}
+
+	/**
+	 * @return Plugin
+	 */
+	public function getPlugin(){
+		return $this->owningPlugin;
+	}
 }

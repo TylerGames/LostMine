@@ -26,10 +26,11 @@
 
 namespace pocketmine\entity;
 
+
 use pocketmine\Player;
 
-class AttributeManager
-{
+
+class AttributeManager{
 
     const MAX_HEALTH = 0;
     const MAX_HUNGER = 1;
@@ -44,13 +45,11 @@ class AttributeManager
     /** @var Player */
     protected $player;
 
-    public function __construct($player)
-    {
+    public function __construct($player){
         $this->player = $player;
     }
 
-    public function init()
-    {
+    public function init(){
         self::addAttribute(self::MAX_HEALTH, "generic.health", 0, 20, 20, true);
         self::addAttribute(self::MAX_HUNGER, "player.hunger", 0, 20, 20, true);
         self::addAttribute(self::EXPERIENCE, "player.experience", 0, 24791, 0, true);
@@ -58,8 +57,7 @@ class AttributeManager
         self::addAttribute(self::MOVEMENTSPEED, "generic.movementSpeed", 0, 24791, 0.1, true);
     }
 
-    public function getPlayer()
-    {
+    public function getPlayer() {
         return $this->getPlayer();
     }
 
@@ -72,9 +70,8 @@ class AttributeManager
      * @param bool   $shouldSend
      * @return Attribute
      */
-    public function addAttribute($id, $name, $minValue, $maxValue, $defaultValue, $shouldSend = false)
-    {
-        if ($minValue > $maxValue or $defaultValue > $maxValue or $defaultValue < $minValue) {
+    public function addAttribute($id, $name, $minValue, $maxValue, $defaultValue, $shouldSend = false){
+        if($minValue > $maxValue or $defaultValue > $maxValue or $defaultValue < $minValue){
             throw new \InvalidArgumentException("Invalid ranges: min value: $minValue, max value: $maxValue, $defaultValue: $defaultValue");
         }
 
@@ -85,8 +82,7 @@ class AttributeManager
      * @param $id
      * @return null|Attribute
      */
-    public function getAttribute($id)
-    {
+    public function getAttribute($id){
         return isset($this->attributes[$id]) ? $this->attributes[$id] : null;
     }
 
@@ -94,10 +90,9 @@ class AttributeManager
      * @param $name
      * @return null|Attribute
      */
-    public function getAttributeByName($name)
-    {
-        foreach ($this->attributes as $a) {
-            if ($a->getName() === $name) {
+    public function getAttributeByName($name){
+        foreach($this->attributes as $a){
+            if($a->getName() === $name){
                 return $a;
             }
         }
@@ -105,16 +100,14 @@ class AttributeManager
         return null;
     }
 
-    public function sendAll()
-    {
-        foreach ($this->attributes as $attribute) {
+    public function sendAll() {
+        foreach($this->attributes as $attribute) {
             $attribute->send();
         }
     }
 
-    public function resetAll()
-    {
-        foreach ($this->attributes as $attribute) {
+    public function resetAll() {
+        foreach($this->attributes as $attribute) {
             $attribute->setValue($attribute->getDefaultValue());
         }
     }

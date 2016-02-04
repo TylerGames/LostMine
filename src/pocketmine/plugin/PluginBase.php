@@ -32,295 +32,272 @@ use pocketmine\command\PluginIdentifiableCommand;
 use pocketmine\Server;
 use pocketmine\utils\Config;
 
-abstract class PluginBase implements Plugin
-{
+abstract class PluginBase implements Plugin{
 
-    /** @var PluginLoader */
-    private $loader;
+	/** @var PluginLoader */
+	private $loader;
 
-    /** @var \pocketmine\Server */
-    private $server;
+	/** @var \pocketmine\Server */
+	private $server;
 
-    /** @var bool */
-    private $isEnabled = false;
+	/** @var bool */
+	private $isEnabled = false;
 
-    /** @var bool */
-    private $initialized = false;
+	/** @var bool */
+	private $initialized = false;
 
-    /** @var PluginDescription */
-    private $description;
+	/** @var PluginDescription */
+	private $description;
 
-    /** @var string */
-    private $dataFolder;
-    private $config;
-    /** @var string */
-    private $configFile;
-    private $file;
+	/** @var string */
+	private $dataFolder;
+	private $config;
+	/** @var string */
+	private $configFile;
+	private $file;
 
-    /** @var PluginLogger */
-    private $logger;
+	/** @var PluginLogger */
+	private $logger;
 
-    /**
-     * Called when the plugin is loaded, before calling onEnable()
-     */
-    public function onLoad()
-    {
-    }
+	/**
+	 * Called when the plugin is loaded, before calling onEnable()
+	 */
+	public function onLoad(){
 
-    public function onEnable()
-    {
-    }
+	}
 
-    public function onDisable()
-    {
-    }
+	public function onEnable(){
 
-    /**
-     * @return bool
-     */
-    final public function isEnabled()
-    {
-        return $this->isEnabled === true;
-    }
+	}
 
-    /**
-     * @param bool $boolean
-     */
-    final public function setEnabled($boolean = true)
-    {
-        if ($this->isEnabled !== $boolean) {
-            $this->isEnabled = $boolean;
-            if ($this->isEnabled === true) {
-                $this->onEnable();
-            } else {
-                $this->onDisable();
-            }
-        }
-    }
+	public function onDisable(){
 
-    /**
-     * @return bool
-     */
-    final public function isDisabled()
-    {
-        return $this->isEnabled === false;
-    }
+	}
 
-    final public function getDataFolder()
-    {
-        return $this->dataFolder;
-    }
+	/**
+	 * @return bool
+	 */
+	public final function isEnabled(){
+		return $this->isEnabled === true;
+	}
 
-    final public function getDescription()
-    {
-        return $this->description;
-    }
+	/**
+	 * @param bool $boolean
+	 */
+	public final function setEnabled($boolean = true){
+		if($this->isEnabled !== $boolean){
+			$this->isEnabled = $boolean;
+			if($this->isEnabled === true){
+				$this->onEnable();
+			}else{
+				$this->onDisable();
+			}
+		}
+	}
 
-    final public function init(PluginLoader $loader, Server $server, PluginDescription $description, $dataFolder, $file)
-    {
-        if ($this->initialized === false) {
-            $this->initialized = true;
-            $this->loader = $loader;
-            $this->server = $server;
-            $this->description = $description;
-            $this->dataFolder = rtrim($dataFolder, "\\/") . "/";
-            $this->file = rtrim($file, "\\/") . "/";
-            $this->configFile = $this->dataFolder . "config.yml";
-            $this->logger = new PluginLogger($this);
-        }
-    }
+	/**
+	 * @return bool
+	 */
+	public final function isDisabled(){
+		return $this->isEnabled === false;
+	}
 
-    /**
-     * @return PluginLogger
-     */
-    public function getLogger()
-    {
-        return $this->logger;
-    }
+	public final function getDataFolder(){
+		return $this->dataFolder;
+	}
 
-    /**
-     * @return bool
-     */
-    final public function isInitialized()
-    {
-        return $this->initialized;
-    }
+	public final function getDescription(){
+		return $this->description;
+	}
 
-    /**
-     * @param string $name
-     *
-     * @return Command|PluginIdentifiableCommand
-     */
-    public function getCommand($name)
-    {
-        $command = $this->getServer()->getPluginCommand($name);
-        if ($command === null or $command->getPlugin() !== $this) {
-            $command = $this->getServer()->getPluginCommand(strtolower($this->description->getName()) . ":" . $name);
-        }
+	public final function init(PluginLoader $loader, Server $server, PluginDescription $description, $dataFolder, $file){
+		if($this->initialized === false){
+			$this->initialized = true;
+			$this->loader = $loader;
+			$this->server = $server;
+			$this->description = $description;
+			$this->dataFolder = rtrim($dataFolder, "\\/") . "/";
+			$this->file = rtrim($file, "\\/") . "/";
+			$this->configFile = $this->dataFolder . "config.yml";
+			$this->logger = new PluginLogger($this);
+		}
+	}
 
-        if ($command instanceof PluginIdentifiableCommand and $command->getPlugin() === $this) {
-            return $command;
-        } else {
-            return null;
-        }
-    }
+	/**
+	 * @return PluginLogger
+	 */
+	public function getLogger(){
+		return $this->logger;
+	}
 
-    /**
-     * @param CommandSender $sender
-     * @param Command       $command
-     * @param string        $label
-     * @param array         $args
-     *
-     * @return bool
-     */
-    public function onCommand(CommandSender $sender, Command $command, $label, array $args)
-    {
-        return false;
-    }
+	/**
+	 * @return bool
+	 */
+	public final function isInitialized(){
+		return $this->initialized;
+	}
 
-    /**
-     * @return bool
-     */
-    protected function isPhar()
-    {
-        return substr($this->file, 0, 7) === "phar://";
-    }
+	/**
+	 * @param string $name
+	 *
+	 * @return Command|PluginIdentifiableCommand
+	 */
+	public function getCommand($name){
+		$command = $this->getServer()->getPluginCommand($name);
+		if($command === null or $command->getPlugin() !== $this){
+			$command = $this->getServer()->getPluginCommand(strtolower($this->description->getName()) . ":" . $name);
+		}
 
-    /**
-     * Gets an embedded resource on the plugin file.
-     * WARNING: You must close the resource given using fclose()
-     *
-     * @param string $filename
-     *
-     * @return resource Resource data, or null
-     */
-    public function getResource($filename)
-    {
-        $filename = rtrim(str_replace("\\", "/", $filename), "/");
-        if (file_exists($this->file . "resources/" . $filename)) {
-            return fopen($this->file . "resources/" . $filename, "rb");
-        }
+		if($command instanceof PluginIdentifiableCommand and $command->getPlugin() === $this){
+			return $command;
+		}else{
+			return null;
+		}
+	}
 
-        return null;
-    }
+	/**
+	 * @param CommandSender $sender
+	 * @param Command       $command
+	 * @param string        $label
+	 * @param array         $args
+	 *
+	 * @return bool
+	 */
+	public function onCommand(CommandSender $sender, Command $command, $label, array $args){
+		return false;
+	}
 
-    /**
-     * @param string $filename
-     * @param bool   $replace
-     *
-     * @return bool
-     */
-    public function saveResource($filename, $replace = false)
-    {
-        if (trim($filename) === "") {
-            return false;
-        }
+	/**
+	 * @return bool
+	 */
+	protected function isPhar(){
+		return substr($this->file, 0, 7) === "phar://";
+	}
 
-        if (($resource = $this->getResource($filename)) === null) {
-            return false;
-        }
+	/**
+	 * Gets an embedded resource on the plugin file.
+	 * WARNING: You must close the resource given using fclose()
+	 *
+	 * @param string $filename
+	 *
+	 * @return resource Resource data, or null
+	 */
+	public function getResource($filename){
+		$filename = rtrim(str_replace("\\", "/", $filename), "/");
+		if(file_exists($this->file . "resources/" . $filename)){
+			return fopen($this->file . "resources/" . $filename, "rb");
+		}
 
-        $out = $this->dataFolder . $filename;
-        if (!file_exists($this->dataFolder)) {
-            mkdir($this->dataFolder, 0755, true);
-        }
+		return null;
+	}
 
-        if (file_exists($out) and $replace !== true) {
-            return false;
-        }
+	/**
+	 * @param string $filename
+	 * @param bool   $replace
+	 *
+	 * @return bool
+	 */
+	public function saveResource($filename, $replace = false){
+		if(trim($filename) === ""){
+			return false;
+		}
 
-        $ret = stream_copy_to_stream($resource, $fp = fopen($out, "wb")) > 0;
-        fclose($fp);
-        fclose($resource);
-        return $ret;
-    }
+		if(($resource = $this->getResource($filename)) === null){
+			return false;
+		}
 
-    /**
-     * Returns all the resources incrusted on the plugin
-     *
-     * @return string[]
-     */
-    public function getResources()
-    {
-        $resources = [];
-        if (is_dir($this->file . "resources/")) {
-            foreach (new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->file . "resources/")) as $resource) {
-                $resources[] = $resource;
-            }
-        }
+		$out = $this->dataFolder . $filename;
+		if(!file_exists($this->dataFolder)){
+			mkdir($this->dataFolder, 0755, true);
+		}
 
-        return $resources;
-    }
+		if(file_exists($out) and $replace !== true){
+			return false;
+		}
 
-    /**
-     * @return Config
-     */
-    public function getConfig()
-    {
-        if (!isset($this->config)) {
-            $this->reloadConfig();
-        }
+		$ret = stream_copy_to_stream($resource, $fp = fopen($out, "wb")) > 0;
+		fclose($fp);
+		fclose($resource);
+		return $ret;
+	}
 
-        return $this->config;
-    }
+	/**
+	 * Returns all the resources incrusted on the plugin
+	 *
+	 * @return string[]
+	 */
+	public function getResources(){
+		$resources = [];
+		if(is_dir($this->file . "resources/")){
+			foreach(new \RecursiveIteratorIterator(new \RecursiveDirectoryIterator($this->file . "resources/")) as $resource){
+				$resources[] = $resource;
+			}
+		}
 
-    public function saveConfig()
-    {
-        if ($this->getConfig()->save() === false) {
-            $this->getLogger()->critical("Could not save config to " . $this->configFile);
-        }
-    }
+		return $resources;
+	}
 
-    public function saveDefaultConfig()
-    {
-        if (!file_exists($this->configFile)) {
-            $this->saveResource("config.yml", false);
-        }
-    }
+	/**
+	 * @return Config
+	 */
+	public function getConfig(){
+		if(!isset($this->config)){
+			$this->reloadConfig();
+		}
 
-    public function reloadConfig()
-    {
-        $this->config = new Config($this->configFile);
-        if (($configStream = $this->getResource("config.yml")) !== null) {
-            $this->config->setDefaults(yaml_parse(config::fixYAMLIndexes(stream_get_contents($configStream))));
-            fclose($configStream);
-        }
-    }
+		return $this->config;
+	}
 
-    /**
-     * @return Server
-     */
-    final public function getServer()
-    {
-        return $this->server;
-    }
+	public function saveConfig(){
+		if($this->getConfig()->save() === false){
+			$this->getLogger()->critical("Could not save config to " . $this->configFile);
+		}
+	}
 
-    /**
-     * @return string
-     */
-    final public function getName()
-    {
-        return $this->description->getName();
-    }
+	public function saveDefaultConfig(){
+		if(!file_exists($this->configFile)){
+			$this->saveResource("config.yml", false);
+		}
+	}
 
-    /**
-     * @return string
-     */
-    final public function getFullName()
-    {
-        return $this->description->getFullName();
-    }
+	public function reloadConfig(){
+		$this->config = new Config($this->configFile);
+		if(($configStream = $this->getResource("config.yml")) !== null){
+			$this->config->setDefaults(yaml_parse(config::fixYAMLIndexes(stream_get_contents($configStream))));
+			fclose($configStream);
+		}
+	}
 
-    protected function getFile()
-    {
-        return $this->file;
-    }
+	/**
+	 * @return Server
+	 */
+	public final function getServer(){
+		return $this->server;
+	}
 
-    /**
-     * @return PluginLoader
-     */
-    public function getPluginLoader()
-    {
-        return $this->loader;
-    }
+	/**
+	 * @return string
+	 */
+	public final function getName(){
+		return $this->description->getName();
+	}
+
+	/**
+	 * @return string
+	 */
+	public final function getFullName(){
+		return $this->description->getFullName();
+	}
+
+	protected function getFile(){
+		return $this->file;
+	}
+
+	/**
+	 * @return PluginLoader
+	 */
+	public function getPluginLoader(){
+		return $this->loader;
+	}
+
 }

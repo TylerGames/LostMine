@@ -26,6 +26,7 @@
 
 namespace pocketmine\entity;
 
-class Painting extends Hanging
-{
+
+class Painting extends Hanging{
+
 }

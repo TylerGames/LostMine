@@ -25,48 +25,45 @@ use pocketmine\entity\Living;
 use pocketmine\item\Item;
 use pocketmine\Player;
 
-class EntityDeathEvent extends EntityEvent
-{
-    public static $handlerList = null;
 
-    /** @var Item[] */
-    private $drops = [];
+class EntityDeathEvent extends EntityEvent{
+	public static $handlerList = null;
+
+	/** @var Item[] */
+	private $drops = [];
 
 
-    /**
-     * @param Living $entity
-     * @param Item[] $drops
-     */
-    public function __construct(Living $entity, array $drops = [])
-    {
-        $this->entity = $entity;
-        $this->drops = $drops;
-        if ($entity->getLastDamageCause() instanceof EntityDamageByEntityEvent) {
-            $entity->getLevel()->addExperienceOrb($entity->add(0, 1, 0), mt_rand(3, 11));
-        }
-    }
+	/**
+	 * @param Living $entity
+	 * @param Item[] $drops
+	 */
+	public function __construct(Living $entity, array $drops = []){
+		$this->entity = $entity;
+		$this->drops = $drops;
+		if($entity->getLastDamageCause() instanceof EntityDamageByEntityEvent){
+				$entity->getLevel()->addExperienceOrb($entity->add(0,1,0), mt_rand(3,11));
+		}
+	}
 
-    /**
-     * @return Living
-     */
-    public function getEntity()
-    {
-        return $this->entity;
-    }
+	/**
+	 * @return Living
+	 */
+	public function getEntity(){
+		return $this->entity;
+	}
 
-    /**
-     * @return \pocketmine\item\Item[]
-     */
-    public function getDrops()
-    {
-        return $this->drops;
-    }
+	/**
+	 * @return \pocketmine\item\Item[]
+	 */
+	public function getDrops(){
+		return $this->drops;
+	}
 
-    /**
-     * @param Item[] $drops
-     */
-    public function setDrops(array $drops)
-    {
-        $this->drops = $drops;
-    }
+	/**
+	 * @param Item[] $drops
+	 */
+	public function setDrops(array $drops){
+		$this->drops = $drops;
+	}
+
 }

@@ -26,22 +26,21 @@
 
 namespace pocketmine\block;
 
-class Sponge extends Solid
-{
 
-    protected $id = self::SPONGE;
+class Sponge extends Solid{
 
-    public function __construct()
-    {
-    }
+	protected $id = self::SPONGE;
 
-    public function getHardness()
-    {
-        return 0.6;
-    }
+	public function __construct(){
 
-    public function getName()
-    {
-        return "Sponge";
-    }
+	}
+
+	public function getHardness(){
+		return 0.6;
+	}
+
+	public function getName(){
+		return "Sponge";
+	}
+
 }

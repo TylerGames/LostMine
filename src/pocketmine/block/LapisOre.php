@@ -29,38 +29,34 @@ namespace pocketmine\block;
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
 
-class LapisOre extends Solid
-{
+class LapisOre extends Solid{
 
-    protected $id = self::LAPIS_ORE;
+	protected $id = self::LAPIS_ORE;
 
-    public function __construct()
-    {
-    }
+	public function __construct(){
 
-    public function getHardness()
-    {
-        return 3;
-    }
+	}
 
-    public function getToolType()
-    {
-        return Tool::TYPE_PICKAXE;
-    }
+	public function getHardness(){
+		return 3;
+	}
 
-    public function getName()
-    {
-        return "Lapis Lazuli Ore";
-    }
+	public function getToolType(){
+		return Tool::TYPE_PICKAXE;
+	}
 
-    public function getDrops(Item $item)
-    {
-        if ($item->isPickaxe() >= Tool::TIER_STONE) {
-            return [
-                [Item::DYE, 4, mt_rand(4, 8)],
-            ];
-        } else {
-            return [];
-        }
-    }
+	public function getName(){
+		return "Lapis Lazuli Ore";
+	}
+
+	public function getDrops(Item $item){
+		if($item->isPickaxe() >= Tool::TIER_STONE){
+			return [
+				[Item::DYE, 4, mt_rand(4, 8)],
+			];
+		}else{
+			return [];
+		}
+	}
+
 }

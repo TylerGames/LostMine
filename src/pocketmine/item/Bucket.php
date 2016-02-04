@@ -32,84 +32,90 @@ use pocketmine\block\Liquid;
 use pocketmine\event\player\PlayerBucketFillEvent;
 use pocketmine\level\Level;
 use pocketmine\Player;
+
 use pocketmine\block\Water;
 use pocketmine\block\StillWater;
 use pocketmine\block\Lava;
 use pocketmine\block\StillLava;
 
-class Bucket extends Food
-{
-    public function __construct($meta = 0, $count = 1)
-    {
-        parent::__construct(self::BUCKET, $meta, $count, "Bucket");
-    }
+class Bucket extends Food{
+	public function __construct($meta = 0, $count = 1){
+		parent::__construct(self::BUCKET, $meta, $count, "Bucket");
+	}
 
-    public function getMaxStackSize()
-    {
-        return 1;
-    }
+	public function getMaxStackSize(){
+		return 1;
+	}
 
-    public function canBeActivated()
-    {
-        return true;
-    }
+	public function canBeActivated(){
+		return true;
+	}
 
-    public function onActivate(Level $level, Player $player, Block $block, Block $target, $face, $fx, $fy, $fz)
-    {
-        $bucketContents = Block::get($this->meta);
+	public function onActivate(Level $level, Player $player, Block $block, Block $target, $face, $fx, $fy, $fz){
+		$bucketContents = Block::get($this->meta);
 
-        if ($bucketContents instanceof Air) {
-            // Bucket Empty so pick up block
-            if ($target instanceof Liquid and $target->getDamage() === 0) {
-                $result = clone $this;
-                
-                if ($target instanceof StillWater) {
-                    $toStore = Block::WATER;
-                } elseif ($target instanceof StillLava) {
-                    $toStore = Block::LAVA;
-                } else {
-                    return false;
-                }
-                
-                $result->setDamage($toStore);
-                $player->getServer()->getPluginManager()->callEvent($ev = new PlayerBucketFillEvent($player, $block, $face, $this, $result));
-                if (!$ev->isCancelled()) {
-                    $player->getLevel()->setBlock($target, new Air(), true, true);
-                    if ($player->isSurvival()) {
-                        $player->getInventory()->setItemInHand($ev->getItem(), $player);
-                    }
-                    return true;
-                } else {
-                    $player->getInventory()->sendContents($player);
-                }
-            }
-        } elseif ($bucketContents instanceof Liquid) {
-            // Bucket Full, so empty
-            $result = clone $this;
-            $result->setDamage(0);
-            
-            if ($bucketContents instanceof Water) {
-                $toCreate = Block::STILL_WATER;
-            } elseif ($bucketContents instanceof Lava) {
-                $toCreate = Block::STILL_LAVA;
-            } else {
-                return false;
-            }
-            
-            $bucketContents = Block::get($toCreate);
-            
-            $player->getServer()->getPluginManager()->callEvent($ev = new PlayerBucketFillEvent($player, $block, $face, $this, $result));
-            if (!$ev->isCancelled()) {
-                $player->getLevel()->setBlock($block, $bucketContents, true, true);
-                if ($player->isSurvival()) {
-                    $player->getInventory()->setItemInHand($ev->getItem(), $player);
-                }
-                return true;
-            } else {
-                $player->getInventory()->sendContents($player);
-            }
-        }
+		if($bucketContents instanceof Air){
+		// Bucket Empty so pick up block
+			if($target instanceof Liquid and $target->getDamage() === 0){
+				$result = clone $this;
+				
+				if($target instanceof StillWater)
+				{
+					$toStore = Block::WATER;
+				}
+				elseif($target instanceof StillLava)
+				{
+					$toStore = Block::LAVA;
+				}
+				else
+				{
+					return false;
+				}
+				
+				$result->setDamage($toStore);
+				$player->getServer()->getPluginManager()->callEvent($ev = new PlayerBucketFillEvent($player, $block, $face, $this, $result));
+				if(!$ev->isCancelled()){
+					$player->getLevel()->setBlock($target, new Air(), true, true);
+					if($player->isSurvival()){
+						$player->getInventory()->setItemInHand($ev->getItem(), $player);
+					}
+					return true;
+				}else{
+					$player->getInventory()->sendContents($player);
+				}
+			}
+		}elseif($bucketContents instanceof Liquid){
+			// Bucket Full, so empty
+			$result = clone $this;
+			$result->setDamage(0);
+			
+			if($bucketContents instanceof Water)
+			{
+				$toCreate = Block::STILL_WATER;
+			}
+			elseif($bucketContents instanceof Lava)
+			{
+				$toCreate = Block::STILL_LAVA;
+			}
+			else
+			{
+				return false;
+			}
+			
+			$bucketContents = Block::get($toCreate);
+			
+			$player->getServer()->getPluginManager()->callEvent($ev = new PlayerBucketFillEvent($player, $block, $face, $this, $result));
+			if(!$ev->isCancelled()){
+				$player->getLevel()->setBlock($block, $bucketContents, true, true);
+				if($player->isSurvival()){
+					$player->getInventory()->setItemInHand($ev->getItem(), $player);
+				}
+				return true;
+			}else{
+				$player->getInventory()->sendContents($player);
+			}
+		}
 
-        return false;
-    }
+		return false;
+	}
 }

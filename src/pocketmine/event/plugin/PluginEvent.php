@@ -32,22 +32,20 @@ namespace pocketmine\event\plugin;
 use pocketmine\event\Event;
 use pocketmine\plugin\Plugin;
 
-abstract class PluginEvent extends Event
-{
 
-    /** @var Plugin */
-    private $plugin;
+abstract class PluginEvent extends Event{
 
-    public function __construct(Plugin $plugin)
-    {
-        $this->plugin = $plugin;
-    }
+	/** @var Plugin */
+	private $plugin;
 
-    /**
-     * @return Plugin
-     */
-    public function getPlugin()
-    {
-        return $this->plugin;
-    }
+	public function __construct(Plugin $plugin){
+		$this->plugin = $plugin;
+	}
+
+	/**
+	 * @return Plugin
+	 */
+	public function getPlugin(){
+		return $this->plugin;
+	}
 }

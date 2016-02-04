@@ -26,7 +26,6 @@
 
 namespace pocketmine\block;
 
-interface RedstoneSwitch
-{
-    public function isRedstoneSwitch();
+interface RedstoneSwitch{
+	public function isRedstoneSwitch();
 }

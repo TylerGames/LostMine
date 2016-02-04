@@ -26,56 +26,51 @@ use pocketmine\event\TextContainer;
 use pocketmine\item\Item;
 use pocketmine\Player;
 
-class PlayerDeathEvent extends EntityDeathEvent
-{
-    public static $handlerList = null;
 
-    /** @var TextContainer|string */
-    private $deathMessage;
-    private $keepInventory = false;
+class PlayerDeathEvent extends EntityDeathEvent{
+	public static $handlerList = null;
 
-    /**
-     * @param Player $entity
-     * @param Item[] $drops
-     * @param string|TextContainer $deathMessage
-     */
-    public function __construct(Player $entity, array $drops, $deathMessage)
-    {
-        parent::__construct($entity, $drops);
-        $this->deathMessage = $deathMessage;
-    }
+	/** @var TextContainer|string */
+	private $deathMessage;
+	private $keepInventory = false;
 
-    /**
-     * @return Player
-     */
-    public function getEntity()
-    {
-        return $this->entity;
-    }
+	/**
+	 * @param Player $entity
+	 * @param Item[] $drops
+	 * @param string|TextContainer $deathMessage
+	 */
+	public function __construct(Player $entity, array $drops, $deathMessage){
+		parent::__construct($entity, $drops);
+		$this->deathMessage = $deathMessage;
+	}
 
-    /**
-     * @return TextContainer|string
-     */
-    public function getDeathMessage()
-    {
-        return $this->deathMessage;
-    }
+	/**
+	 * @return Player
+	 */
+	public function getEntity(){
+		return $this->entity;
+	}
 
-    /**
-     * @param string|TextContainer $deathMessage
-     */
-    public function setDeathMessage($deathMessage)
-    {
-        $this->deathMessage = $deathMessage;
-    }
+	/**
+	 * @return TextContainer|string
+	 */
+	public function getDeathMessage(){
+		return $this->deathMessage;
+	}
 
-    public function getKeepInventory()
-    {
-        return $this->keepInventory;
-    }
+	/**
+	 * @param string|TextContainer $deathMessage
+	 */
+	public function setDeathMessage($deathMessage){
+		$this->deathMessage = $deathMessage;
+	}
 
-    public function setKeepInventory($keepInventory)
-    {
-        $this->keepInventory = (bool) $keepInventory;
-    }
+	public function getKeepInventory(){
+		return $this->keepInventory;
+	}
+
+	public function setKeepInventory($keepInventory){
+		$this->keepInventory = (bool) $keepInventory;
+	}
+
 }

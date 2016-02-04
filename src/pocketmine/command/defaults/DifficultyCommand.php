@@ -32,51 +32,49 @@ use pocketmine\event\TranslationContainer;
 use pocketmine\network\protocol\SetDifficultyPacket;
 use pocketmine\Server;
 
-class DifficultyCommand extends VanillaCommand
-{
 
-    public function __construct($name)
-    {
-        parent::__construct(
-            $name,
-            "%pocketmine.command.difficulty.description",
-            "%commands.difficulty.usage"
-        );
-        $this->setPermission("pocketmine.command.difficulty");
-    }
+class DifficultyCommand extends VanillaCommand{
 
-    public function execute(CommandSender $sender, $currentAlias, array $args)
-    {
-        if (!$this->testPermission($sender)) {
-            return true;
-        }
+	public function __construct($name){
+		parent::__construct(
+			$name,
+			"%pocketmine.command.difficulty.description",
+			"%commands.difficulty.usage"
+		);
+		$this->setPermission("pocketmine.command.difficulty");
+	}
 
-        if (count($args) !== 1) {
-            $sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
+	public function execute(CommandSender $sender, $currentAlias, array $args){
+		if(!$this->testPermission($sender)){
+			return true;
+		}
 
-            return false;
-        }
+		if(count($args) !== 1){
+			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
-        $difficulty = Server::getDifficultyFromString($args[0]);
+			return false;
+		}
 
-        if ($sender->getServer()->isHardcore()) {
-            $difficulty = 3;
-        }
+		$difficulty = Server::getDifficultyFromString($args[0]);
 
-        if ($difficulty !== -1) {
-            $sender->getServer()->setConfigInt("difficulty", $difficulty);
+		if($sender->getServer()->isHardcore()){
+			$difficulty = 3;
+		}
 
-            $pk = new SetDifficultyPacket();
-            $pk->difficulty = $sender->getServer()->getDifficulty();
-            Server::broadcastPacket($sender->getServer()->getOnlinePlayers(), $pk);
+		if($difficulty !== -1){
+			$sender->getServer()->setConfigInt("difficulty", $difficulty);
 
-            Command::broadcastCommandMessage($sender, new TranslationContainer("commands.difficulty.success", [$difficulty]));
-        } else {
-            $sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
+			$pk = new SetDifficultyPacket();
+			$pk->difficulty = $sender->getServer()->getDifficulty();
+			Server::broadcastPacket($sender->getServer()->getOnlinePlayers(), $pk);
 
-            return false;
-        }
+			Command::broadcastCommandMessage($sender, new TranslationContainer("commands.difficulty.success", [$difficulty]));
+		}else{
+			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
-        return true;
-    }
+			return false;
+		}
+
+		return true;
+	}
 }

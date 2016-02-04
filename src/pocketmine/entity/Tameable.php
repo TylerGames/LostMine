@@ -26,6 +26,7 @@
 
 namespace pocketmine\entity;
 
-interface Tameable
-{
+
+interface Tameable{
+
 }

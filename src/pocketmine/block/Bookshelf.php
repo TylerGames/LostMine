@@ -26,36 +26,32 @@
 
 namespace pocketmine\block;
 
+
 use pocketmine\item\Tool;
 use pocketmine\item\Item;
 
-class Bookshelf extends Solid
-{
+class Bookshelf extends Solid{
 
-    protected $id = self::BOOKSHELF;
+	protected $id = self::BOOKSHELF;
 
-    public function __construct()
-    {
-    }
+	public function __construct(){
 
-    public function getName()
-    {
-        return "Bookshelf";
-    }
+	}
 
-    public function getHardness()
-    {
-        return 1.5;
-    }
+	public function getName(){
+		return "Bookshelf";
+	}
 
-    public function getToolType()
-    {
-        return Tool::TYPE_AXE;
-    }
-    public function getDrops(Item $item)
-    {
-        return [
-                [Item::BOOK, 0, 3],
-            ];
-    }
+	public function getHardness(){
+		return 1.5;
+	}
+
+	public function getToolType(){
+		return Tool::TYPE_AXE;
+	}
+	public function getDrops(Item $item){
+  			return [  
+  				[Item::BOOK, 0, 3],  
+  			];  
+	}
 }

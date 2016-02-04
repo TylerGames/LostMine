@@ -30,38 +30,36 @@ use pocketmine\command\CommandSender;
 use pocketmine\event\TranslationContainer;
 use pocketmine\Player;
 
-class ListCommand extends VanillaCommand
-{
 
-    public function __construct($name)
-    {
-        parent::__construct(
-            $name,
-            "%pocketmine.command.list.description",
-            "%command.players.usage"
-        );
-        $this->setPermission("pocketmine.command.list");
-    }
+class ListCommand extends VanillaCommand{
 
-    public function execute(CommandSender $sender, $currentAlias, array $args)
-    {
-        if (!$this->testPermission($sender)) {
-            return true;
-        }
+	public function __construct($name){
+		parent::__construct(
+			$name,
+			"%pocketmine.command.list.description",
+			"%command.players.usage"
+		);
+		$this->setPermission("pocketmine.command.list");
+	}
 
-        $online = "";
-        $onlineCount = 0;
+	public function execute(CommandSender $sender, $currentAlias, array $args){
+		if(!$this->testPermission($sender)){
+			return true;
+		}
 
-        foreach ($sender->getServer()->getOnlinePlayers() as $player) {
-            if ($player->isOnline() and (!($sender instanceof Player) or $sender->canSee($player))) {
-                $online .= $player->getDisplayName() . ", ";
-                ++$onlineCount;
-            }
-        }
+		$online = "";
+		$onlineCount = 0;
 
-        $sender->sendMessage(new TranslationContainer("commands.players.list", [$onlineCount, $sender->getServer()->getMaxPlayers()]));
-        $sender->sendMessage(substr($online, 0, -2));
+		foreach($sender->getServer()->getOnlinePlayers() as $player){
+			if($player->isOnline() and (!($sender instanceof Player) or $sender->canSee($player))){
+				$online .= $player->getDisplayName() . ", ";
+				++$onlineCount;
+			}
+		}
 
-        return true;
-    }
+		$sender->sendMessage(new TranslationContainer("commands.players.list", [$onlineCount, $sender->getServer()->getMaxPlayers()]));
+		$sender->sendMessage(substr($online, 0, -2));
+
+		return true;
+	}
 }

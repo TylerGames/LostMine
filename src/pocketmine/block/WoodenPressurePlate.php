@@ -35,115 +35,101 @@ use pocketmine\math\Vector3;
 use pocketmine\entity\Entity;
 use pocketmine\item\Tool;
 
-class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSwitch
-{
+class WoodenPressurePlate extends Transparent implements Redstone, RedstoneSwitch{
 
-    protected $id = self::WOODEN_PRESSURE_PLATE;
-    public $activationtime = 10; // how many redstoneticks they need
-    public $deactivationtime = 5;
+	protected $id = self::WOODEN_PRESSURE_PLATE;
+	public $activationtime = 10; // how many redstoneticks they need
+	public $deactivationtime = 5;
 
-    public function __construct($meta = 0)
-    {
-        $this->meta = $meta;
-    }
-    
-    public function hasEntityCollision()
-    {
-        return true;
-    }
-    
-    public function getToolType()
-    {
-        return Tool::TYPE_AXE;
-    }
+	public function __construct($meta = 0){
+		$this->meta = $meta;
+	}
+	
+	public function hasEntityCollision(){
+		return true;
+	}
+	
+	public function getToolType(){
+		return Tool::TYPE_AXE;
+	}
 
-    public function getName()
-    {
-        return "Wooden Pressure Plate";
-    }
+	public function getName(){
+		return "Wooden Pressure Plate";
+	}
 
-    public function getHardness()
-    {
-        return 0.5;
-    }
+	public function getHardness(){
+		return 0.5;
+	}
 
-    public function getPower()
-    {
-        return $this->isPowered()?16:0;
-    }
-    
-    
-    public function onUpdate($type)
-    {
-        $down = $this->getSide(0);
-        if ($type === Level::BLOCK_UPDATE_SCHEDULED) {
-            if ($this->isPowered() && !$this->isEntityCollided()) {
-                $this->togglePowered();
-            }
-        } elseif ($type === Level::BLOCK_UPDATE_NORMAL) {
-            if ($down->isTransparent() === true && !$down instanceof Fence/* && !$down instanceof Stair && !$down instanceof Slab*/) {
-                $this->getLevel()->useBreakOn($this);
-                return Level::BLOCK_UPDATE_NORMAL;
-            }
-        }
-        return false;
-    }
+	public function getPower(){
+		return $this->isPowered()?16:0;
+	}
+	
+	
+	public function onUpdate($type){
+		$down = $this->getSide(0);
+		if($type === Level::BLOCK_UPDATE_SCHEDULED){
+			if($this->isPowered() && !$this->isEntityCollided()){
+				$this->togglePowered();
+			}
+		}elseif($type === Level::BLOCK_UPDATE_NORMAL){
+			if($down->isTransparent() === true && !$down instanceof Fence/* && !$down instanceof Stair && !$down instanceof Slab*/){
+				$this->getLevel()->useBreakOn($this);
+				return Level::BLOCK_UPDATE_NORMAL;
+			}
+		}
+		return false;
+	}
 
-    public function onEntityCollide(Entity $entity)
-    {
-        if (!$this->isPowered()) {
-            $this->togglePowered();
-            $this->getLevel()->scheduleUpdate($this, 50);
-        }
-    }
+	public function onEntityCollide(Entity $entity){
+		if(!$this->isPowered()){
+			$this->togglePowered();
+			$this->getLevel()->scheduleUpdate($this, 50);
+		}
+	}
 
-    public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null)
-    {
-        $down = $block->getSide(Vector3::SIDE_DOWN);
-        if ($down->isTransparent() === false || $down instanceof Fence/* || $down instanceof Stair || $down instanceof Slab*/) {
-            $this->getLevel()->setBlock($block, $this, true, true);
-            return true;
-        }
-        
-        return false;
-    }
+	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+		$down = $block->getSide(Vector3::SIDE_DOWN);
+		if($down->isTransparent() === false || $down instanceof Fence/* || $down instanceof Stair || $down instanceof Slab*/){
+			$this->getLevel()->setBlock($block, $this, true, true);
+			return true;
+		}
+		
+		return false;
+	}
 
-    public function getDrops(Item $item)
-    {
-        return [[$this->id,0,1]];
-    }
+	public function getDrops(Item $item){
+		return [[$this->id,0,1]];
+	}
 
-    public function isPowered()
-    {
-        return (($this->meta & 0x01) === 0x01);
-    }
-    
-    public function isEntityCollided()
-    {
-        foreach ($this->getLevel()->getChunk($this->x >> 4, $this->z >> 4)->getEntities() as $entity) {
-            if ($this->getLevel()->getBlock($entity->getPosition()) === $this) {
-                return true;
-            }
-        }
-        return false;
-    }
+	public function isPowered(){
+		return (($this->meta & 0x01) === 0x01);
+	}
+	
+	public function isEntityCollided(){
+		foreach ($this->getLevel()->getChunk($this->x >> 4, $this->z >> 4)->getEntities() as $entity){
+			if($this->getLevel()->getBlock($entity->getPosition()) === $this)
+				return true;
+		}
+		return false;
+	}
 
-    /**
-     * Toggles the current state of this plate
-     */
-    public function togglePowered()
-    {
-        $this->meta ^= 0x01;
-        $this->isPowered()?$this->power=15:$this->power=0;
-        if ($this->isPowered()) {
-            $this->getLevel()->addSound(new ButtonClickSound($this));
-            $type = Level::REDSTONE_UPDATE_PLACE;
-        } else {
-            $this->getLevel()->addSound(new ButtonReturnSound($this, 1000));
-            $type = Level::REDSTONE_UPDATE_BREAK;
-        }
-        $this->getLevel()->setBlock($this, $this, true);
-        $this->BroadcastRedstoneUpdate($type, 16);
-        $this->getSide(0)->BroadcastRedstoneUpdate($type, 16);
-    }
+	/**
+	 * Toggles the current state of this plate
+	 */
+	public function togglePowered(){
+		$this->meta ^= 0x01;
+		$this->isPowered()?$this->power=15:$this->power=0;
+		if($this->isPowered()){
+			$this->getLevel()->addSound(new ButtonClickSound($this));
+			$type = Level::REDSTONE_UPDATE_PLACE;
+
+		}else{
+			$this->getLevel()->addSound(new ButtonReturnSound($this, 1000));
+			$type = Level::REDSTONE_UPDATE_BREAK;
+		}
+		$this->getLevel()->setBlock($this, $this, true);
+		$this->BroadcastRedstoneUpdate($type,16);
+		$this->getSide(0)->BroadcastRedstoneUpdate($type,16);
+	}
 }

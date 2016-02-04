@@ -36,64 +36,58 @@ namespace pocketmine\network\protocol;
 use pocketmine\utils\BinaryStream;
 use pocketmine\utils\Utils;
 
-abstract class DataPacket extends BinaryStream
-{
 
-    const NETWORK_ID = 0;
+abstract class DataPacket extends BinaryStream{
 
-    public $isEncoded = false;
-    private $channel = 0;
+	const NETWORK_ID = 0;
 
-    public function pid()
-    {
-        return $this::NETWORK_ID;
-    }
+	public $isEncoded = false;
+	private $channel = 0;
 
-    abstract public function encode();
+	public function pid(){
+		return $this::NETWORK_ID;
+	}
 
-    abstract public function decode();
+	abstract public function encode();
 
-    public function reset()
-    {
-        $this->buffer = chr($this::NETWORK_ID);
-        $this->offset = 0;
-    }
+	abstract public function decode();
 
-    /**
-     * @deprecated This adds extra overhead on the network, so its usage is now discouraged. It was a test for the viability of this.
-     */
-    public function setChannel($channel)
-    {
-        $this->channel = (int) $channel;
-        return $this;
-    }
+	public function reset(){
+		$this->buffer = chr($this::NETWORK_ID);
+		$this->offset = 0;
+	}
 
-    public function getChannel()
-    {
-        return $this->channel;
-    }
+	/**
+	 * @deprecated This adds extra overhead on the network, so its usage is now discouraged. It was a test for the viability of this.
+	 */
+	public function setChannel($channel){
+		$this->channel = (int) $channel;
+		return $this;
+	}
 
-    public function clean()
-    {
-        $this->buffer = null;
-        $this->isEncoded = false;
-        $this->offset = 0;
-        return $this;
-    }
+	public function getChannel(){
+		return $this->channel;
+	}
 
-    public function __debugInfo()
-    {
-        $data = [];
-        foreach ($this as $k => $v) {
-            if ($k === "buffer") {
-                $data[$k] = bin2hex($v);
-            } elseif (is_string($v) or (is_object($v) and method_exists($v, "__toString"))) {
-                $data[$k] = Utils::printable((string) $v);
-            } else {
-                $data[$k] = $v;
-            }
-        }
+	public function clean(){
+		$this->buffer = null;
+		$this->isEncoded = false;
+		$this->offset = 0;
+		return $this;
+	}
 
-        return $data;
-    }
+	public function __debugInfo(){
+		$data = [];
+		foreach($this as $k => $v){
+			if($k === "buffer"){
+				$data[$k] = bin2hex($v);
+			}elseif(is_string($v) or (is_object($v) and method_exists($v, "__toString"))){
+				$data[$k] = Utils::printable((string) $v);
+			}else{
+				$data[$k] = $v;
+			}
+		}
+
+		return $data;
+	}
 }

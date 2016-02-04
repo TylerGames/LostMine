@@ -30,115 +30,114 @@ use pocketmine\command\CommandSender;
 use pocketmine\event\TimingsHandler;
 use pocketmine\event\TranslationContainer;
 
-class TimingsCommand extends VanillaCommand
-{
 
-    public static $timingStart = 0;
+class TimingsCommand extends VanillaCommand{
 
-    public function __construct($name)
-    {
-        parent::__construct(
-            $name,
-            "%pocketmine.command.timings.description",
-            "%pocketmine.command.timings.usage"
-        );
-        $this->setPermission("pocketmine.command.timings");
-    }
+	public static $timingStart = 0;
 
-    public function execute(CommandSender $sender, $currentAlias, array $args)
-    {
-        if (!$this->testPermission($sender)) {
-            return true;
-        }
+	public function __construct($name){
+		parent::__construct(
+			$name,
+			"%pocketmine.command.timings.description",
+			"%pocketmine.command.timings.usage"
+		);
+		$this->setPermission("pocketmine.command.timings");
+	}
 
-        if (count($args) !== 1) {
-            $sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
+	public function execute(CommandSender $sender, $currentAlias, array $args){
+		if(!$this->testPermission($sender)){
+			return true;
+		}
 
-            return true;
-        }
+		if(count($args) !== 1){
+			$sender->sendMessage(new TranslationContainer("commands.generic.usage", [$this->usageMessage]));
 
-        $mode = strtolower($args[0]);
+			return true;
+		}
 
-        if ($mode === "on") {
-            $sender->getServer()->getPluginManager()->setUseTimings(true);
-            TimingsHandler::reload();
-            $sender->sendMessage(new TranslationContainer("pocketmine.command.timings.enable"));
+		$mode = strtolower($args[0]);
 
-            return true;
-        } elseif ($mode === "off") {
-            $sender->getServer()->getPluginManager()->setUseTimings(false);
-            $sender->sendMessage(new TranslationContainer("pocketmine.command.timings.disable"));
-            return true;
-        }
+		if($mode === "on"){
+			$sender->getServer()->getPluginManager()->setUseTimings(true);
+			TimingsHandler::reload();
+			$sender->sendMessage(new TranslationContainer("pocketmine.command.timings.enable"));
 
-        if (!$sender->getServer()->getPluginManager()->useTimings()) {
-            $sender->sendMessage(new TranslationContainer("pocketmine.command.timings.timingsDisabled"));
+			return true;
+		}elseif($mode === "off"){
+			$sender->getServer()->getPluginManager()->setUseTimings(false);
+			$sender->sendMessage(new TranslationContainer("pocketmine.command.timings.disable"));
+			return true;
+		}
 
-            return true;
-        }
+		if(!$sender->getServer()->getPluginManager()->useTimings()){
+			$sender->sendMessage(new TranslationContainer("pocketmine.command.timings.timingsDisabled"));
 
-        $paste = $mode === "paste";
+			return true;
+		}
 
-        if ($mode === "reset") {
-            TimingsHandler::reload();
-            $sender->sendMessage(new TranslationContainer("pocketmine.command.timings.reset"));
-        } elseif ($mode === "merged" or $mode === "report" or $paste) {
-            $sampleTime = microtime(true) - self::$timingStart;
-            $index = 0;
-            $timingFolder = $sender->getServer()->getDataPath() . "timings/";
+		$paste = $mode === "paste";
 
-            if (!file_exists($timingFolder)) {
-                mkdir($timingFolder, 0777);
-            }
-            $timings = $timingFolder . "timings.txt";
-            while (file_exists($timings)) {
-                $timings = $timingFolder . "timings" . (++$index) . ".txt";
-            }
+		if($mode === "reset"){
+			TimingsHandler::reload();
+			$sender->sendMessage(new TranslationContainer("pocketmine.command.timings.reset"));
+		}elseif($mode === "merged" or $mode === "report" or $paste){
 
-            $fileTimings = $paste ? fopen("php://temp", "r+b") : fopen($timings, "a+b");
+			$sampleTime = microtime(true) - self::$timingStart;
+			$index = 0;
+			$timingFolder = $sender->getServer()->getDataPath() . "timings/";
 
-            TimingsHandler::printTimings($fileTimings);
+			if(!file_exists($timingFolder)){
+				mkdir($timingFolder, 0777);
+			}
+			$timings = $timingFolder . "timings.txt";
+			while(file_exists($timings)){
+				$timings = $timingFolder . "timings" . (++$index) . ".txt";
+			}
 
-            fwrite($fileTimings, "Sample time " . round($sampleTime * 1000000000) . " (" . $sampleTime . "s)" . PHP_EOL);
+			$fileTimings = $paste ? fopen("php://temp", "r+b") : fopen($timings, "a+b");
 
-            if ($paste) {
-                fseek($fileTimings, 0);
-                $data = [
-                    "syntax" => "text",
-                    "poster" => $sender->getServer()->getName(),
-                    "content" => stream_get_contents($fileTimings)
-                ];
+			TimingsHandler::printTimings($fileTimings);
 
-                $ch = curl_init("http://paste.ubuntu.com/");
-                curl_setopt($ch, CURLOPT_POST, 1);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-                curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
-                curl_setopt($ch, CURLOPT_FORBID_REUSE, 1);
-                curl_setopt($ch, CURLOPT_FRESH_CONNECT, 1);
-                curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
-                curl_setopt($ch, CURLOPT_AUTOREFERER, false);
-                curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
-                curl_setopt($ch, CURLOPT_HEADER, true);
-                curl_setopt($ch, CURLOPT_HTTPHEADER, ["User-Agent: " . $this->getName() . " " . $sender->getServer()->getPocketMineVersion()]);
-                curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-                $data = curl_exec($ch);
-                curl_close($ch);
-                if (preg_match('#^Location: http://paste\\.ubuntu\\.com/([0-9]{1,})/#m', $data, $matches) == 0) {
-                    $sender->sendMessage(new TranslationContainer("pocketmine.command.timings.pasteError"));
+			fwrite($fileTimings, "Sample time " . round($sampleTime * 1000000000) . " (" . $sampleTime . "s)" . PHP_EOL);
 
-                    return true;
-                }
+			if($paste){
+				fseek($fileTimings, 0);
+				$data = [
+					"syntax" => "text",
+					"poster" => $sender->getServer()->getName(),
+					"content" => stream_get_contents($fileTimings)
+				];
+
+				$ch = curl_init("http://paste.ubuntu.com/");
+				curl_setopt($ch, CURLOPT_POST, 1);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+				curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 2);
+				curl_setopt($ch, CURLOPT_FORBID_REUSE, 1);
+				curl_setopt($ch, CURLOPT_FRESH_CONNECT, 1);
+				curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+				curl_setopt($ch, CURLOPT_AUTOREFERER, false);
+				curl_setopt($ch, CURLOPT_FOLLOWLOCATION, false);
+				curl_setopt($ch, CURLOPT_HEADER, true);
+				curl_setopt($ch, CURLOPT_HTTPHEADER, ["User-Agent: " . $this->getName() . " " . $sender->getServer()->getPocketMineVersion()]);
+				curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+				$data = curl_exec($ch);
+				curl_close($ch);
+				if(preg_match('#^Location: http://paste\\.ubuntu\\.com/([0-9]{1,})/#m', $data, $matches) == 0){
+					$sender->sendMessage(new TranslationContainer("pocketmine.command.timings.pasteError"));
+
+					return true;
+				}
 
 
-                $sender->sendMessage(new TranslationContainer("pocketmine.command.timings.timingsUpload", ["http://paste.ubuntu.com/" . $matches[1] . "/"]));
-                $sender->sendMessage(new TranslationContainer("pocketmine.command.timings.timingsRead", ["http://timings.aikar.co/?url=" . $matches[1]]));
-                fclose($fileTimings);
-            } else {
-                fclose($fileTimings);
-                $sender->sendMessage(new TranslationContainer("pocketmine.command.timings.timingsWrite", [$timings]));
-            }
-        }
+				$sender->sendMessage(new TranslationContainer("pocketmine.command.timings.timingsUpload", ["http://paste.ubuntu.com/" . $matches[1] . "/"]));
+				$sender->sendMessage(new TranslationContainer("pocketmine.command.timings.timingsRead", ["http://timings.aikar.co/?url=" . $matches[1]]));
+				fclose($fileTimings);
+			}else{
+				fclose($fileTimings);
+				$sender->sendMessage(new TranslationContainer("pocketmine.command.timings.timingsWrite", [$timings]));
+			}
+		}
 
-        return true;
-    }
+		return true;
+	}
 }
