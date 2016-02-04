@@ -26,6 +26,7 @@
 
 namespace pocketmine\block;
 
-interface RedstoneConsumer{
-	public function isRedstoneConsumer();
+interface RedstoneConsumer
+{
+    public function isRedstoneConsumer();
 }

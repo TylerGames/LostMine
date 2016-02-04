@@ -31,34 +31,41 @@ use pocketmine\item\Item;
 use pocketmine\item\Tool;
 use pocketmine\Player;
 
-class AnvilBlock extends Fallable{
+class AnvilBlock extends Fallable
+{
     const TYPE_ANVIL = 0;
     const TYPE_SLIGHTLY_DAMAGED_ANVIL = 4;
     const TYPE_VERY_DAMAGED_ANVIL = 8;
 
     protected $id = self::ANVIL_BLOCK;
 
-    public function isSolid(){
+    public function isSolid()
+    {
         return false;
     }
 
-    public function __construct($meta = 0){
+    public function __construct($meta = 0)
+    {
         $this->meta = $meta;
     }
 
-    public function canBeActivated(){
+    public function canBeActivated()
+    {
         return true;
     }
 
-    public function getHardness(){
+    public function getHardness()
+    {
         return 5;
     }
 
-    public function getResistance(){
+    public function getResistance()
+    {
         return 6000;
     }
 
-    public function getName(){
+    public function getName()
+    {
         static $names = [
             self::TYPE_ANVIL => "Anvil",
             1 => "Anvil",
@@ -76,13 +83,15 @@ class AnvilBlock extends Fallable{
         return $names[$this->meta];
     }
 
-    public function getToolType(){
+    public function getToolType()
+    {
         return Tool::TYPE_PICKAXE;
     }
 
-    public function onActivate(Item $item, Player $player = null){
-        if($player instanceof Player){
-            if($player->isCreative()){
+    public function onActivate(Item $item, Player $player = null)
+    {
+        if ($player instanceof Player) {
+            if ($player->isCreative()) {
                 return true;
             }
 
@@ -92,24 +101,25 @@ class AnvilBlock extends Fallable{
         return true;
     }
 
-    public function getDrops(Item $item){
+    public function getDrops(Item $item)
+    {
         $damage = $this->getDamage();
-        if($item->isPickaxe() >= Tool::TIER_WOODEN){
-            if($damage >= 0 && $damage <= 3){ //Anvil
+        if ($item->isPickaxe() >= Tool::TIER_WOODEN) {
+            if ($damage >= 0 && $damage <= 3) { //Anvil
                 return [[$this->id, 0, 1]];
-
-            }elseif($damage >= 4 && $damage <= 7){//Slightly Anvil
+            } elseif ($damage >= 4 && $damage <= 7) {
+                //Slightly Anvil
                 return [[$this->id, $this->meta & 0x04, 1]];
-
-            }elseif($damage >= 8 && $damage <= 11){ //Very Damaged Anvil
+            } elseif ($damage >= 8 && $damage <= 11) { //Very Damaged Anvil
                 return [[$this->id, $this->meta & 0x08, 1]];
             }
-        }else{
+        } else {
             return [];
         }
     }
 
-    public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
+    public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null)
+    {
         if ($target->isTransparent() === false) {
             $faces = [
                 0 => 0,
@@ -121,15 +131,12 @@ class AnvilBlock extends Fallable{
             $damage = $this->getDamage();
             $this->meta = $faces[$player instanceof Player ? $player->getDirection() : 0] & 0x04;
 
-            if($damage >= 0 && $damage <= 3){
+            if ($damage >= 0 && $damage <= 3) {
                 $this->meta = $faces[$player instanceof Player ? $player->getDirection() : 0];
-                
-            }elseif($damage >= 4 && $damage <= 7){
+            } elseif ($damage >= 4 && $damage <= 7) {
                 $this->meta = $faces[$player instanceof Player ? $player->getDirection() : 0] | 0x04;
-
-            }elseif($damage >= 8 && $damage <= 11){
+            } elseif ($damage >= 8 && $damage <= 11) {
                 $this->meta = $faces[$player instanceof Player ? $player->getDirection() : 0] | 0x08;
-
             }
             $this->getLevel()->setBlock($block, $this, true);
             return true;

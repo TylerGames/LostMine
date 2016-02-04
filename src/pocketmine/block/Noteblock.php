@@ -32,73 +32,87 @@
  * OpenGenisys Project
 */
 namespace pocketmine\block;
+
 use pocketmine\item\Tool;
 use pocketmine\item\Item;
 use pocketmine\level\sound\NoteblockSound;
 use pocketmine\Player;
 
-class Noteblock extends Solid implements RedstoneConsumer{
-	protected $id = self::NOTEBLOCK;
-	protected $downSideId = null;
+class Noteblock extends Solid implements RedstoneConsumer
+{
+    protected $id = self::NOTEBLOCK;
+    protected $downSideId = null;
 
-	public function __construct($meta = 0){
-		$this->meta = $meta;
-	}
+    public function __construct($meta = 0)
+    {
+        $this->meta = $meta;
+    }
 
-	public function getHardness(){
-		return 0.8;
-	}
-	public function getResistance(){
-		return 4;
-	}
-	public function getToolType(){
-		return Tool::TYPE_AXE;
-	}
-	public function canBeActivated(){
-		return true;
-	}
-	public function getStrength(){
-		if($this->meta < 24) $this->meta ++;
-		else $this->meta = 0;
-		$this->getLevel()->setBlock($this, $this);
-		return $this->meta * 1;
-	}
+    public function getHardness()
+    {
+        return 0.8;
+    }
+    public function getResistance()
+    {
+        return 4;
+    }
+    public function getToolType()
+    {
+        return Tool::TYPE_AXE;
+    }
+    public function canBeActivated()
+    {
+        return true;
+    }
+    public function getStrength()
+    {
+        if ($this->meta < 24) {
+            $this->meta ++;
+        } else {
+            $this->meta = 0;
+        }
+        $this->getLevel()->setBlock($this, $this);
+        return $this->meta * 1;
+    }
 
-	public function onActivate(Item $item, Player $player = null){
+    public function onActivate(Item $item, Player $player = null)
+    {
+        switch ($this->downSideId) {
+            case self::GLASS:
+            case self::GLOWSTONE:
+                $this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_CLICK, $this->getStrength()));
+                break;
+            case self::SAND:
+            case self::GRAVEL:
+                $this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_TABOUR, $this->getStrength()));
+                break;
+            case self::WOOD:
+                $this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS, $this->getStrength()));
+                break;
+            case self::STONE:
+                $this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS_DRUM, $this->getStrength()));
+                break;
+            default:
+                $this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_PIANO, $this->getStrength()));
+                break;
+        }
+        return true;
+    }
 
-		switch($this->downSideId){
-			case self::GLASS:
-			case self::GLOWSTONE:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_CLICK, $this->getStrength()));
-				break;
-			case self::SAND:
-			case self::GRAVEL:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_TABOUR, $this->getStrength()));
-				break;
-			case self::WOOD:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS, $this->getStrength()));
-				break;
-			case self::STONE:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS_DRUM, $this->getStrength()));
-				break;
-			default:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_PIANO, $this->getStrength()));
-				break;
-		}
-		return true;
-	}
+    public function onUpdate($type)
+    {
+        $this->downSideId = $this->getSide(0)->getId();
+        return parent::onUpdate($type);
+    }
 
-	public function onUpdate($type){
-		$this->downSideId = $this->getSide(0)->getId();
-		return parent::onUpdate($type);
-	}
+    public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null)
+    {
+        $this->downSideId = $this->getSide(0)->getId();
+        return parent::place($item, $block, $target, $face, $fx, $fy, $fz, $player);
+    }
 
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		$this->downSideId = $this->getSide(0)->getId();
-		return parent::place($item, $block, $target, $face, $fx, $fy, $fz, $player);
-	}
-
-	public function getName(){
-		return "Noteblock";
-	}
+    public function getName()
+    {
+        return "Noteblock";
+    }
 }

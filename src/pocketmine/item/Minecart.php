@@ -38,21 +38,26 @@ use pocketmine\block\Rail;
 use pocketmine\block\RailBlock;
 use pocketmine\math\Vector3;
 
-class Minecart extends Item{
+class Minecart extends Item
+{
 
-    public function __construct($meta = 0, $count = 1){
+    public function __construct($meta = 0, $count = 1)
+    {
         parent::__construct(self::MINECART, $meta, $count, "Minecart");
     }
 
-    public function getMaxStackSize(){
+    public function getMaxStackSize()
+    {
         return 1;
     }
 
-    public function canBeActivated(){
+    public function canBeActivated()
+    {
         return true;
     }
 
-    public function onActivate(Level $level, Player $player, Block $block, Block $target, $face, $fx, $fy, $fz){
+    public function onActivate(Level $level, Player $player, Block $block, Block $target, $face, $fx, $fy, $fz)
+    {
         $blockTemp = $level->getBlock($block->add(0, -1, 0));
         //if(!$block instanceof RailBlock || !$block instanceof Rail) return false; in previuos version IM
         //if($blockTemp->getId() != self::RAIL and $blockTemp->getId() != self::POWERED_RAIL) return; in previuos version Genisys
@@ -75,10 +80,10 @@ class Minecart extends Item{
                 )));
         $minecart->spawnToAll();
 
-        if($player->isSurvival()){
+        if ($player->isSurvival()) {
             $item = $player->getInventory()->getItemInHand();
             $count = $item->getCount();
-            if(--$count <= 0){
+            if (--$count <= 0) {
                 $player->getInventory()->setItemInHand(Item::get(Item::AIR));
                 return;
             }
@@ -90,4 +95,3 @@ class Minecart extends Item{
         return true;
     }
 }
-

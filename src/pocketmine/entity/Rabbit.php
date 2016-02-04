@@ -30,7 +30,8 @@ use pocketmine\item\Item as drp;
 use pocketmine\nbt\tag\Int;
 use pocketmine\Player;
 
-class Rabbit extends Animal{
+class Rabbit extends Animal
+{
     const NETWORK_ID = 18;
 
     const TYPE_BROWN = 0;
@@ -44,19 +45,22 @@ class Rabbit extends Animal{
     public $width = 0.5;
     public $lenght = 0.5;
 
-    public function initEntity(){
+    public function initEntity()
+    {
         $this->setMaxHealth(3);
         parent::initEntity();
-        if(!isset($this->namedtag->Type)){
+        if (!isset($this->namedtag->Type)) {
             $this->setType(mt_rand(0, 5));
         }
     }
 
-    public function getName(){
+    public function getName()
+    {
         return "Rabbit";
     }
 
-    public function spawnTo(Player $player){
+    public function spawnTo(Player $player)
+    {
         $pk = $this->addEntityDataPacket($player);
         $pk->type = Rabbit::NETWORK_ID;
 
@@ -64,25 +68,26 @@ class Rabbit extends Animal{
         parent::spawnTo($player);
     }
 
-    public function setType($type){
+    public function setType($type)
+    {
         $this->namedtag->Profession = new Int("Type", $type);
     }
 
-    public function getType(){
+    public function getType()
+    {
         return $this->namedtag["Type"];
     }
 
-    public function getDrops(){
+    public function getDrops()
+    {
         $drops = [drp::get(drp::RABBIT_HIDE, 0, mt_rand(0, 2))];
 
-        if($this->getLastDamageCause() === EntityDamageEvent::CAUSE_FIRE){
+        if ($this->getLastDamageCause() === EntityDamageEvent::CAUSE_FIRE) {
             $drops[] = drp::get(drp::COOKED_RABBIT, 0, mt_rand(1, 2));
-        }else{
+        } else {
             $drops[] = drp::get(drp::RAW_RABBIT, 0, mt_rand(1, 2));
         }
 
         return $drops;
     }
-
-
 }

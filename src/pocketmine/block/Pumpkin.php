@@ -43,7 +43,6 @@ class Pumpkin extends Solid
 
     public function __construct()
     {
-
     }
 
     public function getHardness()
@@ -108,8 +107,6 @@ class Pumpkin extends Solid
                     ]),
                 ]));
                 $snowGolem->spawnToAll();
-
-
             } elseif ($firstBlock->getId() === Item::IRON_BLOCK && $secondBlock->getId() === Item::IRON_BLOCK) { // possible iron golem
 
                 if (($armBlock1->getId() === Item::IRON_BLOCK && $armBlock2->getId() === Item::IRON_BLOCK && $airBlock1->getId() === Item::AIR && $airBlock2->getId() === Item::AIR) ||
@@ -146,5 +143,4 @@ class Pumpkin extends Solid
         }
         return true;
     }
-
 }

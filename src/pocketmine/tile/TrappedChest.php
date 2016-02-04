@@ -30,47 +30,51 @@ use pocketmine\nbt\tag\Compound;
 use pocketmine\nbt\tag\Int;
 use pocketmine\nbt\tag\String;
 
-class TrappedChest extends Chest{
-	public function close(){
-		if($this->closed === false){
-			foreach($this->getInventory()->getViewers() as $player){
-				$player->removeWindow($this->getInventory());
-			}
+class TrappedChest extends Chest
+{
+    public function close()
+    {
+        if ($this->closed === false) {
+            foreach ($this->getInventory()->getViewers() as $player) {
+                $player->removeWindow($this->getInventory());
+            }
 
-			foreach($this->getInventory()->getViewers() as $player){
-				$player->removeWindow($this->getRealInventory());
-			}
-			parent::close();
-		}
-	}
+            foreach ($this->getInventory()->getViewers() as $player) {
+                $player->removeWindow($this->getRealInventory());
+            }
+            parent::close();
+        }
+    }
 
-	public function getName(){
-		return isset($this->namedtag->CustomName) ? $this->namedtag->CustomName->getValue() : "Trapped chest";
-	}
+    public function getName()
+    {
+        return isset($this->namedtag->CustomName) ? $this->namedtag->CustomName->getValue() : "Trapped chest";
+    }
 
-	public function getSpawnCompound(){
-		if($this->isPaired()){
-			$c = new Compound("", [
-				new String("id", Tile::TRAPPED_CHEST),
-				new Int("x", (int) $this->x),
-				new Int("y", (int) $this->y),
-				new Int("z", (int) $this->z),
-				new Int("pairx", (int) $this->namedtag["pairx"]),
-				new Int("pairz", (int) $this->namedtag["pairz"])
-			]);
-		}else{
-			$c = new Compound("", [
-				new String("id", Tile::TRAPPED_CHEST),
-				new Int("x", (int) $this->x),
-				new Int("y", (int) $this->y),
-				new Int("z", (int) $this->z)
-			]);
-		}
+    public function getSpawnCompound()
+    {
+        if ($this->isPaired()) {
+            $c = new Compound("", [
+                new String("id", Tile::TRAPPED_CHEST),
+                new Int("x", (int) $this->x),
+                new Int("y", (int) $this->y),
+                new Int("z", (int) $this->z),
+                new Int("pairx", (int) $this->namedtag["pairx"]),
+                new Int("pairz", (int) $this->namedtag["pairz"])
+            ]);
+        } else {
+            $c = new Compound("", [
+                new String("id", Tile::TRAPPED_CHEST),
+                new Int("x", (int) $this->x),
+                new Int("y", (int) $this->y),
+                new Int("z", (int) $this->z)
+            ]);
+        }
 
-		if($this->hasName()){
-			$c->CustomName = $this->namedtag->CustomName;
-		}
+        if ($this->hasName()) {
+            $c->CustomName = $this->namedtag->CustomName;
+        }
 
-		return $c;
-	}
+        return $c;
+    }
 }

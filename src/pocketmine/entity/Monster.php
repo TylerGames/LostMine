@@ -26,11 +26,8 @@
 
 namespace pocketmine\entity;
 
-
-
 use pocketmine\Player;
 
-abstract class Monster extends Creature{
-
-
+abstract class Monster extends Creature
+{
 }

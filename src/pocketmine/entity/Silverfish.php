@@ -28,23 +28,27 @@ namespace pocketmine\entity;
 
 use pocketmine\Player;
 
-class Silverfish extends Monster{
+class Silverfish extends Monster
+{
     const NETWORK_ID = 39;
 
     public $height = 0.438;
     public $width = 0.609;
     public $lenght = 1.094;
 
-    public function initEntity(){
+    public function initEntity()
+    {
         $this->setMaxHealth(8);
         parent::initEntity();
     }
 
- 	public function getName(){
+    public function getName()
+    {
         return "Silverfish";
     }
 
-    public function spawnTo(Player $player){
+    public function spawnTo(Player $player)
+    {
         $pk = $this->addEntityDataPacket($player);
         $pk->type = Silverfish::NETWORK_ID;
 
@@ -52,7 +56,8 @@ class Silverfish extends Monster{
         parent::spawnTo($player);
     }
 
-    public function getDrops(){
+    public function getDrops()
+    {
         $drops = [];
         return $drops;
     }

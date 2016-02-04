@@ -25,17 +25,19 @@
 
 namespace pocketmine\entity;
 
-
 use pocketmine\Player;
 
-class ChargedCreeper extends Creeper{
+class ChargedCreeper extends Creeper
+{
 
-    public function initEntity(){
+    public function initEntity()
+    {
         $this->setMaxHealth(20);
         parent::initEntity();
     }
 
-    public function spawnTo(Player $player){
+    public function spawnTo(Player $player)
+    {
         $pk = $this->addEntityDataPacket($player);
         $pk->type = Creeper::NETWORK_ID;
 
@@ -43,8 +45,8 @@ class ChargedCreeper extends Creeper{
         parent::spawnTo($player);
     }
 
-    public function getName(){
+    public function getName()
+    {
         return "Charged Creeper";
     }
-
 }
