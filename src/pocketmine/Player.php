@@ -1855,8 +1855,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$pk->y = (int) $spawnPosition->y;
 		$pk->z = (int) $spawnPosition->z;
 		$this->dataPacket($pk);
-		
-		
+
+
 		//Reload Attributes
 		if(isset($nbt["Health"]))
 		{
@@ -1876,8 +1876,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		{
 			$this->setExpLevel($nbt["expLevel"]);
 		}
-		
-		
+
+
 		$this->getAttribute()->sendAll();
 
 		$pk = new SetDifficultyPacket();
@@ -2556,7 +2556,9 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 				){
 					$cancelled = true;
 				}
-				$target->onPlayerAction($this, $packet->action);
+				if($target instanceof Entity or $target instanceof Item) {
+				    $target->onPlayerAction($this, $packet->action);
+				}
 				// @todo move this to the entity
 				//if($target instanceof Boat or $target instanceof Minecart){
 				if($target instanceof Boat) {
@@ -3227,12 +3229,12 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 
 			$this->namedtag["playerGameType"] = $this->gamemode;
 			$this->namedtag["lastPlayed"] = new Long("lastPlayed", floor(microtime(true) * 1000));
-			
+
 			$this->namedtag["food"] = new Int("food", $this->getFood());
 			$this->namedtag["Health"] = new Short("Health", $this->getHealth());
 			$this->namedtag["exp"] = new Short("exp", $this->getExperience());
 			$this->namedtag["expLevel"] = new Short("expLevel", $this->getExpLevel());
-			
+
 			if($this->username != "" and $this->namedtag instanceof Compound){
 				$this->server->saveOfflinePlayerData($this->username, $this->namedtag, $async);
 			}
