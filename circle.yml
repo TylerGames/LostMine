@@ -16,7 +16,9 @@ checkout:
     - curl -sL https://get.pocketmine.net | bash -s - -v stable
     - rm -r PocketMine-MP.phar
     - rm -r PocketMine-MP.phar.sig
-    - git clone https://github.com/ImagicalMine/ImagicalMine .
+    - git init .
+    - git remote add origin https://github.com/ImagicalMine/ImagicalMine
+    -git pull origin master
     - mkdir plugins
     - wget -O plugins/DevTools.phar https://github.com/PocketMine/DevTools/releases/download/v1.9.0/DevTools_v1.9.0.phar
     - php tests/TravisTest.php
