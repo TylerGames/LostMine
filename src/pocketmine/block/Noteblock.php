@@ -75,7 +75,10 @@ class Noteblock extends Solid implements RedstoneConsumer{
 		}
 
 		//fix for possible memory leak, limited addSound call
-		switch($this->downSideId && $this->soundAdded == false){
+		if($this->soundAdded == true) {
+			return true;
+		}
+		switch($this->downSideId){
 			case self::GLASS:
 			case self::GLOWSTONE:
 				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_CLICK, $this->getStrength()), $players);
