@@ -1,18 +1,20 @@
-dependencies:
-  pre:
-    - curl -sL https://get.pocketmine.net | bash -s - -v stable
-    - rm -r PocketMine-MP.phar
+#dependencies:
+#  pre:
+#    - curl -sL https://get.pocketmine.net | bash -s - -v stable
+#    - rm -r PocketMine-MP.phar
 #    - wget https://bintray.com/artifact/download/pocketmine/PocketMine/PHP_5.6.10_x86-64_Linux.tar.gz
 #    - tar zxf PHP_5.6.10_x86-64_Linux.tar.gz
 #    - pear config-set php_dir /bin/php5
-    - pecl install channel://pecl.php.net/pthreads-2.0.10
-    - pecl install channel://pecl.php.net/weakref-0.2.6
-    - pecl install channel://pecl.php.net/yaml-1.1.1
+#    - pecl install channel://pecl.php.net/pthreads-2.0.10
+#    - pecl install channel://pecl.php.net/weakref-0.2.6
+#    - pecl install channel://pecl.php.net/yaml-1.1.1
 
 checkout:
   post:
     - git submodule sync
     - git submodule update --init
+    - curl -sL https://get.pocketmine.net | bash -s - -v stable
+    - rm -r PocketMine-MP.phar
     - mkdir plugins
     - wget -O plugins/DevTools.phar https://github.com/PocketMine/DevTools/releases/download/v1.9.0/DevTools_v1.9.0.phar
     - php tests/TravisTest.php
