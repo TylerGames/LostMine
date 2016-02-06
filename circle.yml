@@ -15,6 +15,7 @@ checkout:
     - git submodule update --init
     - curl -sL https://get.pocketmine.net | bash -s - -v stable
     - rm -r PocketMine-MP.phar
+    - ls
     - mkdir plugins
     - wget -O plugins/DevTools.phar https://github.com/PocketMine/DevTools/releases/download/v1.9.0/DevTools_v1.9.0.phar
     - php tests/TravisTest.php
