@@ -42,7 +42,7 @@ class DetectorRail extends ExtendedRailBlock implements RedstoneConsumer{
 	const SIDE_SOUTH_EAST = 8;
 	const SIDE_SOUTH_WEST = 9;
 
-	public function __construct($meta = 0){
+	public function __construct(int $meta = 0){
 		$this->meta = $meta;
 	}
 
@@ -103,7 +103,7 @@ class DetectorRail extends ExtendedRailBlock implements RedstoneConsumer{
 		$this->getLevel()->setBlock($this, $this, true, true);
 	}
 
-	public function setDirection($face, $isOnSlope=false){
+	public function setDirection($face, $isOnSlope = false){/*@Aodzip */
 		$extrabitset=(($this->meta&0x08)===0x08);
 		if($face !== Vector3::SIDE_WEST && $face !== Vector3::SIDE_EAST && $face !== Vector3::SIDE_NORTH && $face !== Vector3::SIDE_SOUTH){
 			throw new IllegalArgumentException("This rail variant can't be on a curve!");

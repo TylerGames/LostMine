@@ -29,14 +29,14 @@ namespace pocketmine\item;
 use pocketmine\level\Level;
 use pocketmine\block\Block;
 use pocketmine\Player;
-use pocketmine\nbt\tag\Compound;
-use pocketmine\nbt\tag\Enum;
-use pocketmine\nbt\tag\Double;
-use pocketmine\nbt\tag\Float;
 use pocketmine\entity\Minecart as MinecartEntity;
 use pocketmine\block\Rail;
 use pocketmine\block\RailBlock;
 use pocketmine\math\Vector3;
+use pocketmine\nbt\tag\CompoundTag;
+use pocketmine\nbt\tag\ListTag;
+use pocketmine\nbt\tag\DoubleTag;
+use pocketmine\nbt\tag\FloatTag;
 
 class Minecart extends Item{
 
@@ -75,6 +75,7 @@ class Minecart extends Item{
                 )));
         $minecart->spawnToAll();
 
+<<<<<<< HEAD
         if($player->isSurvival()){
             $item = $player->getInventory()->getItemInHand();
             $count = $item->getCount();
@@ -89,5 +90,36 @@ class Minecart extends Item{
 
         return true;
     }
+=======
+	public function getMaxStackSize() : int{
+		return 1;
+	}
+
+	public function canBeActivated() : bool{
+		return true;
+	}
+
+	public function onActivate(Level $level, Player $player, Block $block, Block $target, $face, $fx, $fy, $fz){
+		$realPos = $block->getSide(Vector3::SIDE_UP);
+		if(!$block instanceof RailBlock) return false;
+		$cart = new MinecartEntity($player->getLevel()->getChunk($realPos->getX() >> 4, $realPos->getZ() >> 4), new CompoundTag("", ["Pos" => new ListTag("Pos", [new DoubleTag("", $realPos->getX()),new DoubleTag("", $realPos->getY()),new DoubleTag("", $realPos->getZ())]),
+				"Motion" => new ListTag("Motion", [new DoubleTag("", 0),new DoubleTag("", 0),new DoubleTag("", 0)]),"Rotation" => new ListTag("Rotation", [new FloatTag("", 0),new FloatTag("", 0)])]));
+		$cart->spawnToAll();
+		
+		if($player->isSurvival()){
+			$item = $player->getInventory()->getItemInHand();
+			$count = $item->getCount();
+			if(--$count <= 0){
+				$player->getInventory()->setItemInHand(Item::get(Item::AIR));
+				return;
+			}
+			
+			$item->setCount($count);
+			$player->getInventory()->setItemInHand($item);
+		}
+		
+		return true;
+	}
+>>>>>>> origin/php7
 }
 

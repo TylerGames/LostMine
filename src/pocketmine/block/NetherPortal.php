@@ -10,7 +10,7 @@ use pocketmine\event\entity\EntityEnterPortalEvent;
 class NetherPortal extends Flowable{
 	protected $id = self::NETHER_PORTAL;
 
-	public function __construct($meta = 0){
+	public function __construct(int $meta = 0){
 		$this->meta = $meta;
 	}
 
@@ -27,6 +27,7 @@ class NetherPortal extends Flowable{
 	}
 
 	public function onEntityCollide(Entity $entity){
+<<<<<<< HEAD
 		Server::getInstance()->getPluginManager()->callEvent($ev = new EntityEnterPortalEvent($entity, $this));
 		if(!$ev->isCancelled()){
 			return true;
@@ -35,6 +36,16 @@ class NetherPortal extends Flowable{
 	}
 
 	public function canPassThrough(){
+=======
+        //Server::getInstance()->getPluginManager()->callEvent($ev = new EntityEnterPortalEvent($this, $entity));
+        //if(!$ev->isCancelled()) {
+            //TODO: Delayed teleport entity to nether world.
+        //}
+        return true;
+    }
+    
+    public function canPassThrough(){
+>>>>>>> origin/php7
 		return true;
 	}
 	

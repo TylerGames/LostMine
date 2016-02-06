@@ -86,8 +86,9 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 		if($type === Level::BLOCK_UPDATE_SCHEDULED){
 			$this->togglePowered();
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_BREAK,16);
-			return;
+			return true;
 		}
+<<<<<<< HEAD
 		elseif($type === Level::BLOCK_UPDATE_NORMAL){
 			$lookDirection = [
 				0 => 4,
@@ -105,6 +106,9 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 			}
 		}
 		return;
+=======
+		return false;
+>>>>>>> origin/php7
 	}
 
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
@@ -120,15 +124,26 @@ class WoodenButton extends Flowable implements Redstone,RedstoneSwitch{
 
 	public function onActivate(Item $item, Player $player = null){
 		if($this->getPower()>0){
+<<<<<<< HEAD
 			return true;
+=======
+			return false;
+>>>>>>> origin/php7
 		}
 		if(($player instanceof Player && !$player->isSneaking())||$player===null){
 			$this->togglePowered();
 			$this->BroadcastRedstoneUpdate(Level::REDSTONE_UPDATE_PLACE,$this->getPower());
+<<<<<<< HEAD
 			$this->getLevel()->scheduleUpdate($this, 50);
 		}
 		
 		return true;
+=======
+			$this->getLevel()->scheduleUpdate($this, 15);
+			return true;
+		}
+		return false;
+>>>>>>> origin/php7
 	}
 
 	public function getDrops(Item $item){

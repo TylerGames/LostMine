@@ -37,32 +37,40 @@ use pocketmine\math\Vector3;
 use pocketmine\Player;
 use pocketmine\tile\Tile;
 use pocketmine\math\AxisAlignedBB;
-use pocketmine\nbt\tag\String;
-use pocketmine\nbt\tag\Int;
-use pocketmine\nbt\tag\Compound;
+use pocketmine\nbt\tag\StringTag;
+use pocketmine\nbt\tag\IntTag;
+use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\tile\FlowerPot as FlowerPotTile;
 
 class FlowerPot extends Flowable{
+
 	protected $id = Block::FLOWER_POT_BLOCK;
-	public function __construct($meta = 0){
+
+	public function __construct(int $meta = 0){
 		$this->meta = $meta;
 	}
+
 	public function canBeActivated(){
 		return true;
 	}
+
 	public function canBeFlowedInto(){
 		return true;
 	}
+
 	public function getHardness(){
 		return 0;
 	}
+
 	public function isSolid(){
 		return false;
 	}
+
 	public function getName(){
 		return "Flower Pot";
 	}
-	public function getBoundingBox(){//todo fix...
+
+	public function getBoundingBox(){
 		return new AxisAlignedBB(
 			$this->x - 0.6875,
 			$this->y - 0.375,
@@ -75,13 +83,13 @@ class FlowerPot extends Flowable{
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
 		if($this->getSide(Vector3::SIDE_DOWN)->isTransparent() === false){
 			$this->getLevel()->setBlock($block, $this, true, true);
-			$nbt = new Compound("", [
-				new String("id", Tile::FLOWER_POT),
-				new Int("x", $block->x),
-				new Int("y", $block->y),
-				new Int("z", $block->z),
-				new Int("item", 0),
-				new Int("data", 0),
+			$nbt = new CompoundTag("", [
+				new StringTag("id", Tile::FLOWER_POT),
+				new IntTag("x", $block->x),
+				new IntTag("y", $block->y),
+				new IntTag("z", $block->z),
+				new IntTag("item", 0),
+				new IntTag("data", 0),
 			]);
 			$pot = Tile::createTile("FlowerPot", $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
 			return true;

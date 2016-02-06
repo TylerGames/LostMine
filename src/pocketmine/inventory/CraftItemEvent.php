@@ -24,44 +24,59 @@
  *
 */
 
-namespace pocketmine\scheduler;
+namespace pocketmine\event\inventory;
 
-/**
- * Allows the creation of simple callbacks with extra data
- * The last parameter in the callback will be this object
- *
- * If you want to do a task in a Plugin, consider extending PluginTask to your needs
- *
- * @deprecated
- *
- */
-class CallbackTask extends Task{
+use pocketmine\event\Cancellable;
+use pocketmine\event\Event;
+use pocketmine\inventory\Recipe;
+use pocketmine\item\Item;
+use pocketmine\Player;
 
-	/** @var callable */
-	protected $callable;
+class CraftItemEvent extends Event implements Cancellable{
+	public static $handlerList = null;
 
-	/** @var array */
-	protected $args;
+	/** @var Item[] */
+	private $input = [];
+	/** @var Recipe */
+	private $recipe;
+	/** @var \pocketmine\Player */
+	private $player;
 
-	/**
-	 * @param callable $callable
-	 * @param array    $args
-	 */
-	public function __construct(callable $callable, array $args = []){
-		$this->callable = $callable;
-		$this->args = $args;
-		$this->args[] = $this;
-	}
 
 	/**
-	 * @return callable
+	 * @param \pocketmine\Player $player
+	 * @param Item[] $input
+	 * @param Recipe $recipe
 	 */
-	public function getCallable(){
-		return $this->callable;
+	public function __construct(Player $player, array $input, Recipe $recipe){
+		$this->player = $player;
+		$this->input = $input;
+		$this->recipe = $recipe;
 	}
 
-	public function onRun($currentTicks){
-		call_user_func_array($this->callable, $this->args);
+	/**
+	 * @return Item[]
+	 */
+	public function getInput(){
+		$items = [];
+		foreach($items as $i => $item){
+			$items[$i] = clone $item;
+		}
+
+		return $items;
 	}
 
+	/**
+	 * @return Recipe
+	 */
+	public function getRecipe(){
+		return $this->recipe;
+	}
+
+	/**
+	 * @return \pocktemine\Player
+	 */
+	public function getPlayer(){
+		return $this->player;
+	}
 }

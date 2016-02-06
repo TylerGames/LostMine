@@ -105,13 +105,7 @@ class Chunk extends BaseFullChunk{
 			return (ord($this->blocks{$i}) << 4) | (ord($this->data{$i >> 1}) >> 4);
 		}
 	}
-
-	public function getBlock($x, $y, $z, &$blockId, &$meta = null){
-		$full = $this->getFullBlock($x, $y, $z);
-		$blockId = $full >> 4;
-		$meta = $full & 0x0f;
-	}
-
+	
 	public function setBlock($x, $y, $z, $blockId = null, $meta = null){
 		$i = ($x << 11) | ($z << 7) | $y;
 
@@ -310,7 +304,7 @@ class Chunk extends BaseFullChunk{
 				$chunk->setLightPopulated();
 			}
 			return $chunk;
-		}catch(\Exception $e){
+		}catch(\Throwable $e){
 			return null;
 		}
 	}
@@ -398,7 +392,7 @@ class Chunk extends BaseFullChunk{
 			$chunk = new Chunk($provider instanceof LevelProvider ? $provider : LevelDB::class, $chunkX, $chunkZ, str_repeat("\x00", self::DATA_LENGTH));
 			$chunk->skyLight = str_repeat("\xff", 16384);
 			return $chunk;
-		}catch(\Exception $e){
+		}catch(\Throwable $e){
 			return null;
 		}
 	}
