@@ -18,7 +18,7 @@ while(!feof($pipes[1])){
 fclose($pipes[0]);
 fclose($pipes[1]);
 fclose($pipes[2]);
-rename("./plugins/DevTools/ImagicalMine_1.0dev.phar","./releases/ImagicalMine.phar");
-if(file_exists("./releases/ImagicalMine.phar"))
+rename("../plugins/DevTools/ImagicalMine_1.0dev.phar","./releases/ImagicalMine.phar");
+if(file_exists("../releases/ImagicalMine.phar"))
 exit (0);
 exit (1);
