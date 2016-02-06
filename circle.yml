@@ -4,7 +4,7 @@ checkout:
     - git submodule update --init
     - mkdir plugins
     - wget -O plugins/DevTools.phar https://github.com/PocketMine/DevTools/releases/download/v1.9.0/DevTools_v1.9.0.phar
-    - wget -O https://bintray.com/artifact/download/pocketmine/PocketMine/PHP_5.6.10_x86-64_Linux.tar.gz
+    - wget https://bintray.com/artifact/download/pocketmine/PocketMine/PHP_5.6.10_x86-64_Linux.tar.gz
     - tar zxf PHP_5.6.10_x86-64_Linux.tar.gz
     - php tests/TravisTest.php
     - cp -R ./plugins/DevTools/ImagicalMine_1.0dev.phar $CIRCLE_ARTIFACTS
