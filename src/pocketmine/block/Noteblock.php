@@ -40,7 +40,6 @@ use pocketmine\Player;
 class Noteblock extends Solid implements RedstoneConsumer{
 	protected $id = self::NOTEBLOCK;
 	protected $downSideId = null;
-	protected $soundAdded = false;
 
 	public function __construct($meta = 0){
 		$this->meta = $meta;
@@ -67,39 +66,23 @@ class Noteblock extends Solid implements RedstoneConsumer{
 
 	public function onActivate(Item $item, Player $player = null){
 
-		//fix for usage in Level->addSound, possible memory leak
-		if($player instanceof Player) {
-			$players = $player->getViewers();
-		} else {
-			$players = null;
-		}
-
-		//fix for possible memory leak, limited addSound call
-		if($this->soundAdded == true) {
-			return true;
-		}
 		switch($this->downSideId){
 			case self::GLASS:
 			case self::GLOWSTONE:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_CLICK, $this->getStrength()), $players);
-				$this->soundAdded = true;
+				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_CLICK, $this->getStrength()), array($player));
 				break;
 			case self::SAND:
 			case self::GRAVEL:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_TABOUR, $this->getStrength()), $players);
-				$this->soundAdded = true;
+				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_TABOUR, $this->getStrength()), array($player));
 				break;
 			case self::WOOD:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS, $this->getStrength()), $players);
-				$this->soundAdded = true;
+				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS, $this->getStrength()), array($player));
 				break;
 			case self::STONE:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS_DRUM, $this->getStrength()), $players);
-				$this->soundAdded = true;
+				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS_DRUM, $this->getStrength()), array($player));
 				break;
 			default:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_PIANO, $this->getStrength()), $players);
-				$this->soundAdded = true;
+				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_PIANO, $this->getStrength()), array($player));
 				break;
 		}
 		return true;
@@ -118,4 +101,13 @@ class Noteblock extends Solid implements RedstoneConsumer{
 	public function getName(){
 		return "Noteblock";
 	}
+
+	/**
+	 * overriding Block::onRedstoneUpdate
+	 * is causing memory leak if noteblock is activated
+	 */
+	public function onRedstoneUpdate($type, $power){
+		return true;
+	}
+
 }
