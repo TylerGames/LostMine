@@ -42,8 +42,8 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-.gitmodules
-.mailmap
+# Server configurations
+
 banned-ips.txt
 banned-players.txt
 bin/
@@ -53,3 +53,5 @@ server.log
 server.properties
 white-list.txt
 worlds/
+install.log
+install_data
