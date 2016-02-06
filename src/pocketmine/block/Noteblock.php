@@ -40,6 +40,7 @@ use pocketmine\Player;
 class Noteblock extends Solid implements RedstoneConsumer{
 	protected $id = self::NOTEBLOCK;
 	protected $downSideId = null;
+	protected $soundAdded = false;
 
 	public function __construct($meta = 0){
 		$this->meta = $meta;
@@ -66,23 +67,36 @@ class Noteblock extends Solid implements RedstoneConsumer{
 
 	public function onActivate(Item $item, Player $player = null){
 
-		switch($this->downSideId){
+		//fix for usage in Level->addSound, possible memory leak
+		if($player instanceof Player) {
+			$players = $player->getViewers();
+		} else {
+			$players = null;
+		}
+
+		//fix for possible memory leak, limited addSound call
+		switch($this->downSideId && $this->soundAdded == false){
 			case self::GLASS:
 			case self::GLOWSTONE:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_CLICK, $this->getStrength()));
+				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_CLICK, $this->getStrength()), $players);
+				$this->soundAdded = true;
 				break;
 			case self::SAND:
 			case self::GRAVEL:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_TABOUR, $this->getStrength()));
+				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_TABOUR, $this->getStrength()), $players);
+				$this->soundAdded = true;
 				break;
 			case self::WOOD:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS, $this->getStrength()));
+				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS, $this->getStrength()), $players);
+				$this->soundAdded = true;
 				break;
 			case self::STONE:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS_DRUM, $this->getStrength()));
+				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS_DRUM, $this->getStrength()), $players);
+				$this->soundAdded = true;
 				break;
 			default:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_PIANO, $this->getStrength()));
+				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_PIANO, $this->getStrength()), $players);
+				$this->soundAdded = true;
 				break;
 		}
 		return true;
