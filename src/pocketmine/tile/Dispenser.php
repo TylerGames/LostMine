@@ -26,8 +26,8 @@ use pocketmine\level\format\FullChunk;
 use pocketmine\nbt\NBT;
 use pocketmine\nbt\tag\Compound;
 use pocketmine\nbt\tag\Enum;
-use pocketmine\nbt\tag\Int;
-use pocketmine\nbt\tag\String;
+use pocketmine\nbt\tag\IntTag;
+use pocketmine\nbt\tag\StringTag;
 use pocketmine\network\protocol\ContainerSetDataPacket;
 //Bug fixed by MagicDroidX, Genisys and Nukkit Project
 
@@ -70,9 +70,9 @@ class Dispenser extends Spawnable implements InventoryHolder, Container, Nameabl
 	public function getSpawnCompound(){
 		$nbt = new Compound("", [
 			new String("id", Tile::HOPPER),
-			new Int("x", (int) $this->x),
-			new Int("y", (int) $this->y),
-			new Int("z", (int) $this->z),
+			new IntTag("x", (int) $this->x),
+			new IntTag("y", (int) $this->y),
+			new IntTag("z", (int) $this->z),
 		]);
 
 		if($this->hasName()){

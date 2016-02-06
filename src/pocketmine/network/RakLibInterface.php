@@ -2,17 +2,17 @@
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +20,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -84,7 +84,7 @@ class RakLibInterface implements ServerInstance, AdvancedSourceInterface{
 
 		if($this->rakLib->isTerminated()){
 			$this->network->unregisterInterface($this);
-			
+
 			throw new \Exception("RakLib Thread crashed");
 		}
 
@@ -203,7 +203,6 @@ class RakLibInterface implements ServerInstance, AdvancedSourceInterface{
 				if(!isset($packet->__encapsulatedPacket)){
 					$packet->__encapsulatedPacket = new CachedEncapsulatedPacket;
 					$packet->__encapsulatedPacket->identifierACK = null;
-<<<<<<< HEAD
 					$packet->__encapsulatedPacket->buffer = chr(0x8e) . $packet->buffer;
 					if($packet->getChannel() !== 0){
 						$packet->__encapsulatedPacket->reliability = 3;
@@ -212,11 +211,6 @@ class RakLibInterface implements ServerInstance, AdvancedSourceInterface{
 					}else{
 						$packet->__encapsulatedPacket->reliability = 2;
 					}
-=======
-					$packet->__encapsulatedPacket->buffer = $packet->buffer;
-					$packet->__encapsulatedPacket->reliability = 3;
-					$packet->__encapsulatedPacket->orderChannel = 0;
->>>>>>> origin/php7
 				}
 				$pk = $packet->__encapsulatedPacket;
 			}
@@ -230,7 +224,6 @@ class RakLibInterface implements ServerInstance, AdvancedSourceInterface{
 
 			if($pk === null){
 				$pk = new EncapsulatedPacket();
-<<<<<<< HEAD
 				$pk->buffer = chr(0x8e) . $packet->buffer;
 				if($packet->getChannel() !== 0){
 					$packet->reliability = 3;
@@ -239,12 +232,6 @@ class RakLibInterface implements ServerInstance, AdvancedSourceInterface{
 				}else{
 					$packet->reliability = 2;
 				}
-=======
-				$pk->buffer = $packet->buffer;
-				$packet->reliability = 3;
- 				$packet->orderChannel = 0;
->>>>>>> origin/php7
-
 				if($needACK === true){
 					$pk->identifierACK = $this->identifiersACK[$identifier]++;
 				}

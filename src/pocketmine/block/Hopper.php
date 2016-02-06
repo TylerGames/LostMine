@@ -28,8 +28,8 @@ namespace pocketmine\block;
 use pocketmine\nbt\NBT;
 use pocketmine\nbt\tag\Compound;
 use pocketmine\nbt\tag\Enum;
-use pocketmine\nbt\tag\Int;
-use pocketmine\nbt\tag\String;
+use pocketmine\nbt\tag\IntTag;
+use pocketmine\nbt\tag\StringTag;
 use pocketmine\tile\Hopper as TileHopper;
 use pocketmine\item\Item;
 use pocketmine\item\Tool;
@@ -70,9 +70,9 @@ class Hopper extends Transparent{
                 $nbt = new Compound("", [
                     new Enum("Items", []),
                     new String("id", Tile::HOPPER),
-                    new Int("x", $this->x),
-                    new Int("y", $this->y),
-                    new Int("z", $this->z)
+                    new IntTag("x", $this->x),
+                    new IntTag("y", $this->y),
+                    new IntTag("z", $this->z)
                 ]);
                 $nbt->Items->setTagType(NBT::TAG_Compound);
                 $hopper = Tile::createTile("Hopper", $this->getLevel()->getChunk($this->x >> 4, $this->z >> 4), $nbt);
@@ -114,9 +114,9 @@ class Hopper extends Transparent{
         $nbt = new Compound("", [
             new Enum("Items", []),
             new String("id", Tile::HOPPER),
-            new Int("x", $this->x),
-            new Int("y", $this->y),
-            new Int("z", $this->z)
+            new IntTag("x", $this->x),
+            new IntTag("y", $this->y),
+            new IntTag("z", $this->z)
         ]);
         $nbt->Items->setTagType(NBT::TAG_Compound);
 

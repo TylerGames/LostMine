@@ -900,7 +900,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			$timings->stopTiming();
 			return false;
 		}
-		
+
 		$this->batchedPackets[] = clone $packet;
 		$timings->stopTiming();
 		return true;
@@ -1827,8 +1827,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		$pk->y = (int) $spawnPosition->y;
 		$pk->z = (int) $spawnPosition->z;
 		$this->dataPacket($pk);
-		
-		
+
+
 		//Reload Attributes
 		if(isset($nbt["Health"]))
 		{
@@ -1848,8 +1848,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		{
 			$this->setExpLevel($nbt["expLevel"]);
 		}
-		
-		
+
+
 		$this->getAttribute()->sendAll();
 
 		$pk = new SetDifficultyPacket();
@@ -2000,17 +2000,17 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 					$revert = true;
 					$this->forceMovement = new Vector3($this->x, $this->y, $this->z);
 				}
-				
+
 				if($this->teleportPosition !== null or ($this->forceMovement instanceof Vector3 and (($dist = $newPos->distanceSquared($this->forceMovement)) > 0.1 or $revert))){
 					$this->sendPosition($this->forceMovement, $packet->yaw, $packet->pitch);
 				}else{
 					$packet->yaw %= 360;
-					
+
 					$packet->pitch %= 360;
 					if($packet->yaw < 0){
 						$packet->yaw += 360;
 					}
-					
+
 					$this->setRotation($packet->yaw, $packet->pitch);
 					$this->newPosition = $newPos;
 					$this->forceMovement = null;
@@ -3190,20 +3190,15 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			}
 
 			$this->namedtag["playerGameType"] = $this->gamemode;
-<<<<<<< HEAD
-			$this->namedtag["lastPlayed"] = new Long("lastPlayed", floor(microtime(true) * 1000));
 			
-			$this->namedtag["food"] = new Int("food", $this->getFood());
+			$this->namedtag["lastPlayed"] = new Long("lastPlayed", floor(microtime(true) * 1000));
+
+			$this->namedtag["food"] = new IntTag("food", $this->getFood());
 			$this->namedtag["Health"] = new Short("Health", $this->getHealth());
 			$this->namedtag["exp"] = new Short("exp", $this->getExperience());
 			$this->namedtag["expLevel"] = new Short("expLevel", $this->getExpLevel());
-			
-			if($this->username != "" and $this->namedtag instanceof Compound){
-=======
-			$this->namedtag["lastPlayed"] = new LongTag("lastPlayed", floor(microtime(true) * 1000));
 
-			if($this->username != "" and $this->namedtag instanceof CompoundTag){
->>>>>>> origin/php7
+			if($this->username != "" and $this->namedtag instanceof Compound){
 				$this->server->saveOfflinePlayerData($this->username, $this->namedtag, $async);
 			}
 		}

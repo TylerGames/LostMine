@@ -34,9 +34,9 @@ use pocketmine\nbt\NBT;
 
 use pocketmine\nbt\tag\Compound;
 use pocketmine\nbt\tag\Enum;
-use pocketmine\nbt\tag\Int;
+use pocketmine\nbt\tag\IntTag;
 
-use pocketmine\nbt\tag\String;
+use pocketmine\nbt\tag\StringTag;
 use pocketmine\network\protocol\ContainerSetDataPacket;
 
 class Hopper extends Spawnable implements InventoryHolder, Container, Nameable{
@@ -58,7 +58,7 @@ class Hopper extends Spawnable implements InventoryHolder, Container, Nameable{
         }
 
         if(!isset($this->namedtag->BurnTime) or $this->namedtag["TransferCooldown"] < 0){
-            $this->namedtag->BurnTime = new Int("TransferCooldown", 0);
+            $this->namedtag->BurnTime = new IntTag("TransferCooldown", 0);
         }
 
         if($this->namedtag["TransferCooldown"] > 0){
@@ -173,10 +173,10 @@ class Hopper extends Spawnable implements InventoryHolder, Container, Nameable{
     public function getSpawnCompound(){
         $nbt = new Compound("", [
             new String("id", Tile::HOPPER),
-            new Int("x", (int) $this->x),
-            new Int("y", (int) $this->y),
-            new Int("z", (int) $this->z),
-            new Int("TransferCooldown", $this->namedtag["TransferCooldown"]),
+            new IntTag("x", (int) $this->x),
+            new IntTag("y", (int) $this->y),
+            new IntTag("z", (int) $this->z),
+            new IntTag("TransferCooldown", $this->namedtag["TransferCooldown"]),
         ]);
 
         if($this->hasName()){
@@ -212,14 +212,14 @@ class Hopper extends Spawnable implements InventoryHolder, Container, Nameable{
         $ret = false;
 
         if($this->namedtag["TransferCooldow"] > 0){
-            $this->namedtag->BurnTime = new Int("TransferCooldown", $this->namedtag["TransferCooldown"] - 1);
+            $this->namedtag->BurnTime = new IntTag("TransferCooldown", $this->namedtag["TransferCooldown"] - 1);
 
             if($this->namedtag["TransferCooldown"] <= 0) {
-                $this->namedtag->BurnTime = new Int("TransferCooldown", 0);
+                $this->namedtag->BurnTime = new IntTag("TransferCooldown", 0);
             }
             $ret = true;
         }else{
-            $this->namedtag->BurnTime = new Int("TransferCooldown", 0);
+            $this->namedtag->BurnTime = new IntTag("TransferCooldown", 0);
         }
 
         foreach($this->getInventory()->getViewers() as $player){

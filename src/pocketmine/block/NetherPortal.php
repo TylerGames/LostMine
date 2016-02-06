@@ -27,28 +27,17 @@ class NetherPortal extends Flowable{
 	}
 
 	public function onEntityCollide(Entity $entity){
-<<<<<<< HEAD
-		Server::getInstance()->getPluginManager()->callEvent($ev = new EntityEnterPortalEvent($entity, $this));
-		if(!$ev->isCancelled()){
+        Server::getInstance()->getPluginManager()->callEvent($ev = new EntityEnterPortalEvent($this, $entity));
+        if(!$ev->isCancelled()) {
 			return true;
 		}
-		return false;
-	}
-
-	public function canPassThrough(){
-=======
-        //Server::getInstance()->getPluginManager()->callEvent($ev = new EntityEnterPortalEvent($this, $entity));
-        //if(!$ev->isCancelled()) {
-            //TODO: Delayed teleport entity to nether world.
-        //}
-        return true;
+        return false;
     }
-    
+
     public function canPassThrough(){
->>>>>>> origin/php7
 		return true;
 	}
-	
+
 	/*
 	 * public function canBeReplaced(){
 	 * return true;
