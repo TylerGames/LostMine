@@ -26,21 +26,21 @@
 
 namespace pocketmine\level\generator\normal\biome;
 
-use pocketmine\level\generator\populator\Flowers;
+use pocketmine\level\generator\populator\Flower;
 
 use pocketmine\block\Block;
-use pocketmine\block\Flower;
+use pocketmine\block\Flower as FlowerBlock;
 
 class SwampBiome extends GrassyBiome{
 
 	public function __construct(){
 		parent::__construct();
 		
-		$flowers = new Flowers();
-		$flowers->setBaseAmount(8);
-		$flowers->addType([Block::RED_FLOWER, Flower::TYPE_BLUE_ORCHID]);
+		$flower = new Flower();
+		$flower->setBaseAmount(8);
+		$flower->addType([Block::RED_FLOWER, FlowerBlock::TYPE_BLUE_ORCHID]);
 		
-		$this->addPopulator($flowers);
+		$this->addPopulator($flower);
 
 		$this->setElevation(62, 63);
 

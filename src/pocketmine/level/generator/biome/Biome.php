@@ -41,7 +41,7 @@ use pocketmine\level\generator\normal\biome\TaigaBiome;
 use pocketmine\level\generator\populator\Populator;
 use pocketmine\utils\Random;
 
-use pocketmine\level\generator\populator\Flowers;
+use pocketmine\level\generator\populator\Flower;
 
 abstract class Biome{
 
@@ -89,21 +89,21 @@ abstract class Biome{
 		$biome->setId((int) $id);
 		$biome->grassColor = self::generateBiomeColor($biome->getTemperature(), $biome->getRainfall());
 		
-		$flowersPopFound = false;
+		$flowerPopFound = false;
 		
 		foreach($biome->getPopulators() as $populator)
 		{
-			if($populator instanceof Flowers)
+			if($populator instanceof Flower)
 			{
-				$flowersPopFound = true;
+				$flowerPopFound = true;
 				break;
 			}
 		}
 		
-		if($flowersPopFound === false)
+		if($flowerPopFound === false)
 		{
-			$flowers = new Flowers();
-			$biome->addPopulator($flowers);
+			$flower = new Flower();
+			$biome->addPopulator($flower);
 		}
 	}
 

@@ -30,9 +30,9 @@ use pocketmine\block\Block;
 use pocketmine\level\ChunkManager;
 use pocketmine\utils\Random;
 
-use pocketmine\block\Flower;
+use pocketmine\block\Flower as FlowerBlock;
 
-class Flowers extends Populator{
+class Flower extends Populator{
 	/** @var ChunkManager */
 	private $level;
 	private $randomAmount;
@@ -65,7 +65,7 @@ class Flowers extends Populator{
 		if(count($this->flowerTypes) === 0)
 		{
 			$this->addType([Block::DANDELION, 0]);
-			$this->addType([Block::RED_FLOWER, Flower::TYPE_POPPY]);
+			$this->addType([Block::RED_FLOWER, FlowerBlock::TYPE_POPPY]);
 		}
 		
 		$endNum = count($this->flowerTypes) - 1;

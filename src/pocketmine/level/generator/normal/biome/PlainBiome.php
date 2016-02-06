@@ -27,10 +27,10 @@
 namespace pocketmine\level\generator\normal\biome;
 
 use pocketmine\level\generator\populator\TallGrass;
-use pocketmine\level\generator\populator\Flowers;
+use pocketmine\level\generator\populator\Flower;
 
 use pocketmine\block\Block;
-use pocketmine\block\Flower;
+use pocketmine\block\Flower as FlowerBlock;
 
 class PlainBiome extends GrassyBiome{
 
@@ -40,19 +40,19 @@ class PlainBiome extends GrassyBiome{
 		$tallGrass = new TallGrass();
 		$tallGrass->setBaseAmount(12);
 		
-		$flowers = new Flowers();
-		$flowers->setBaseAmount(2);
-		$flowers->addType([Block::DANDELION, 0]);
-		$flowers->addType([Block::RED_FLOWER, Flower::TYPE_POPPY]);
-		$flowers->addType([Block::RED_FLOWER, Flower::TYPE_AZURE_BLUET]);
-		$flowers->addType([Block::RED_FLOWER, Flower::TYPE_RED_TULIP]);
-		$flowers->addType([Block::RED_FLOWER, Flower::TYPE_ORANGE_TULIP]);
-		$flowers->addType([Block::RED_FLOWER, Flower::TYPE_WHITE_TULIP]);
-		$flowers->addType([Block::RED_FLOWER, Flower::TYPE_PINK_TULIP]);
-		$flowers->addType([Block::RED_FLOWER, Flower::TYPE_OXEYE_DAISY]);
+		$flower = new Flower();
+		$flower->setBaseAmount(2);
+		$flower->addType([Block::DANDELION, 0]);
+		$flower->addType([Block::RED_FLOWER, FlowerBlock::TYPE_POPPY]);
+		$flower->addType([Block::RED_FLOWER, FlowerBlock::TYPE_AZURE_BLUET]);
+		$flower->addType([Block::RED_FLOWER, FlowerBlock::TYPE_RED_TULIP]);
+		$flower->addType([Block::RED_FLOWER, FlowerBlock::TYPE_ORANGE_TULIP]);
+		$flower->addType([Block::RED_FLOWER, FlowerBlock::TYPE_WHITE_TULIP]);
+		$flower->addType([Block::RED_FLOWER, FlowerBlock::TYPE_PINK_TULIP]);
+		$flower->addType([Block::RED_FLOWER, FlowerBlock::TYPE_OXEYE_DAISY]);
 
 		$this->addPopulator($tallGrass);
-		$this->addPopulator($flowers);
+		$this->addPopulator($flower);
 
 		$this->setElevation(63, 74);
 
