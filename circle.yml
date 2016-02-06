@@ -16,6 +16,8 @@ checkout:
     - curl -sL https://get.pocketmine.net | bash -s - -v stable
     - rm -r PocketMine-MP.phar
     - rm -r PocketMine-MP.phar.sig
+    - git config --global user.email "hello@imagicalmine.me"
+    - git config --global user.name "ImagicalMine"
     - git stash
     - git reset --hard HEAD
     - git pull origin master
