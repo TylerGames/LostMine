@@ -10,8 +10,7 @@ use pocketmine\event\entity\EntityEnterPortalEvent;
 class NetherPortal extends Flowable{
 	protected $id = self::NETHER_PORTAL;
 
-	public function __construct($id, $meta = 0){
-		$this->id = (int) $id;
+	public function __construct($meta = 0){
 		$this->meta = (int) $meta;
 	}
 
@@ -23,9 +22,22 @@ class NetherPortal extends Flowable{
 		return "Nether Portal";
 	}
 
+	/**
+	 * Places the Block, using block space and block target, and side. Returns if the block has been placed.
+	 *
+	 * @param Item   $item
+	 * @param Block  $block
+	 * @param Block  $target
+	 * @param int    $face
+	 * @param float  $fx
+	 * @param float  $fy
+	 * @param float  $fz
+	 * @param Player $player = null
+	 *
+	 * @return bool
+	 */
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		$this->getLevel()->setBlock($block, $this, true, true);
-		return false;
+	    return $this->getLevel()->setBlock($this, $this, true, true);
 	}
 
 	public function getDrops(Item $item){
