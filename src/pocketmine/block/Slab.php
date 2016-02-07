@@ -38,9 +38,16 @@ class Slab extends Transparent{
 	const COBBLESTONE = 3;
 	const BRICK = 4;
 	const STONE_BRICK = 5;
+<<<<<<< HEAD
 	const NETHER_BRICK = 6;
 	const QUARTZ = 7;
 	
+=======
+	const QUARTZ = 6;
+	const NETHER_BRICK = 7;
+	const RED_SANDSTONE = 8;
+
+>>>>>>> refs/remotes/origin/mcpe-0.14
 	protected $id = self::SLAB;
 
 	public function __construct($meta = 0){
@@ -61,6 +68,7 @@ class Slab extends Transparent{
 			self::STONE_BRICK => "Stone Brick",
 			self::QUARTZ => "Quartz",
 			self::NETHER_BRICK => "Nether Brick",
+			self::RED_SANDSTONE => "Red Sandstone",
 		];
 		return (($this->meta & 0x08) > 0 ? "Upper " : "") . $names[$this->meta & 0x07] . " Slab";
 	}
