@@ -10,8 +10,9 @@ use pocketmine\event\entity\EntityEnterPortalEvent;
 class NetherPortal extends Flowable{
 	protected $id = self::NETHER_PORTAL;
 
-	public function __construct(int $meta = 0){
-		$this->meta = $meta;
+	public function __construct($id, $meta = 0){
+		$this->id = (int) $id;
+		$this->meta = (int) $meta;
 	}
 
 	public function getLightLevel(){
