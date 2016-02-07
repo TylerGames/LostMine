@@ -67,6 +67,7 @@ use pocketmine\network\protocol\SetEntityLinkPacket;
 use pocketmine\Player;
 use pocketmine\plugin\Plugin;
 use pocketmine\Server;
+use pocketmine\utils\ChunkException;
 use pocketmine\event\entity\EntityDamageByChildEntityEvent;
 use pocketmine\event\entity\EntityDamageByEntityEvent;
 use pocketmine\network\protocol\PlayerActionPacket;
@@ -217,9 +218,9 @@ abstract class Entity extends Location implements Metadatable{
 
 	protected $riding = null;
 	public function __construct(FullChunk $chunk, CompoundTag $nbt){
-		
-		assert($chunk !== null and $chunk->getProvider() !== null);
-
+	    if($chunk === null or $chunk->getProvider() === null){
+	        throw new ChunkException("Invalid garbage Chunk given to Entity");
+	    }
 		$this->timings = Timings::getEntityTimings($this);
 
 		$this->isPlayer = $this instanceof Player;

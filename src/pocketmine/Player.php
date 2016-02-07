@@ -900,8 +900,12 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			$timings->stopTiming();
 			return false;
 		}
-		
-		$this->batchedPackets[] = clone $packet;
+
+		if(!isset($this->batchedPackets[$packet->getChannel()])){
+			$this->batchedPackets[$packet->getChannel()] = [];
+		}
+
+		$this->batchedPackets[$packet->getChannel()][] = clone $packet;
 		$timings->stopTiming();
 		return true;
 	}
@@ -1593,8 +1597,8 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 			if($this->getHealth() < $this->getMaxHealth()){
 				$this->foodTick++;
 			}
+			return true;
 		}
-		return true;
 	}
 
 	protected $eatCoolDown = 0;
@@ -1653,7 +1657,9 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 		}
 
 		if(count($this->batchedPackets) > 0){
-			$this->server->batchPackets([$this], $this->batchedPackets, false);
+			foreach($this->batchedPackets as $channel => $list){
+				$this->server->batchPackets([$this], $list, false, $channel);
+			}
 			$this->batchedPackets = [];
 		}
 	}
@@ -1948,6 +1954,7 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 					break;
 				}
 				$this->randomClientId = $packet->clientId;
+				$this->loginData = ["clientId" => $packet->clientId, "loginData" => null];
 				$this->uuid = $packet->clientUUID;
 				$this->rawUUID = $this->uuid->toBinary();
 				$this->clientSecret = $packet->clientSecret;
@@ -2002,17 +2009,14 @@ class Player extends Human implements CommandSender, InventoryHolder, ChunkLoade
 					$revert = true;
 					$this->forceMovement = new Vector3($this->x, $this->y, $this->z);
 				}
-				
 				if($this->teleportPosition !== null or ($this->forceMovement instanceof Vector3 and (($dist = $newPos->distanceSquared($this->forceMovement)) > 0.1 or $revert))){
-					$this->sendPosition($this->forceMovement, $packet->yaw, $packet->pitch);
+					if($this->forceMovement instanceof Vector3) $this->sendPosition($this->forceMovement, $packet->yaw, $packet->pitch);
 				}else{
 					$packet->yaw %= 360;
-					
 					$packet->pitch %= 360;
 					if($packet->yaw < 0){
 						$packet->yaw += 360;
 					}
-					
 					$this->setRotation($packet->yaw, $packet->pitch);
 					$this->newPosition = $newPos;
 					$this->forceMovement = null;
