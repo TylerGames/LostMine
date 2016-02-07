@@ -6,6 +6,7 @@ use pocketmine\item\Item;
 use pocketmine\Server;
 use pocketmine\entity\Entity;
 use pocketmine\event\entity\EntityEnterPortalEvent;
+use pocketmine\Player;
 
 class NetherPortal extends Flowable{
 	protected $id = self::NETHER_PORTAL;
