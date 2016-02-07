@@ -23,6 +23,7 @@ checkout:
     - git pull origin master
     - mkdir plugins
     - wget -O plugins/DevTools.phar https://github.com/PocketMine/DevTools/releases/download/v1.9.0/DevTools_v1.9.0.phar
+    - ./start.sh
     - version
     - makeserver
     - stop
