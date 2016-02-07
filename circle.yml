@@ -23,5 +23,5 @@ checkout:
     - git pull origin master
     - mkdir plugins
     - wget -O plugins/DevTools.phar https://github.com/PocketMine/DevTools/releases/download/v1.9.0/DevTools_v1.9.0.phar
-    - php tests/TravisTest.php
+    - php JenkinsBuild.php
     - cp -R ./plugins/DevTools/ImagicalMine_1.0dev.phar $CIRCLE_ARTIFACTS
