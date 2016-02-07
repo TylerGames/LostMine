@@ -1,41 +1,18 @@
 <?php
 
-/*
- *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
- * This program is a third party build by ImagicalMine.
- * 
- * PocketMine is free software: you can redistribute it and/or modify
- * it under the terms of the GNU Lesser General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * @author ImagicalMine Team
- * @link http://forums.imagicalcorp.ml/
- * 
- *
-*/
-
 namespace pocketmine\block;
 
 use pocketmine\item\Item;
-use pocketmine\Player;
-
+use pocketmine\Server;
 use pocketmine\entity\Entity;
+use pocketmine\event\entity\EntityEnterPortalEvent;
+use pocketmine\Player;
 
 class NetherPortal extends Flowable{
 	protected $id = self::NETHER_PORTAL;
 
-	public function __construct(int $meta = 0){
-		$this->meta = $meta;
+	public function __construct($meta = 0){
+		$this->meta = (int) $meta;
 	}
 
 	public function getLightLevel(){
@@ -46,24 +23,44 @@ class NetherPortal extends Flowable{
 		return "Nether Portal";
 	}
 
+	/**
+	 * Places the Block, using block space and block target, and side. Returns if the block has been placed.
+	 *
+	 * @param Item   $item
+	 * @param Block  $block
+	 * @param Block  $target
+	 * @param int    $face
+	 * @param float  $fx
+	 * @param float  $fy
+	 * @param float  $fz
+	 * @param Player $player = null
+	 *
+	 * @return bool
+	 */
 	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		$this->getLevel()->setBlock($block, $this, true, true);
-		return false;
+	    return $this->getLevel()->setBlock($this, $this, true, true);
 	}
 
 	public function getDrops(Item $item){
 		return;
 	}
-	
+
 	public function onEntityCollide(Entity $entity){
         //Server::getInstance()->getPluginManager()->callEvent($ev = new EntityEnterPortalEvent($this, $entity));
         //if(!$ev->isCancelled()) {
             //TODO: Delayed teleport entity to nether world.
         //}
         return true;
-    }
-    
-    public function canPassThrough(){
+	}
+
+	public function canPassThrough(){
 		return true;
 	}
+
+	/*
+	 * public function canBeReplaced(){
+	 * return true;
+	 * }
+	 */
+	// TODO: only source blocks of liquids
 }
