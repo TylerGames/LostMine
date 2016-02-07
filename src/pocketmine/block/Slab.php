@@ -2,17 +2,17 @@
 
 /*
  *
- *  _                       _           _ __  __ _             
- * (_)                     (_)         | |  \/  (_)            
- *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
- * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
- * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
- * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
- *                     __/ |                                   
- *                    |___/                                                                     
- * 
+ *  _                       _           _ __  __ _
+ * (_)                     (_)         | |  \/  (_)
+ *  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___
+ * | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \
+ * | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/
+ * |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___|
+ *                     __/ |
+ *                    |___/
+ *
  * This program is a third party build by ImagicalMine.
- * 
+ *
  * PocketMine is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
@@ -20,7 +20,7 @@
  *
  * @author ImagicalMine Team
  * @link http://forums.imagicalcorp.ml/
- * 
+ *
  *
 */
 
@@ -38,16 +38,11 @@ class Slab extends Transparent{
 	const COBBLESTONE = 3;
 	const BRICK = 4;
 	const STONE_BRICK = 5;
-<<<<<<< HEAD
-	const NETHER_BRICK = 6;
-	const QUARTZ = 7;
-	
-=======
+
 	const QUARTZ = 6;
 	const NETHER_BRICK = 7;
 	const RED_SANDSTONE = 8;
 
->>>>>>> refs/remotes/origin/mcpe-0.14
 	protected $id = self::SLAB;
 
 	public function __construct($meta = 0){
@@ -78,7 +73,7 @@ class Slab extends Transparent{
 		if(($this->meta & 0x08) > 0){
 			return new AxisAlignedBB(
 				$this->x,
-				$this->y + 0.5,
+			$this->y + 0.5,
 				$this->z,
 				$this->x + 1,
 				$this->y + 1,
