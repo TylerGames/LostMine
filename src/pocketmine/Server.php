@@ -1818,6 +1818,13 @@ class Server{
             $recipient->sendPopup($popup);
         }
 
+		if($this->getProperty("log.enable", true)){
+ 			$this->logger->info("Enabled log writing to server.log");
+ 			$this->logger->Enable();
+ 		}else{
+ 			$this->logger->info("Disabled log writing to server.log");
+ 			$this->logger->Disable();
+ 		}
         return count($recipients);
     }
 
