@@ -24,6 +24,8 @@
 */
 namespace pocketmine\entity;
 
+use pocketmine\network\protocol\PlayerActionPacket;
+
 use pocketmine\network\protocol\AddEntityPacket;
 use pocketmine\Player;
 use pocketmine\event\entity\EntityDamageEvent;
@@ -44,6 +46,8 @@ class Minecart extends Vehicle{
     public $moveSpeed = 0.4;
 
     public $isFreeMoving = false;
+    public $isLinked = false;
+    public $oldPosition = null;
 
     public function initEntity(){
         $this->setMaxHealth(1);
@@ -64,10 +68,10 @@ class Minecart extends Vehicle{
 
         $this->timings->startTiming();
 
-        $hasUpdate = false;;
-        //parent::onUpdate($currentTick);
+        $hasUpdate = false;
 
-        if($this->isAlive()){
+        // if Minecart item is droped
+        if($this->isLinked || $this->isAlive()){
             $this->motionY -= $this->gravity;
 
             if($this->checkObstruction($this->x, $this->y, $this->z)){
@@ -95,6 +99,10 @@ class Minecart extends Vehicle{
                 $this->motionX = 0;
                 $this->motionZ = 0;
                 $this->isFreeMoving = false;
+            }
+        }else{
+            if($this->isLinked == false) {
+                parent::onUpdate($currentTick);
             }
         }
 
@@ -150,4 +158,47 @@ class Minecart extends Vehicle{
         $class = new \ReflectionClass(static::class);
         return $class->getShortName();
     }
+
+    public function onPlayerAction(Player $player, $playerAction) {
+        if($playerAction == 1) {
+          //pressed move button
+          $this->isLinked = true;
+          $this->isMoving = true;
+          $this->isFreeMoving = true;
+          $this->setHealth($this->getMaxHealth());
+          $player->linkEntity($this);
+        } elseif(in_array($playerAction, array(2,3)) || $playerAction == PlayerActionPacket::ACTION_JUMP) {
+          //touched
+          $this->isLinked = false;
+          $this->isMoving = false;
+          $this->isFreeMoving = false;
+          $this->setLinked(0, $player);
+          $player->setLinked(0, $this);
+          return $this;
+        } elseif($playerAction == 157) {
+            //playerMove
+            $this->isFreeMoving = true;
+            // try to get the bottom blockId, as Vector
+            $position = $this->getPosition();
+            $blockTemp = $this->level->getBlock($position);
+            if(in_array($blockTemp->getId(),array(27, 28, 66, 126))) {
+                //we are on rail
+                $connected = $blockTemp->check($blockTemp);
+                if(count($connected) >= 1){
+                    foreach($connected as $newPosition) {
+                        if($this->oldPosition != $newPosition || count($connected) == 1) {
+                            $this->oldPosition = $position->add(0,0,0);
+                            $this->setPosition($newPosition);
+                            return $newPosition;
+                        }
+                    }
+                }
+            }
+            return false;
+
+        }
+
+        return true;
+    }
+
 }

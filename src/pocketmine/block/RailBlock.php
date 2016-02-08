@@ -201,4 +201,41 @@ abstract class RailBlock extends Flowable{
 		}
 		return false;
 	}
+
+	public static function check($rail){
+	    $array = [
+	    [[0, 1], [0, -1]],
+	    [[1, 0], [-1, 0]],
+	    [[1, 0], [-1, 0]],
+	    [[1, 0], [-1, 0]],
+	    [[0, 1], [0, -1]],
+	    [[0, 1], [0, -1]],
+	    [[1, 0], [0, 1]],
+	    [[0, 1], [-1, 0]],
+	    [[-1, 0], [0, -1]],
+	    [[0, -1], [1, 0]]
+	    ];
+	    $arrayY = [0, 1, -1];
+	    $blocks = $array[$rail->getDamage()];
+	    $connected = [];
+	    foreach($arrayY as $y){
+	        $v3 = new Vector3($rail->x + $blocks[0][0], $rail->y + $y, $rail->z + $blocks[0][1]);
+	        $id = $rail->getLevel()->getBlockIdAt($v3->x, $v3->y, $v3->z);
+	        $meta = $rail->getLevel()->getBlockDataAt($v3->x, $v3->y, $v3->z);
+	        if(in_array($id, array(self::RAIL, self::POWERED_RAIL, self::ACTIVATOR_RAIL, self::DETECTOR_RAIL)) and in_array([$rail->x - $v3->x, $rail->z - $v3->z], $array[$meta])){
+	            $connected[] = $v3;
+	            break;
+	        }
+	    }
+	    foreach($arrayY as $y){
+	        $v3 = new Vector3($rail->x + $blocks[1][0], $rail->y + $y, $rail->z + $blocks[1][1]);
+	        $id = $rail->getLevel()->getBlockIdAt($v3->x, $v3->y, $v3->z);
+	        $meta = $rail->getLevel()->getBlockDataAt($v3->x, $v3->y, $v3->z);
+	        if(in_array($id, array(self::RAIL, self::POWERED_RAIL, self::ACTIVATOR_RAIL, self::DETECTOR_RAIL)) and in_array([$rail->x - $v3->x, $rail->z - $v3->z], $array[$meta])){
+	            $connected[] = $v3;
+	            break;
+	        }
+	    }
+	    return $connected;
+	}
 }
