@@ -17,14 +17,14 @@ class NoteblockSound extends GenericSound{
 	protected $instrument;
 	protected $pitch;
 
-	const INSTRUMENT_PIANO = 0;
-	const INSTRUMENT_BASS_DRUM = 1;
-	const INSTRUMENT_CLICK = 2;
-	const INSTRUMENT_TABOUR = 3;
-	const INSTRUMENT_BASS = 4;
+	const INSTRUMENT_PIANO_OR_HARP = 0; // Any other material
+	const INSTRUMENT_BASS_DRUM = 1; // Stone, SandStone, Ores, Brick, NetherRack, Opsidian, Quartz
+	const INSTRUMENT_SNARE_DRUM = 2; // Sand, Gravel, SoulSand
+	const INSTRUMENT_CLICKS_AND_STICKS = 3; // Glass, GlowStone
+	const INSTRUMENT_BASS_GUITAR = 4; // Wood, Mushroom, Daylight Sensor, Wooden plate
 
 	public function __construct(Vector3 $pos, $instrument = self::INSTRUMENT_PIANO, $pitch = 0){
-		parent::__construct($pos, LevelEventPacket::EVENT_SOUND_ANVIL_BREAK, $pitch);
+		parent::__construct($pos, 0);
 		$this->instrument = $instrument;
 		$this->pitch = $pitch;
 	}
