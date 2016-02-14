@@ -64,9 +64,8 @@ class Noteblock extends Solid implements RedstoneConsumer{
 		return $this->meta;
 	}
 
-	public function onActivate(Item $item, Player $player = null){
-		$down = $this->getSide(0);
-		switch($down->getId()){
+	public function getInstrument(Block $block){
+		switch($block->getId()){
 			case self::STONE:
 			case self::COBBLESTONE:
 			case self::COBBLE_STAIRS:
@@ -100,18 +99,15 @@ class Noteblock extends Solid implements RedstoneConsumer{
 			case self::NETHER_BRICKS_STAIRS:
 			case self::ENCHANT_TABLE:
 			case self::STONE_PRESSURE_PLATE:
-				$instrument = NoteBlockSound::INSTRUMENT_BASS_DRUM;
-				break;
+				return NoteBlockSound::INSTRUMENT_BASS_DRUM;
 			case self::SAND:
 			case self::GRAVEL:
 			case self::SOUL_SAND:
-				$instrument = NoteBlockSound::INSTRUMENT_SNARE_DRUM;
-				break;
+				return NoteBlockSound::INSTRUMENT_SNARE_DRUM;
 			case self::GLASS:
 			case self::GLASS_PANEL:
 			case self::GLOWSTONE:
-				$instrument = NoteBlockSound::INSTRUMENT_CLICKS_AND_STICKS;
-				break;
+				return NoteBlockSound::INSTRUMENT_CLICKS_AND_STICKS;
 			case self::WOOD:
 			case self::WOOD2:
 			case self::PLANK:
@@ -148,21 +144,24 @@ class Noteblock extends Solid implements RedstoneConsumer{
 			case self::WOODEN_PRESSURE_PLATE:
 			case self::DAYLIGHT_DETECTOR:
 			case self::DAYLIGHT_DETECTOR_INVERTED:
-				$instrument = NoteBlockSound::INSTRUMENT_BASS_GUITAR;
+				return NoteBlockSound::INSTRUMENT_BASS_GUITAR;
 				break;
 			case self::SLAB:
 			case self::DOUBLE_SLAB:
-				if($down->getDamage() == 2){ // Wooden Slab
-					$instrument = NoteBlockSound::INSTRUMENT_BASS_GUITAR;
+				if($block->getDamage() == 2){ // Wooden Slab
+					return NoteBlockSound::INSTRUMENT_BASS_GUITAR;
 				}else{ // else : Stones
-					$instrument = NoteBlockSound::INSTRUMENT_BASS_DRUM;
+					return NoteBlockSound::INSTRUMENT_BASS_DRUM;
 				}
 				break;
 			default:
-				$instrument = NoteBlockSound::INSTRUMENT_PIANO_OR_HARP;
+				return NoteBlockSound::INSTRUMENT_PIANO_OR_HARP;
 				break;
 		}
-		$this->getLevel()->addSound(new NoteblockSound($this, $instrument, $this->getStrength()));
+	}
+
+	public function onActivate(Item $item, Player $player = null){
+		$this->getLevel()->addSound(new NoteblockSound($this, $this->getInstrument($this->getSide(0)), $this->meta));
 		$this->meta = (int) ++$this->meta % 25;
 		$this->getLevel()->setBlock($this, $this);
 		return true;
