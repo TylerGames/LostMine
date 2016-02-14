@@ -11,7 +11,6 @@ namespace pocketmine\level\sound;
 
 use pocketmine\math\Vector3;
 use pocketmine\network\protocol\BlockEventPacket;
-use pocketmine\network\protocol\LevelEventPacket;
 
 class NoteblockSound extends GenericSound{
 	protected $instrument;
