@@ -23,7 +23,7 @@ class NoteblockSound extends GenericSound{
 	const INSTRUMENT_CLICKS_AND_STICKS = 3; // Glass, GlowStone
 	const INSTRUMENT_BASS_GUITAR = 4; // Wood, Mushroom, Daylight Sensor, Wooden plate
 
-	public function __construct(Vector3 $pos, $instrument = self::INSTRUMENT_PIANO, $pitch = 0){
+	public function __construct(Vector3 $pos, $instrument = self::INSTRUMENT_PIANO_OR_HARP, $pitch = 0){
 		parent::__construct($pos, 0);
 		$this->instrument = $instrument;
 		$this->pitch = $pitch;
