@@ -1,25 +1,11 @@
 #!/bin/bash
-#
-#  _                       _           _ __  __ _             
-# (_)                     (_)         | |  \/  (_)            
-#  _ _ __ ___   __ _  __ _ _  ___ __ _| | \  / |_ _ __   ___  
-# | | '_ ` _ \ / _` |/ _` | |/ __/ _` | | |\/| | | '_ \ / _ \ 
-# | | | | | | | (_| | (_| | | (_| (_| | | |  | | | | | |  __/ 
-# |_|_| |_| |_|\__,_|\__, |_|\___\__,_|_|_|  |_|_|_| |_|\___| 
-#                     __/ |                                   
-#                    |___/                                                                     
-# 
-# This program is a third party build by ImagicalMine.
-#
-# ImagicalMine is free software: you can redistribute it and/or modify
-# it under the terms of the GNU Lesser General Public License as published by
-# the Free Software Foundation, either version 3 of the License, or
-# (at your option) any later version.
-#
-# @author PocketMine Team, edited by the ImagicalMine team
-# @link http://imagicalmine.net
-#
-
+/*
+ _              _  _____                    
+| |    ___  ___| ||_   _|__  __ _ _ __ ___  
+| |   / _ \/ __| __|| |/ _ \/ _` | '_ ` _ \ 
+| |__| (_) \__ \ |_ | |  __/ (_| | | | | | |
+|_____\___/|___/\__||_|\___|\__,_|_| |_| |_|
+ */     
 DIR="$(cd -P "$( dirname "${BASH_SOURCE[0]}" )" && pwd)"
 cd "$DIR"
 
@@ -61,12 +47,12 @@ if [ "$PHP_BINARY" == "" ]; then
 fi
 
 if [ "$POCKETMINE_FILE" == "" ]; then
-	if [ -f ./ImagicalMine.phar ]; then
-		POCKETMINE_FILE="./ImagicalMine.phar"
+	if [ -f ./LostMine.phar ]; then
+		POCKETMINE_FILE="./LostMine.phar"
 	elif [ -f ./src/pocketmine/PocketMine.php ]; then
 		POCKETMINE_FILE="./src/pocketmine/PocketMine.php"
 	else
-		echo "Couldn't find a valid ImagicalMine installation. If you have recently upgraded, ensure that you have renamed PocketMine-MP.phar to ImagicalMine.phar"
+		echo "Couldn't find a valid LostMine installation. If you have recently upgraded, ensure that you have renamed PocketMine-MP.phar to LostMine.phar"
 		exit 7
 	fi
 fi
