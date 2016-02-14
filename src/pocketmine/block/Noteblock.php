@@ -70,24 +70,102 @@ class Noteblock extends Solid implements RedstoneConsumer{
 	public function onActivate(Item $item, Player $player = null){
 		$down = $this->getSide(0);
 		switch($down->getId()){
-			case self::GLASS:
-			case self::GLOWSTONE:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_CLICKS_AND_STICKS, $this->getStrength()), array($player));
+			case self::STONE:
+			case self::COBBLESTONE:
+			case self::COBBLE_STAIRS:
+			case self::BEDROCK:
+			case self::GOLD_ORE:
+			case self::IRON_ORE:
+			case self::COAL_ORE:
+			case self::LAPIS_ORE:
+			case self::DIAMOND_ORE:
+			case self::REDSTONE_ORE:
+			case self::EMERALD_ORE:
+			case self::GLOWING_REDSTONE_ORE:
+			case self::FURNACE:
+			case self::BURNING_FURNACE:
+			case self::BRICKS:
+			case self::BRICK_STAIRS:
+			case self::STONE_BRICK:
+			case self::STONE_BRICK_STAIRS:
+			case self::NETHERRACK:
+			case self::COBBLE_WALL:
+			case self::STONECUTTER:
+			case self::MOSS_STONE:
+			case self::OBSIDIAN:
+			case self::SANDSTONE:
+			case self::END_STONE:
+			case self::MONSTER_SPAWNER:
+			case self::END_PORTAL_FRAME:
+			case self::QUARTZ_BLOCK:
+			case self::QUARTZ_STAIRS:
+			case self::NETHER_BRICKS:
+			case self::NETHER_BRICKS_STAIRS:
+			case self::ENCHANT_TABLE:
+			case self::STONE_PRESSURE_PLATE:
+				$instrument = self::INSTRUMENT_BASS_DRUM;
 				break;
 			case self::SAND:
 			case self::GRAVEL:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_SNARE_DRUM, $this->getStrength()), array($player));
+			case self::SOUL_SAND:
+				$instrument = self::INSTRUMENT_SNARE_DRUM;
+				break;
+			case self::GLASS:
+			case self::GLASS_PANEL:
+			case self::GLOWSTONE:
+				$instrument = self::INSTRUMENT_CLICKS_AND_STICKS;
 				break;
 			case self::WOOD:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS_GUITAR, $this->getStrength()), array($player));
-				break;
-			case self::STONE:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS_DRUM, $this->getStrength()), array($player));
-				break;
+			case self::WOOD2:
+			case self::PLANK:
+			case self::SPRUCE_WOOD_STAIRS:
+			case self::BIRCH_WOOD_STAIRS:
+			case self::JUNGLE_WOOD_STAIRS:
+			case self::DOUBLE_WOOD_SLAB:
+			case self::ACACIA_WOOD_STAIRS:
+			case self::DARK_OAK_WOOD_STAIRS:
+			case self::WOOD_STAIRS:
+			case self::BOOKSHELF:
+			case self::CHEST:
+			case self::WORKBENCH:
+			case self::SIGN_POST:
+			case self::WALL_SIGN:
+			case self::WOOD_DOOR_BLOCK:
+			case self::SPRUCE_DOOR_BLOCK:
+			case self::BIRCH_DOOR_BLOCK:
+			case self::JUNGLE_DOOR_BLOCK:
+			case self::ACACIA_DOOR_BLOCK:
+			case self::DARK_OAK_DOOR_BLOCK:
+			case self::TRAPDOOR:
+			case self::FENCE:
+			case self::FENCE_GATE:
+			case self::FENCE_GATE_SPRUCE:
+			case self::FENCE_GATE_BIRCH:
+			case self::FENCE_GATE_JUNGLE:
+			case self::FENCE_GATE_DARK_OAK:
+			case self::FENCE_GATE_ACACIA:
+			case self::WOOD_SLAB:
+			case self::BROWN_MUSHROOM:
+			case self::RED_MUSHROOM:
+			case self::NOTEBLOCK:
+			case self::WOODEN_PRESSURE_PLATE:
+			case self::DAYLIGHT_DETECTOR:
+			case self::DAYLIGHT_DETECTOR_INVERTED:
+				$instrument = self::INSTRUMENT_BASS_GUITAR;
+			break;
+			case self::SLAB:
+			case self::DOUBLE_SLAB:
+				if($down->getDamage() == 2){ // Wooden Slab
+					$instrument = self::INSTRUMENT_BASS_GUITAR;
+				}else{ // else : Stones
+					$instrument = self::INSTRUMENT_BASS_DRUM;
+				}
+			break;
 			default:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_PIANO_OR_HARP, $this->getStrength()), array($player));
-				break;
+				$instrument = INSTRUMENT_PIANO_OR_HARP;
+			break;
 		}
+		$this->getLevel()->addSound(new NoteblockSound($this, $instrument, $this->getStrength()), array($player));
 		return true;
 	}
 
@@ -95,7 +173,7 @@ class Noteblock extends Solid implements RedstoneConsumer{
 		return "Noteblock";
 	}
 
-	/**
+	/*
 	 * overriding Block::onRedstoneUpdate
 	 * is causing memory leak if noteblock is activated
 	 */
