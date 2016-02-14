@@ -39,7 +39,6 @@ use pocketmine\Player;
 
 class Noteblock extends Solid implements RedstoneConsumer{
 	protected $id = self::NOTEBLOCK;
-	protected $downSideId = null;
 
 	public function __construct($meta = 0){
 		$this->meta = $meta;
@@ -48,25 +47,29 @@ class Noteblock extends Solid implements RedstoneConsumer{
 	public function getHardness(){
 		return 0.8;
 	}
+
 	public function getResistance(){
 		return 4;
 	}
+
 	public function getToolType(){
 		return Tool::TYPE_AXE;
 	}
+
 	public function canBeActivated(){
 		return true;
 	}
+
 	public function getStrength(){
 		if($this->meta < 24) $this->meta ++;
 		else $this->meta = 0;
 		$this->getLevel()->setBlock($this, $this);
-		return $this->meta * 1;
+		return $this->meta;
 	}
 
 	public function onActivate(Item $item, Player $player = null){
-
-		switch($this->downSideId){
+		$down = $this->getSide(0);
+		switch($down->getId()){
 			case self::GLASS:
 			case self::GLOWSTONE:
 				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_CLICKS_AND_STICKS, $this->getStrength()), array($player));
@@ -86,16 +89,6 @@ class Noteblock extends Solid implements RedstoneConsumer{
 				break;
 		}
 		return true;
-	}
-
-	public function onUpdate($type){
-		$this->downSideId = $this->getSide(0)->getId();
-		return parent::onUpdate($type);
-	}
-
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		$this->downSideId = $this->getSide(0)->getId();
-		return parent::place($item, $block, $target, $face, $fx, $fy, $fz, $player);
 	}
 
 	public function getName(){
