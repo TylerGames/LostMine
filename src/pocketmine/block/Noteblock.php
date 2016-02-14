@@ -103,17 +103,17 @@ class Noteblock extends Solid implements RedstoneConsumer{
 			case self::NETHER_BRICKS_STAIRS:
 			case self::ENCHANT_TABLE:
 			case self::STONE_PRESSURE_PLATE:
-				$instrument = self::INSTRUMENT_BASS_DRUM;
+				$instrument = NoteBlockSound::INSTRUMENT_BASS_DRUM;
 				break;
 			case self::SAND:
 			case self::GRAVEL:
 			case self::SOUL_SAND:
-				$instrument = self::INSTRUMENT_SNARE_DRUM;
+				$instrument = NoteBlockSound::INSTRUMENT_SNARE_DRUM;
 				break;
 			case self::GLASS:
 			case self::GLASS_PANEL:
 			case self::GLOWSTONE:
-				$instrument = self::INSTRUMENT_CLICKS_AND_STICKS;
+				$instrument = NoteBlockSound::INSTRUMENT_CLICKS_AND_STICKS;
 				break;
 			case self::WOOD:
 			case self::WOOD2:
@@ -151,18 +151,18 @@ class Noteblock extends Solid implements RedstoneConsumer{
 			case self::WOODEN_PRESSURE_PLATE:
 			case self::DAYLIGHT_DETECTOR:
 			case self::DAYLIGHT_DETECTOR_INVERTED:
-				$instrument = self::INSTRUMENT_BASS_GUITAR;
+				$instrument = NoteBlockSound::INSTRUMENT_BASS_GUITAR;
 				break;
 			case self::SLAB:
 			case self::DOUBLE_SLAB:
 				if($down->getDamage() == 2){ // Wooden Slab
-					$instrument = self::INSTRUMENT_BASS_GUITAR;
+					$instrument = NoteBlockSound::INSTRUMENT_BASS_GUITAR;
 				}else{ // else : Stones
-					$instrument = self::INSTRUMENT_BASS_DRUM;
+					$instrument = NoteBlockSound::INSTRUMENT_BASS_DRUM;
 				}
 				break;
 			default:
-				$instrument = INSTRUMENT_PIANO_OR_HARP;
+				$instrument = NoteBlockSound::INSTRUMENT_PIANO_OR_HARP;
 				break;
 		}
 		$this->getLevel()->addSound(new NoteblockSound($this, $instrument, $this->getStrength()));
