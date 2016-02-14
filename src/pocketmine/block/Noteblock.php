@@ -69,20 +69,20 @@ class Noteblock extends Solid implements RedstoneConsumer{
 		switch($this->downSideId){
 			case self::GLASS:
 			case self::GLOWSTONE:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_CLICK, $this->getStrength()), array($player));
+				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_CLICKS_AND_STICKS, $this->getStrength()), array($player));
 				break;
 			case self::SAND:
 			case self::GRAVEL:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_TABOUR, $this->getStrength()), array($player));
+				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_SNARE_DRUM, $this->getStrength()), array($player));
 				break;
 			case self::WOOD:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS, $this->getStrength()), array($player));
+				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS_GUITAR, $this->getStrength()), array($player));
 				break;
 			case self::STONE:
 				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS_DRUM, $this->getStrength()), array($player));
 				break;
 			default:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_PIANO, $this->getStrength()), array($player));
+				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_PIANO_OR_HARP, $this->getStrength()), array($player));
 				break;
 		}
 		return true;
