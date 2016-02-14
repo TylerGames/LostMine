@@ -24,7 +24,7 @@
 :: ERROR: Restricted area - access denied. Don't try to edit anything below this line! ::
 :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-TITLE ImagicalMine server software for Minecraft: Pocket Edition
+TITLE LostTeam server software for Minecraft: Pocket Edition
 cd /d %~dp0
 
 if exist bin\php\php.exe (
@@ -34,8 +34,8 @@ if exist bin\php\php.exe (
 	set PHP_BINARY=php
 )
 
-if exist ImagicalMine.phar (
-	set POCKETMINE_FILE=ImagicalMine.phar
+if exist LostTeam.phar (
+	set POCKETMINE_FILE=LostTeam.phar
 ) else (
 	if exist src\pocketmine\PocketMine.php (
 		set POCKETMINE_FILE=src\pocketmine\PocketMine.php
