@@ -61,9 +61,6 @@ class Noteblock extends Solid implements RedstoneConsumer{
 	}
 
 	public function getStrength(){
-		if($this->meta < 24) $this->meta ++;
-		else $this->meta = 0;
-		$this->getLevel()->setBlock($this, $this);
 		return $this->meta;
 	}
 
@@ -166,6 +163,8 @@ class Noteblock extends Solid implements RedstoneConsumer{
 				break;
 		}
 		$this->getLevel()->addSound(new NoteblockSound($this, $instrument, $this->getStrength()));
+		$this->meta = (int) ++$this->meta % 25;
+		$this->getLevel()->setBlock($this, $this);
 		return true;
 	}
 
