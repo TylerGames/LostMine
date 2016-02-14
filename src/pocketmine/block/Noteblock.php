@@ -39,7 +39,6 @@ use pocketmine\Player;
 
 class Noteblock extends Solid implements RedstoneConsumer{
 	protected $id = self::NOTEBLOCK;
-	protected $downSideId = null;
 
 	public function __construct($meta = 0){
 		$this->meta = $meta;
@@ -48,61 +47,131 @@ class Noteblock extends Solid implements RedstoneConsumer{
 	public function getHardness(){
 		return 0.8;
 	}
+
 	public function getResistance(){
 		return 4;
 	}
+
 	public function getToolType(){
 		return Tool::TYPE_AXE;
 	}
+
 	public function canBeActivated(){
 		return true;
 	}
+
 	public function getStrength(){
-		if($this->meta < 24) $this->meta ++;
-		else $this->meta = 0;
-		$this->getLevel()->setBlock($this, $this);
-		return $this->meta * 1;
+		return $this->meta;
+	}
+
+	public function getInstrument(Block $block){
+		switch($block->getId()){
+			case self::STONE:
+			case self::COBBLESTONE:
+			case self::COBBLE_STAIRS:
+			case self::BEDROCK:
+			case self::GOLD_ORE:
+			case self::IRON_ORE:
+			case self::COAL_ORE:
+			case self::LAPIS_ORE:
+			case self::DIAMOND_ORE:
+			case self::REDSTONE_ORE:
+			case self::EMERALD_ORE:
+			case self::GLOWING_REDSTONE_ORE:
+			case self::FURNACE:
+			case self::BURNING_FURNACE:
+			case self::BRICKS:
+			case self::BRICK_STAIRS:
+			case self::STONE_BRICK:
+			case self::STONE_BRICK_STAIRS:
+			case self::NETHERRACK:
+			case self::COBBLE_WALL:
+			case self::STONECUTTER:
+			case self::MOSS_STONE:
+			case self::OBSIDIAN:
+			case self::SANDSTONE:
+			case self::END_STONE:
+			case self::MONSTER_SPAWNER:
+			case self::END_PORTAL_FRAME:
+			case self::QUARTZ_BLOCK:
+			case self::QUARTZ_STAIRS:
+			case self::NETHER_BRICKS:
+			case self::NETHER_BRICKS_STAIRS:
+			case self::ENCHANT_TABLE:
+			case self::STONE_PRESSURE_PLATE:
+				return NoteBlockSound::INSTRUMENT_BASS_DRUM;
+			case self::SAND:
+			case self::GRAVEL:
+			case self::SOUL_SAND:
+				return NoteBlockSound::INSTRUMENT_SNARE_DRUM;
+			case self::GLASS:
+			case self::GLASS_PANEL:
+			case self::GLOWSTONE:
+				return NoteBlockSound::INSTRUMENT_CLICKS_AND_STICKS;
+			case self::WOOD:
+			case self::WOOD2:
+			case self::PLANK:
+			case self::SPRUCE_WOOD_STAIRS:
+			case self::BIRCH_WOOD_STAIRS:
+			case self::JUNGLE_WOOD_STAIRS:
+			case self::DOUBLE_WOOD_SLAB:
+			case self::ACACIA_WOOD_STAIRS:
+			case self::DARK_OAK_WOOD_STAIRS:
+			case self::WOOD_STAIRS:
+			case self::BOOKSHELF:
+			case self::CHEST:
+			case self::WORKBENCH:
+			case self::SIGN_POST:
+			case self::WALL_SIGN:
+			case self::WOOD_DOOR_BLOCK:
+			case self::SPRUCE_DOOR_BLOCK:
+			case self::BIRCH_DOOR_BLOCK:
+			case self::JUNGLE_DOOR_BLOCK:
+			case self::ACACIA_DOOR_BLOCK:
+			case self::DARK_OAK_DOOR_BLOCK:
+			case self::TRAPDOOR:
+			case self::FENCE:
+			case self::FENCE_GATE:
+			case self::FENCE_GATE_SPRUCE:
+			case self::FENCE_GATE_BIRCH:
+			case self::FENCE_GATE_JUNGLE:
+			case self::FENCE_GATE_DARK_OAK:
+			case self::FENCE_GATE_ACACIA:
+			case self::WOOD_SLAB:
+			case self::BROWN_MUSHROOM:
+			case self::RED_MUSHROOM:
+			case self::NOTEBLOCK:
+			case self::WOODEN_PRESSURE_PLATE:
+			case self::DAYLIGHT_DETECTOR:
+			case self::DAYLIGHT_DETECTOR_INVERTED:
+				return NoteBlockSound::INSTRUMENT_BASS_GUITAR;
+				break;
+			case self::SLAB:
+			case self::DOUBLE_SLAB:
+				if($block->getDamage() == 2){ // Wooden Slab
+					return NoteBlockSound::INSTRUMENT_BASS_GUITAR;
+				}else{ // else : Stones
+					return NoteBlockSound::INSTRUMENT_BASS_DRUM;
+				}
+				break;
+			default:
+				return NoteBlockSound::INSTRUMENT_PIANO_OR_HARP;
+				break;
+		}
 	}
 
 	public function onActivate(Item $item, Player $player = null){
-
-		switch($this->downSideId){
-			case self::GLASS:
-			case self::GLOWSTONE:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_CLICK, $this->getStrength()), array($player));
-				break;
-			case self::SAND:
-			case self::GRAVEL:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_TABOUR, $this->getStrength()), array($player));
-				break;
-			case self::WOOD:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS, $this->getStrength()), array($player));
-				break;
-			case self::STONE:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_BASS_DRUM, $this->getStrength()), array($player));
-				break;
-			default:
-				$this->getLevel()->addSound(new NoteblockSound($this, NoteblockSound::INSTRUMENT_PIANO, $this->getStrength()), array($player));
-				break;
-		}
+		$this->getLevel()->addSound(new NoteblockSound($this, $this->getInstrument($this->getSide(0)), $this->meta));
+		$this->meta = (int) ++$this->meta % 25;
+		$this->getLevel()->setBlock($this, $this);
 		return true;
-	}
-
-	public function onUpdate($type){
-		$this->downSideId = $this->getSide(0)->getId();
-		return parent::onUpdate($type);
-	}
-
-	public function place(Item $item, Block $block, Block $target, $face, $fx, $fy, $fz, Player $player = null){
-		$this->downSideId = $this->getSide(0)->getId();
-		return parent::place($item, $block, $target, $face, $fx, $fy, $fz, $player);
 	}
 
 	public function getName(){
 		return "Noteblock";
 	}
 
-	/**
+	/*
 	 * overriding Block::onRedstoneUpdate
 	 * is causing memory leak if noteblock is activated
 	 */
