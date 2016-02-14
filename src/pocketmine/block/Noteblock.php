@@ -152,7 +152,7 @@ class Noteblock extends Solid implements RedstoneConsumer{
 			case self::DAYLIGHT_DETECTOR:
 			case self::DAYLIGHT_DETECTOR_INVERTED:
 				$instrument = self::INSTRUMENT_BASS_GUITAR;
-			break;
+				break;
 			case self::SLAB:
 			case self::DOUBLE_SLAB:
 				if($down->getDamage() == 2){ // Wooden Slab
@@ -160,12 +160,12 @@ class Noteblock extends Solid implements RedstoneConsumer{
 				}else{ // else : Stones
 					$instrument = self::INSTRUMENT_BASS_DRUM;
 				}
-			break;
+				break;
 			default:
 				$instrument = INSTRUMENT_PIANO_OR_HARP;
-			break;
+				break;
 		}
-		$this->getLevel()->addSound(new NoteblockSound($this, $instrument, $this->getStrength()), array($player));
+		$this->getLevel()->addSound(new NoteblockSound($this, $instrument, $this->getStrength()));
 		return true;
 	}
 
